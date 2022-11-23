@@ -15,7 +15,7 @@ module.exports = {
         },
       ],
     });
-    config.experiments = { topLevelAwait: true };
+    config.experiments = { topLevelAwait: true, layers: true };
     return config;
   },
   reactStrictMode: true,

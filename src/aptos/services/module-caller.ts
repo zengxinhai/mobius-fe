@@ -10,5 +10,5 @@ export const useModuleCaller = () => {
     if (!connected || !account) return null;
     const transferTxnPayload = buildEntryFuncPayload(module, func, tyArgs, args);
     return signAndSubmitTransaction(transferTxnPayload);
-  }, [signAndSubmitTransaction, account])
+  }, [signAndSubmitTransaction, account, connected])
 }

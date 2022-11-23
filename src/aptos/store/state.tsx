@@ -16,5 +16,9 @@ export const AptosStateProvider: React.FC<React.PropsWithChildren> = ({ children
   const { coins, refreshCoins } = useUserCoinData();
   const { account, refreshAccount } = useAccount();
   const state = { coins, account, refreshCoins, refreshAccount };
-  return (<aptosContext.Provider value={state} children={children} />)
+  return (
+    <aptosContext.Provider value={state}>
+      {children}
+    </aptosContext.Provider>
+  )
 }

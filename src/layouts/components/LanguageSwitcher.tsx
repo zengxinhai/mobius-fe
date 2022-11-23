@@ -1,4 +1,5 @@
 import { CheckIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import Image from 'next/image';
 import { t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import {
@@ -89,7 +90,7 @@ export const LanguagesList = ({ component = ListItem, onClick }: LanguageListIte
           <ListItemIcon
             sx={{ mr: 3, borderRadius: '2px', overflow: 'hidden', width: 20, height: 14 }}
           >
-            <img src={`/icons/flags/${lang}.svg`} width="100%" height="100%" alt={`${lang} icon`} />
+            <Image src={`/icons/flags/${lang}.svg`} style={{ width: '100%', height: '100%' }} alt={`${lang} icon`} />
           </ListItemIcon>
           <ListItemText>{i18n._(langMap[lang as keyof typeof langMap])}</ListItemText>
           {lang === i18n.locale && (

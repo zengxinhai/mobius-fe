@@ -1,4 +1,5 @@
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import { Trans } from '@lingui/macro';
 import {
   Button,
@@ -86,7 +87,6 @@ export function AppHeader() {
     <HideOnScroll>
       <Box
         component="header"
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         sx={(theme) => ({
           height: headerHeight,
@@ -117,7 +117,7 @@ export function AppHeader() {
           }}
           onClick={() => setMobileMenuOpen(false)}
         >
-          <img src='/logo.png' alt="Mobius" height={20} />
+          <Image src='/logo.png' alt="Mobius" height={20} />
         </Box>
         <Box sx={{ mr: sm ? 1 : 3 }}>
           {ENABLE_TESTNET && (

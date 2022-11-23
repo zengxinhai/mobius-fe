@@ -7,7 +7,7 @@ import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { getDesignTokens, getThemedComponents } from 'src/styles/theme';
 
 export const ColorModeContext = React.createContext({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line
   toggleColorMode: () => {},
 });
 
@@ -41,7 +41,7 @@ export function AppGlobalStyles({ children }: { children: ReactNode }) {
     } else if (prefersDarkMode) {
       setMode('dark');
     }
-  }, []);
+  }, [prefersDarkMode]);
 
   const theme = useMemo(() => {
     const themeCreate = createTheme(getDesignTokens(mode));

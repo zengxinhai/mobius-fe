@@ -11,6 +11,7 @@
   "dependencies": {
     "@aave/math-utils": "^1.9.0",
     "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.5",
     "@heroicons/react": "^2.0.13",
     "@lingui/macro": "^3.15.0",
@@ -31,7 +32,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
+    "@emotion/babel-plugin": "^11.10.5",
     "@svgr/webpack": "^6.5.1",
-    "@types/lodash": "^4.14.189"
+    "@types/lodash": "^4.14.189",
+    "babel-plugin-styled-components": "^2.0.7"
   }
 }

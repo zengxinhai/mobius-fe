@@ -1,10 +1,8 @@
 import { BookOpenIcon, CreditCardIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import { t } from '@lingui/macro';
 import { ReactNode } from 'react';
 import { ROUTES } from 'src/components/primitives/Link';
-
-import DiscordIcon from '/public/icons/discord.svg';
-import GithubIcon from '/public/icons/github.svg';
 
 interface Navigation {
   link: string;
@@ -58,12 +56,12 @@ const moreMenuItems: MoreMenuItem[] = [
   {
     link: 'https://discord.gg/7kHKnkDEUf',
     title: t`Discord`,
-    icon: <img alt='discord' src='/icons/discord.svg' />,
+    icon: <Image alt='discord' src='/icons/discord.svg' />,
   },
   {
     link: 'https://github.com/aave/interface',
     title: t`Github`,
-    icon: <img alt='github' src='/icons/github.svg' />,
+    icon: <Image alt='github' src='/icons/github.svg' />,
   },
   {
     link: 'https://global.transak.com',

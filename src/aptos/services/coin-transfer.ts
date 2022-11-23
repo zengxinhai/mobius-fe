@@ -7,10 +7,10 @@ export const useCoinTransfer = () => {
   const account = useAccount();
   return useCallback(async (recipient: string, amount: string | number) => {
     if (!moduleCaller || !account) return null;
-    const module = "0x1::coin";
+    const moduleName = "0x1::coin";
     const func = "transfer";
     const typeArgs = ["0x1::aptos_coin::AptosCoin"];
     const args = [recipient, amount.toString()];
-    return moduleCaller(module, func, typeArgs, args);
+    return moduleCaller(moduleName, func, typeArgs, args);
   }, [moduleCaller, account])
 }

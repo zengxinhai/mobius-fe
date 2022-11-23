@@ -3,24 +3,22 @@ import { Box, Button, Divider } from '@mui/material';
 import { StableAPYTooltip } from 'src/components/infoTooltips/StableAPYTooltip';
 import { VariableAPYTooltip } from 'src/components/infoTooltips/VariableAPYTooltip';
 import { ReserveSubheader } from 'src/components/ReserveSubheader';
-import { useProtocolDataContext } from 'src/hooks/useProtocolDataContext';
 
 import { IncentivesCard } from '../../components/incentives/IncentivesCard';
 import { FormattedNumber } from '../../components/primitives/FormattedNumber';
-import { Link, ROUTES } from '../../components/primitives/Link';
+import { Link } from '../../components/primitives/Link';
 import { Row } from '../../components/primitives/Row';
-import { ComputedReserveData } from '../../hooks/app-data-provider/useAppDataProvider';
-import { ListMobileItemWrapper } from '../dashboard/lists/ListMobileItemWrapper';
+import { ListMobileItemWrapper } from './ListMobileItemWrapper';
 
-export const MarketAssetsListMobileItem = ({ ...reserve }: ComputedReserveData) => {
-  const { currentMarket } = useProtocolDataContext();
+import { Reserve } from './MarketAssetsListItem'
+
+export const MarketAssetsListMobileItem = ({ ...reserve }: Reserve) => {
   return (
     <ListMobileItemWrapper
       symbol={reserve.symbol}
       iconSymbol={reserve.iconSymbol}
       name={reserve.name}
-      underlyingAsset={reserve.underlyingAsset}
-      currentMarket={currentMarket}
+      underlyingAsset={''}
     >
       <Row caption={<Trans>Total supplied</Trans>} captionVariant="description" mb={3}>
         <Box
@@ -45,7 +43,7 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: ComputedReserveData) 
         <IncentivesCard
           align="flex-end"
           value={reserve.supplyAPY}
-          incentives={reserve.aIncentivesData || []}
+          incentives={[]}
           symbol={reserve.symbol}
           variant="secondary14"
         />
@@ -82,7 +80,7 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: ComputedReserveData) 
         <IncentivesCard
           align="flex-end"
           value={reserve.borrowingEnabled ? reserve.variableBorrowAPY : '-1'}
-          incentives={reserve.vIncentivesData || []}
+          incentives={[]}
           symbol={reserve.symbol}
           variant="secondary14"
         />
@@ -102,7 +100,7 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: ComputedReserveData) 
         <IncentivesCard
           align="flex-end"
           value={reserve.stableBorrowRateEnabled ? reserve.stableBorrowAPY : -1}
-          incentives={reserve.sIncentivesData || []}
+          incentives={[]}
           symbol={reserve.symbol}
           variant="secondary14"
         />
@@ -111,7 +109,7 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: ComputedReserveData) 
       <Button
         variant="outlined"
         component={Link}
-        href={ROUTES.reserveOverview(reserve.underlyingAsset, currentMarket)}
+        href={'/'}
         fullWidth
       >
         <Trans>View details</Trans>

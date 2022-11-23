@@ -18,6 +18,6 @@ export const useUserCoinData = () => {
         balances.map((balance, i) => ({ value: balance, meta: COINS[network.mode][i] }))
       )
     });
-  }, [address, getCoinBalances, refresh]);
+  }, [address, getCoinBalances, refresh, network.mode]);
   return { coins, refreshCoins: () => setRefresh(val => val + 1) };
 }

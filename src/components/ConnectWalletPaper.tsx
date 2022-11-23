@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro';
+import Image from 'next/image';
 import { CircularProgress, Paper, PaperProps, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 
@@ -27,7 +28,7 @@ export const ConnectWalletPaper = ({
         ...sx,
       }}
     >
-      <img src='/logo192.png' style={{ marginBottom: '16px' }} />
+      <Image alt='logo' src='/logo192.png' style={{ marginBottom: '16px' }} />
       <>
         {loading ? (
           <CircularProgress />
