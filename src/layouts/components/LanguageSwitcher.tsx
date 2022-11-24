@@ -90,7 +90,7 @@ export const LanguagesList = ({ component = ListItem, onClick }: LanguageListIte
           <ListItemIcon
             sx={{ mr: 3, borderRadius: '2px', overflow: 'hidden', width: 20, height: 14 }}
           >
-            <Image src={`/icons/flags/${lang}.svg`} style={{ width: '100%', height: '100%' }} alt={`${lang} icon`} />
+            <Image src={`/icons/flags/${lang}.svg`} width={20} height={20} alt={`${lang} icon`} />
           </ListItemIcon>
           <ListItemText>{i18n._(langMap[lang as keyof typeof langMap])}</ListItemText>
           {lang === i18n.locale && (

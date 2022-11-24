@@ -117,7 +117,7 @@ export function AppHeader() {
           }}
           onClick={() => setMobileMenuOpen(false)}
         >
-          <Image src='/logo.png' alt="Mobius" height={20} />
+          <Image src='/logo.png' alt="Mobius" width={100} height={20} />
         </Box>
         <Box sx={{ mr: sm ? 1 : 3 }}>
           {ENABLE_TESTNET && (
