@@ -26,7 +26,6 @@ const Web3InnerProvider: FC<PropsWithChildren> = ({ children }) => {
   const connectWallet = useCallback(() => {
     return aptosWallet.connect(new AptosWalletAdapter().name)
   }, [aptosWallet])
-  console.log(connectWallet)
   
   useEffect(() => {
     const account = aptosWallet.account?.address?.toString()
