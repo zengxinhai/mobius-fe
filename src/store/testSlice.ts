@@ -1,11 +1,11 @@
 import { StateCreator } from 'zustand'
 import { RootState } from './root'
 import { simulateTransaction } from 'src/aptos/chain/simulate-txn'
-import {AptosClient} from "aptos";
+import { AptosClient } from "aptos";
 
 export interface TestSlice {
   val?: number,
-  getVal: () => void,
+  getVal: () => Promise<void>,
 }
 
 type WriteResourceChange<T> = {
@@ -47,7 +47,7 @@ export const createTestSlice: StateCreator<
       const resourceType = `${params.moduleName}::${structName}`;
       const typeChanges
         = changeSets.filter(change => (change as any)?.data?.type == resourceType);
-      if (typeChanges.length === 0) return { ok: false, data: null, error: 'Query type error' }
+      if (typeChanges.length === 0) return
       const change = typeChanges[0] as WriteResourceChange<StructType>;
       set({ val: change.data.data.val })
     }
