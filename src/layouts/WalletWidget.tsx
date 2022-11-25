@@ -1,4 +1,4 @@
-import { DocumentDuplicateIcon as DuplicateIcon } from '@heroicons/react/24/outline';
+import { UserCircleIcon, DocumentDuplicateIcon as DuplicateIcon } from '@heroicons/react/24/outline';
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -96,18 +96,22 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
         img: { width: '100%', height: '100%', borderRadius: '50%' },
       }}
     >
+      <UserCircleIcon />
     </Box>
   );
   
   let buttonContent = <></>;
-  if (account) {
+  if (account && account.address) {
     if (hideWalletAccountText) {
       buttonContent = <Box sx={{margin: '1px 0'}}>{accountAvatar}</Box>;
     } else {
-      buttonContent = <Trans>Connect wallet</Trans>;
+      buttonContent = <>{textCenterEllipsis(account.address.toString(), 4, 4)}</>;
     }
+  } else {
+    buttonContent = <Trans>Connect wallet</Trans>;
+  }
   
-    const Content = ({component = ListItem}: { component?: typeof MenuItem | typeof ListItem }) => (
+  const Content = ({component = ListItem}: { component?: typeof MenuItem | typeof ListItem }) => (
       <>
         <Typography
           variant="subheader2"
@@ -291,72 +295,69 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
       </>
     );
   
-    return (
-      <>
-        {md && connected && open ? (
-          <MobileCloseButton setOpen={setOpen}/>
-        ) : connecting ? (
-          <Skeleton height={36} width={126} sx={{background: '#383D51'}}/>
-        ) : (
-          <Button
-            variant={connected ? 'surface' : 'gradient'}
-            aria-label="wallet"
-            id="wallet-button"
-            aria-controls={open ? 'wallet-button' : undefined}
-            aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-            sx={{
-              p: connected ? '5px 8px' : undefined,
-              minWidth: hideWalletAccountText ? 'unset' : undefined,
-            }}
-            startIcon={connected && !hideWalletAccountText && accountAvatar}
-            endIcon={
-              connected &&
-              !hideWalletAccountText &&
-              !md && (
-                <SvgIcon
-                  sx={{
-                    display: {xs: 'none', md: 'block'},
-                  }}
-                >
-                  {open ? <ChevronUpIcon/> : <ChevronDownIcon/>}
-                </SvgIcon>
-              )
-            }
-          >
-            {buttonContent}
-          </Button>
-        )}
-      
-        {md ? (
-          <DrawerWrapper open={open} setOpen={setOpen} headerHeight={headerHeight}>
-            <List sx={{px: 2, '.MuiListItem-root.Mui-disabled': {opacity: 1}}}>
-              <Content/>
-            </List>
-          </DrawerWrapper>
-        ) : (
-          <Menu
-            id="wallet-menu"
-            MenuListProps={{
-              'aria-labelledby': 'wallet-button',
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            keepMounted={true}
-          >
-            <MenuList disablePadding sx={{'.MuiMenuItem-root.Mui-disabled': {opacity: 1}}}>
-              <Content component={MenuItem}/>
-            </MenuList>
-          </Menu>
-        )}
-      
-      </>
-    );
-  }
-  
-  return null;
+  return (
+    <>
+      {md && connected && open ? (
+        <MobileCloseButton setOpen={setOpen}/>
+      ) : connecting ? (
+        <Skeleton height={36} width={126} sx={{background: '#383D51'}}/>
+      ) : (
+        <Button
+          variant={connected ? 'surface' : 'gradient'}
+          aria-label="wallet"
+          id="wallet-button"
+          aria-controls={open ? 'wallet-button' : undefined}
+          aria-expanded={open ? 'true' : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+          sx={{
+            p: connected ? '5px 8px' : undefined,
+            minWidth: hideWalletAccountText ? 'unset' : undefined,
+          }}
+          startIcon={connected && !hideWalletAccountText && accountAvatar}
+          endIcon={
+            connected &&
+            !hideWalletAccountText &&
+            !md && (
+              <SvgIcon
+                sx={{
+                  display: {xs: 'none', md: 'block'},
+                }}
+              >
+                {open ? <ChevronUpIcon/> : <ChevronDownIcon/>}
+              </SvgIcon>
+            )
+          }
+        >
+          {buttonContent}
+        </Button>
+      )}
+    
+      {md ? (
+        <DrawerWrapper open={open} setOpen={setOpen} headerHeight={headerHeight}>
+          <List sx={{px: 2, '.MuiListItem-root.Mui-disabled': {opacity: 1}}}>
+            <Content/>
+          </List>
+        </DrawerWrapper>
+      ) : (
+        <Menu
+          id="wallet-menu"
+          MenuListProps={{
+            'aria-labelledby': 'wallet-button',
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          keepMounted={true}
+        >
+          <MenuList disablePadding sx={{'.MuiMenuItem-root.Mui-disabled': {opacity: 1}}}>
+            <Content component={MenuItem}/>
+          </MenuList>
+        </Menu>
+      )}
+    
+    </>
+  );
 }
 
 export default WalletWidget;

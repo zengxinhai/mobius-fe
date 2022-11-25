@@ -56,12 +56,12 @@ const moreMenuItems: MoreMenuItem[] = [
   {
     link: 'https://discord.gg/7kHKnkDEUf',
     title: t`Discord`,
-    icon: <Image alt='discord' src='/icons/discord.svg' />,
+    icon: <Image alt='discord' src='/icons/discord.svg' width={20} height={20} />,
   },
   {
     link: 'https://github.com/aave/interface',
     title: t`Github`,
-    icon: <Image alt='github' src='/icons/github.svg' />,
+    icon: <Image alt='github' src='/icons/github.svg' width={20} height={20} />,
   },
   {
     link: 'https://global.transak.com',
