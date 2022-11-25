@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import AptosWalletProvider from 'src/aptos/wallet/wallet-provider';
+import Web3ContextProvider from 'src/libs/Web3Provider';
 import { AppGlobalStyles } from 'src/layouts/AppGlobalStyles';
 import { LanguageProvider } from 'src/libs/LanguageProvider';
 
@@ -8,9 +8,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <LanguageProvider>
       <AppGlobalStyles>
-        <AptosWalletProvider>
+        <Web3ContextProvider>
           <Component {...pageProps} />
-        </AptosWalletProvider>
+        </Web3ContextProvider>
       </AppGlobalStyles>
     </LanguageProvider>
   )

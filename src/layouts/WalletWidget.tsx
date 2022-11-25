@@ -22,13 +22,13 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Link } from 'src/components/primitives/Link';
 import { textCenterEllipsis } from 'src/utils/text-center-ellipsis';
 import { DrawerWrapper } from './components/DrawerWrapper';
 import { MobileCloseButton } from './components/MobileCloseButton';
-import {useWallet} from "@manahippo/aptos-wallet-adapter";
+import { web3Context } from 'src/libs/Web3Provider';
 
 interface WalletWidgetProps {
   open: boolean;
@@ -38,13 +38,12 @@ interface WalletWidgetProps {
 
 const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight }) => {
   const {
-    disconnect,
-    account,
+    disconnectWallet,
+    connectWallet,
+    currentAccount,
     connected,
     connecting,
-    connect,
-    wallets,
-    } = useWallet();
+    } = useContext(web3Context);
 
   const { breakpoints, palette } = useTheme();
   const xsm = useMediaQuery(breakpoints.down('xsm'));
@@ -60,7 +59,7 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!connected) {
-      wallets.length > 0 && connect(wallets[0].adapter.name);
+      connectWallet();
     } else {
       setOpen(true);
       setAnchorEl(event.currentTarget);
@@ -69,18 +68,18 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
 
   const handleDisconnect = async () => {
     if (connected) {
-      await disconnect();
+      await disconnectWallet();
       handleClose();
     }
   };
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(account?.address?.toString() || '');
+    await navigator.clipboard.writeText(currentAccount);
     handleClose();
   };
 
   const handleSwitchWallet = (): void => {
-    wallets.length > 0 && connect(wallets[0].adapter.name);
+    connectWallet();
     handleClose();
   };
 
@@ -101,11 +100,11 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
   );
   
   let buttonContent = <></>;
-  if (account && account.address) {
+  if (currentAccount) {
     if (hideWalletAccountText) {
       buttonContent = <Box sx={{margin: '1px 0'}}>{accountAvatar}</Box>;
     } else {
-      buttonContent = <>{textCenterEllipsis(account.address.toString(), 4, 4)}</>;
+      buttonContent = <>{textCenterEllipsis(currentAccount, 4, 4)}</>;
     }
   } else {
     buttonContent = <Trans>Connect wallet</Trans>;
@@ -145,7 +144,7 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
                   variant='h4'
                   color={{xs: '#F1F1F3', md: 'text.primary'}}
                 >
-                  {textCenterEllipsis(account?.address?.toString() || '', 7, 4)}
+                  {textCenterEllipsis(currentAccount || '', 7, 4)}
                 </Typography>
               </Box>
             </Box>
