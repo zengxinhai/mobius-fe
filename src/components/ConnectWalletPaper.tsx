@@ -28,7 +28,7 @@ export const ConnectWalletPaper = ({
         ...sx,
       }}
     >
-      <Image alt='logo' src='/logo192.png' style={{ marginBottom: '16px' }} />
+      <Image alt='logo' src='/logo192.png' width={20} height={20} style={{ marginBottom: '16px' }} />
       <>
         {loading ? (
           <CircularProgress />
