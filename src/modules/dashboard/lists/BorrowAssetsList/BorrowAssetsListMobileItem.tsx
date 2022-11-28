@@ -10,7 +10,7 @@ import { Row } from 'src/components/primitives/Row';
 import { useModalContext } from 'src/hooks/useModal';
 import { ListMobileItemWrapper } from '../ListMobileItemWrapper';
 import { ListValueRow } from '../ListValueRow';
-import { BorrowAssetsItem } from './types';
+import { ReserveData } from 'src/hooks/useAppDataProvider';
 
 export const BorrowAssetsListMobileItem = ({
   symbol,
@@ -22,7 +22,7 @@ export const BorrowAssetsListMobileItem = ({
   totalBorrows,
   variableBorrowRate,
   underlyingAsset,
-}: BorrowAssetsItem) => {
+}: ReserveData) => {
   const { openBorrow } = useModalContext();
   const borrowButtonDisable = Number(availableBorrows) <= 0;
 
@@ -41,7 +41,7 @@ export const BorrowAssetsListMobileItem = ({
         capsComponent={
           <CapsHint
             capType={CapType.borrowCap}
-            capAmount={borrowCap}
+            capAmount={borrowCap.toString()}
             totalAmount={totalBorrows}
             withoutText
           />

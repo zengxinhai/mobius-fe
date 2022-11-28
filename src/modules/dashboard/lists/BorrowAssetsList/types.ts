@@ -11,12 +11,4 @@ export type BorrowAssetsItem = {
   totalBorrows: string;
   totalLiquidityUSD: string;
   borrowingEnabled: boolean;
-  reserve: ReserveData;
 };
-
-export type ReserveData = {
-  totalLiquidity: number,
-  supplyCap: number,
-  totalDebt: number,
-  borrowCap: number
-}

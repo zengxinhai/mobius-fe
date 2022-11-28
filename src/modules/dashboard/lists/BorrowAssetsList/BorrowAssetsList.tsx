@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Fragment } from 'react';
-import { StableAPYTooltip } from 'src/components/infoTooltips/StableAPYTooltip';
 import { VariableAPYTooltip } from 'src/components/infoTooltips/VariableAPYTooltip';
 import { Warning } from 'src/components/primitives/Warning';
 
@@ -12,40 +11,17 @@ import { ListHeader } from '../ListHeader';
 import { ListLoader } from '../ListLoader';
 import { BorrowAssetsListItem } from './BorrowAssetsListItem';
 import { BorrowAssetsListMobileItem } from './BorrowAssetsListMobileItem';
-import { BorrowAssetsItem } from './types'
+import { useAppDataContext } from 'src/hooks/useAppDataProvider';
 
 export const BorrowAssetsList = () => {
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
 
   const loading = false;
-
-  const tokensToBorrow: BorrowAssetsItem[] = [
-    {
-      id: '1',
-      symbol: 'BTC',
-      name: 'Bitcoin',
-      iconSymbol: 'BTC',
-      underlyingAsset: 'BTC',
-      variableBorrowRate: 0.06,
-      availableBorrows: 1999.2,
-      availableBorrowsInUSD: 35000000,
-      borrowCap: '12',
-      totalBorrows: '500',
-      totalLiquidityUSD: '34600000.12',
-      borrowingEnabled: true,
-      reserve: {
-        totalLiquidity: 4324,
-        totalDebt: 3000,
-        supplyCap: 1000,
-        borrowCap: 2000,
-      }
-    }
-  ]
+  
+  const { reserves: borrowReserves } = useAppDataContext();
 
   const collateralUsagePercent = 0.2;
-
-  const borrowReserves = tokensToBorrow;
   
   const totalCollateralMarketReferenceCurrency = '0';
 

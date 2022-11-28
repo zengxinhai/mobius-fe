@@ -1,18 +1,26 @@
 import '../styles/globals.css'
 import { MainLayout } from 'src/layouts/MainLayout'
 import type { AppProps } from 'next/app'
-import Web3ContextProvider from 'src/libs/Web3Provider';
 import { AppGlobalStyles } from 'src/layouts/AppGlobalStyles';
 import { LanguageProvider } from 'src/libs/LanguageProvider';
+import Web3ContextProvider from 'src/libs/Web3Provider';
+import AppDataProvider from 'src/hooks/useAppDataProvider';
+import { ModalContextProvider } from 'src/hooks/useModal';
+import { BorrowModal } from 'src/components/transactions/Borrow/BorrowModal';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <LanguageProvider>
       <AppGlobalStyles>
         <Web3ContextProvider>
-          <MainLayout>
-            <Component {...pageProps} />
-          </MainLayout>
+          <AppDataProvider>
+            <ModalContextProvider>
+              <MainLayout>
+                <Component {...pageProps} />
+                <BorrowModal />
+              </MainLayout>
+            </ModalContextProvider>
+          </AppDataProvider>
         </Web3ContextProvider>
       </AppGlobalStyles>
     </LanguageProvider>

@@ -9,7 +9,7 @@ import { ListAPRColumn } from '../ListAPRColumn';
 import { ListButtonsColumn } from '../ListButtonsColumn';
 import { ListItemWrapper } from '../ListItemWrapper';
 import { ListValueColumn } from '../ListValueColumn';
-import { BorrowAssetsItem } from './types';
+import { ReserveData } from 'src/hooks/useAppDataProvider';
 
 export const BorrowAssetsListItem = ({
   symbol,
@@ -21,7 +21,7 @@ export const BorrowAssetsListItem = ({
   totalBorrows,
   variableBorrowRate,
   underlyingAsset,
-}: BorrowAssetsItem) => {
+}: ReserveData) => {
   const { openBorrow } = useModalContext();
   const borrowButtonDisable = Number(availableBorrows) <= 0;
 
@@ -42,7 +42,7 @@ export const BorrowAssetsListItem = ({
         capsComponent={
           <CapsHint
             capType={CapType.borrowCap}
-            capAmount={borrowCap}
+            capAmount={borrowCap.toString()}
             totalAmount={totalBorrows}
             withoutText
           />
