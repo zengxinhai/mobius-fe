@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { TxErrorType } from 'src/models/error';
 
 export enum ModalType {
   Supply,
@@ -36,8 +37,8 @@ export interface ModalContextType<T extends ModalArgsType> {
   setGasLimit: (limit: string) => void;
   loadingTxns: boolean;
   setLoadingTxns: (loading: boolean) => void;
-  txError: string;
-  setTxError: (error: string) => void;
+  txError: TxErrorType | undefined;
+  setTxError: (error: TxErrorType | undefined) => void;
   retryWithApproval: boolean;
   setRetryWithApproval: (permit: boolean) => void;
 }
@@ -56,7 +57,7 @@ export const ModalContextProvider: React.FC<React.PropsWithChildren> = ({ childr
   const [mainTxState, setMainTxState] = useState<TxStateType>({});
   const [gasLimit, setGasLimit] = useState<string>('');
   const [loadingTxns, setLoadingTxns] = useState(false);
-  const [txError, setTxError] = useState('');
+  const [txError, setTxError] = useState<TxErrorType>();
 
   return (
     <ModalContext.Provider
@@ -87,7 +88,7 @@ export const ModalContextProvider: React.FC<React.PropsWithChildren> = ({ childr
           setMainTxState({});
           setApprovalTxState({});
           setGasLimit('');
-          setTxError('');
+          setTxError(undefined);
           setRetryWithApproval(false);
         },
         type,

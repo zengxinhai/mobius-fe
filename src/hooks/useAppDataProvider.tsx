@@ -6,6 +6,7 @@ export type ReserveData = {
   symbol: string;
   iconSymbol: string;
   underlyingAsset: string;
+  priceInUSD: string;
   totalLiquidity: number;
   supplyCap: number;
   totalDebt: number;
@@ -54,6 +55,7 @@ const reserves: ReserveData[] = [
     symbol: 'BTC',
     iconSymbol: 'BTC',
     underlyingAsset: '0x1::coin::Bitcoin',
+    priceInUSD: '16521',
     totalLiquidity: 3000,
     supplyCap: 20000,
     totalDebt: 2500,
@@ -71,6 +73,7 @@ const reserves: ReserveData[] = [
     symbol: 'ETH',
     iconSymbol: 'ETH',
     underlyingAsset: '0x1::coin::Ethereum',
+    priceInUSD: '1231',
     totalLiquidity: 25000,
     supplyCap: 200000,
     totalDebt: 13333,
@@ -88,6 +91,7 @@ const reserves: ReserveData[] = [
     symbol: 'APT',
     iconSymbol: 'APT',
     underlyingAsset: '0x1::coin::Aptos',
+    priceInUSD: '4.82',
     totalLiquidity: 4000000,
     supplyCap: 80000000,
     totalDebt: 2300000,
