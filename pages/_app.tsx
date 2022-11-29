@@ -7,6 +7,7 @@ import Web3ContextProvider from 'src/libs/Web3Provider';
 import AppDataProvider from 'src/hooks/useAppDataProvider';
 import { ModalContextProvider } from 'src/hooks/useModal';
 import { BorrowModal } from 'src/components/transactions/Borrow/BorrowModal';
+import { RepayModal } from 'src/components/transactions/Repay/RepayModal';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <MainLayout>
                 <Component {...pageProps} />
                 <BorrowModal />
+                <RepayModal />
               </MainLayout>
             </ModalContextProvider>
           </AppDataProvider>

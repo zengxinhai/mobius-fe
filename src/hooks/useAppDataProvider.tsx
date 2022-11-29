@@ -23,6 +23,8 @@ export type UserReserveData = {
   symbol: string;
   iconSymbol: string;
   underlyingAsset: string;
+  underlyingBalance: string;
+  variableBorrows: string;
 };
 
 export type UserData = {
@@ -110,16 +112,22 @@ const userReserves: UserReserveData[] = [
     symbol: 'BTC',
     iconSymbol: 'BTC',
     underlyingAsset: '0x1::coin::Bitcoin',
+    underlyingBalance: '0.8',
+    variableBorrows: '0.21',
   },
   {
     symbol: 'ETH',
     iconSymbol: 'ETH',
     underlyingAsset: '0x1::coin::Ethereum',
+    underlyingBalance: '4',
+    variableBorrows: '1.52',
   },
   {
     symbol: 'APT',
     iconSymbol: 'APT',
     underlyingAsset: '0x1::coin::Aptos',
+    underlyingBalance: '2500',
+    variableBorrows: '460.7',
   }
 ];
 
