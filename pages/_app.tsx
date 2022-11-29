@@ -1,4 +1,3 @@
-import '../styles/globals.css'
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import createCache from '@emotion/cache';
 import Head from 'next/head';

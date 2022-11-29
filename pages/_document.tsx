@@ -13,11 +13,6 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="#00244D" />
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="manifest" href="/manifest.json" />
-          {
-            // Inject MUI styles first to match with the prepend: true configuration.
-            // eslint-disable-next-line
-            (this.props as any).emotionStyleTags
-          }
         </Head>
         <body>
           <Main />
