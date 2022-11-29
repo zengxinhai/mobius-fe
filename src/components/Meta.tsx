@@ -18,9 +18,9 @@ export function Meta({ title, description, imageUrl, timestamp }: MetaProps) {
       {imageUrl && <meta property="og:image" content={imageUrl} key="ogimage" />}
       {imageUrl && <meta name="twitter:image" content={imageUrl} key="twitterimage" />}
       {imageUrl && (
-        <meta name="twitter:image:alt" content={`aave governance image`} key="twitteralt" />
+        <meta name="twitter:image:alt" content={`mobius image`} key="twitteralt" />
       )}
-      <meta name="twitter:site" content="@AaveAave" key="twittersite" />
+      <meta name="twitter:site" content="@Mobius" key="twittersite" />
       <meta
         property="twitter:card"
         content={imageUrl ? 'summary_large_image' : 'summary'}

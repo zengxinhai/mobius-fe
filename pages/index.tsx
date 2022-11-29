@@ -7,7 +7,6 @@ import StyledToggleButtonGroup from 'src/components/StyledToggleButtonGroup';
 
 import { ConnectWalletPaper } from 'src/components/ConnectWalletPaper';
 import { ContentContainer } from 'src/components/ContentContainer';
-import { MainLayout } from 'src/layouts/MainLayout';
 import { web3Context } from 'src/libs/Web3Provider';
 import { DashboardContentWrapper } from 'src/modules/dashboard/DashboardContentWrapper';
 import { DashboardTopPanel } from 'src/modules/dashboard/DashboardTopPanel';
@@ -68,7 +67,3 @@ export default function Home() {
     </>
   );
 }
-
-Home.getLayout = function getLayout(page: React.ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
-};
