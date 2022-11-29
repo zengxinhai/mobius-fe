@@ -28,6 +28,7 @@ import { Link } from 'src/components/primitives/Link';
 import { textCenterEllipsis } from 'src/utils/text-center-ellipsis';
 import { DrawerWrapper } from './components/DrawerWrapper';
 import { MobileCloseButton } from './components/MobileCloseButton';
+import { WalletModal } from 'src/components/WalletConnection/WalletModal';
 import { web3Context } from 'src/libs/Web3Provider';
 
 interface WalletWidgetProps {
@@ -39,10 +40,10 @@ interface WalletWidgetProps {
 const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight }) => {
   const {
     disconnectWallet,
-    connectWallet,
     currentAccount,
     connected,
     connecting,
+    setWalletModalOpen,
     } = useContext(web3Context);
 
   const { breakpoints, palette } = useTheme();
@@ -59,7 +60,7 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!connected) {
-      connectWallet();
+      setWalletModalOpen(true);
     } else {
       setOpen(true);
       setAnchorEl(event.currentTarget);
@@ -79,7 +80,7 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
   };
 
   const handleSwitchWallet = (): void => {
-    connectWallet();
+    setWalletModalOpen(true);
     handleClose();
   };
 
@@ -354,7 +355,7 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
           </MenuList>
         </Menu>
       )}
-    
+      <WalletModal />
     </>
   );
 }

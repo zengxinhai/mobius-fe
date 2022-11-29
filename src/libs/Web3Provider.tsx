@@ -1,36 +1,45 @@
-import React, {FC, PropsWithChildren, createContext, useEffect, useCallback} from 'react'
+import React, {FC, PropsWithChildren, createContext, useEffect, useCallback, useContext, useState} from 'react'
 import { Types } from 'aptos'
 import {
   WalletProvider,
   AptosWalletAdapter,
   MartianWalletAdapter,
-  useWallet,
+  useWallet, WalletAdapter,
 } from '@manahippo/aptos-wallet-adapter'
 import {useRootStore} from "../store/root";
 
 export type Web3Data = {
-  connectWallet: () => Promise<void>;
+  connectWallet: (adapter: WalletAdapter) => Promise<void>;
   disconnectWallet: () => Promise<void>;
   currentAccount: string;
   connected: boolean;
   connecting: boolean;
   chainId: number;
   sendTx: (txData: Types.TransactionPayload) => Promise<{ hash: Types.HexEncodedBytes }>;
+
+  isWalletModalOpen: boolean;
+  setWalletModalOpen: (open: boolean) => void;
 };
 
 export const web3Context = createContext<Web3Data>({} as Web3Data);
 
+export const useWeb3Context = () => {
+  return useContext(web3Context);
+}
+
 const Web3InnerProvider: FC<PropsWithChildren> = ({ children }) => {
   const aptosWallet = useWallet();
   const setAccount = useRootStore(state => state.setAccount);
-  const connectWallet = useCallback(() => {
-    return aptosWallet.connect(new AptosWalletAdapter().name)
+  const connectWallet = useCallback((adapter: WalletAdapter) => {
+    return aptosWallet.connect(adapter.name)
   }, [aptosWallet])
-  
+
   useEffect(() => {
     const account = aptosWallet.account?.address?.toString()
     setAccount(account);
-  }, [aptosWallet.account, setAccount])
+  }, [aptosWallet, setAccount])
+
+  const [isWalletModalOpen, setWalletModalOpen] = useState(false);
   
   return (
     <web3Context.Provider
@@ -42,6 +51,8 @@ const Web3InnerProvider: FC<PropsWithChildren> = ({ children }) => {
         connected: aptosWallet.connected,
         chainId: aptosWallet.network?.chainId ? Number(aptosWallet.network.chainId) : 1,
         sendTx: aptosWallet.signAndSubmitTransaction,
+        isWalletModalOpen,
+        setWalletModalOpen
       }}
     >
       {children}
