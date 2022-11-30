@@ -5,7 +5,7 @@ import { VariableAPYTooltip } from 'src/components/infoTooltips/VariableAPYToolt
 import { CapsHint } from 'src/components/caps/CapsHint';
 import { CapType } from 'src/components/caps/helper';
 import { IncentivesCard } from 'src/components/incentives/IncentivesCard';
-import { Link } from 'src/components/primitives/Link';
+import {Link, ROUTES} from 'src/components/primitives/Link';
 import { Row } from 'src/components/primitives/Row';
 import { useModalContext } from 'src/hooks/useModal';
 import { ListMobileItemWrapper } from '../ListMobileItemWrapper';
@@ -81,7 +81,7 @@ export const BorrowAssetsListMobileItem = ({
         <Button
           variant="outlined"
           component={Link}
-          href={'/'}
+          href={ROUTES.reserveOverview(underlyingAsset)}
           fullWidth
         >
           <Trans>Details</Trans>

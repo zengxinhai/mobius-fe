@@ -12,14 +12,22 @@ export type ReserveData = {
   supplyCap: number;
   supplyAPY: string;
   totalDebt: number;
+  totalDebtUSD: string;
   borrowCap: number;
+  borrowCapUSD: string;
+  borrowUsageRatio: string;
   variableBorrowRate: number | string;
+  variableBorrowAPY: string;
   availableBorrows: number | string;
   availableBorrowsInUSD: number | string;
   totalBorrows: string;
   totalLiquidityUSD: string;
   borrowingEnabled: boolean;
   isActive: boolean;
+  priceOracle?: string;
+  liquidationThreshold: string;
+  liquidationBonus: string;
+  reserveFactor: string;
 };
 
 export type UserReserveData = {
@@ -64,6 +72,7 @@ const btcReserve = {
   supplyAPY: '0.04',
   totalDebt: 2500,
   borrowCap: 2600,
+  borrowUsageRatio: '0.2',
   variableBorrowRate: '0.06',
   availableBorrows: '500',
   availableBorrowsInUSD: '6800000',
@@ -71,6 +80,12 @@ const btcReserve = {
   totalLiquidityUSD: '9800000',
   borrowingEnabled: true,
   isActive: true,
+  liquidationThreshold: '0.85',
+  liquidationBonus: '0.05',
+  reserveFactor: '0.2',
+  borrowCapUSD: '52000000',
+  variableBorrowAPY: '0.02',
+  totalDebtUSD: '32999999',
 }
 
 const ethReserve = {
@@ -86,6 +101,7 @@ const ethReserve = {
   supplyAPY: '0.06',
   totalDebt: 13333,
   borrowCap: 6066,
+  borrowUsageRatio: '0.32',
   variableBorrowRate: '0.08',
   availableBorrows: '7200',
   availableBorrowsInUSD: '8340000',
@@ -93,6 +109,12 @@ const ethReserve = {
   totalLiquidityUSD: '32000000',
   borrowingEnabled: true,
   isActive: true,
+  liquidationThreshold: '0.85',
+  liquidationBonus: '0.05',
+  reserveFactor: '0.2',
+  borrowCapUSD: '82000000',
+  variableBorrowAPY: '0.025',
+  totalDebtUSD: '82495045',
 }
 
 const aptReserve = {
@@ -108,6 +130,7 @@ const aptReserve = {
   supplyAPY: '0.08',
   totalDebt: 2300000,
   borrowCap: 3000000,
+  borrowUsageRatio: '0.46',
   variableBorrowRate: '0.12',
   availableBorrows: '1700000',
   availableBorrowsInUSD: '8620000',
@@ -115,6 +138,12 @@ const aptReserve = {
   totalLiquidityUSD: '17100000',
   borrowingEnabled: true,
   isActive: true,
+  liquidationThreshold: '0.75',
+  liquidationBonus: '0.08',
+  reserveFactor: '0.2',
+  borrowCapUSD: '12000000',
+  variableBorrowAPY: '0.04',
+  totalDebtUSD: '6938123834',
 }
 
 const reserves: ReserveData[] = [ btcReserve, ethReserve, aptReserve ];

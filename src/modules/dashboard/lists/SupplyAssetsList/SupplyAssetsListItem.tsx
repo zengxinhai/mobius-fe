@@ -4,7 +4,7 @@ import { useModalContext } from 'src/hooks/useModal';
 
 import { CapsHint } from 'src/components/caps/CapsHint';
 import { CapType } from 'src/components/caps/helper';
-import { Link } from 'src/components/primitives/Link';
+import {Link, ROUTES} from 'src/components/primitives/Link';
 import { ListAPRColumn } from '../ListAPRColumn';
 import { ListButtonsColumn } from '../ListButtonsColumn';
 import { ListItemWrapper } from '../ListItemWrapper';
@@ -61,7 +61,7 @@ export const SupplyAssetsListItem = ({
         <Button
           variant="outlined"
           component={Link}
-          href={'/'}
+          href={ROUTES.reserveOverview(underlyingAsset)}
         >
           <Trans>Details</Trans>
         </Button>

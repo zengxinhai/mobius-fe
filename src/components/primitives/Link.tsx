@@ -118,4 +118,6 @@ export const ROUTES = {
   staking: '/staking',
   governance: '/governance',
   faucet: '/faucet',
+  reserveOverview: (underlyingAsset: string) =>
+    `/reserve-overview/?underlyingAsset=${underlyingAsset}`,
 };
