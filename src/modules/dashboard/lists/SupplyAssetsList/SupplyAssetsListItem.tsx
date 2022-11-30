@@ -22,7 +22,6 @@ export const SupplyAssetsListItem = ({
   supplyAPY,
   underlyingAsset,
   isActive,
-  detailsAddress,
 }: SupplyAssetsItem) => {
   const { openSupply } = useModalContext();
 
@@ -31,9 +30,7 @@ export const SupplyAssetsListItem = ({
       symbol={symbol}
       iconSymbol={iconSymbol}
       name={name}
-      detailsAddress={detailsAddress}
       data-cy={`dashboardSupplyListItem_${symbol.toUpperCase()}`}
-      showDebtCeilingTooltips
     >
       <ListValueColumn
         symbol={symbol}

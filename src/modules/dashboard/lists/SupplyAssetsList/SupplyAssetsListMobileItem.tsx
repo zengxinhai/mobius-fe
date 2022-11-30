@@ -7,7 +7,6 @@ import { IncentivesCard } from 'src/components/incentives/IncentivesCard';
 import { Link } from 'src/components/primitives/Link';
 import { Row } from 'src/components/primitives/Row';
 import { useModalContext } from 'src/hooks/useModal';
-import { ListItemCanBeCollateral } from '../ListItemCanBeCollateral';
 import { ListMobileItemWrapper } from '../ListMobileItemWrapper';
 import { ListValueRow } from '../ListValueRow';
 import { SupplyAssetsItem } from './types';
@@ -21,7 +20,6 @@ export const SupplyAssetsListMobileItem = ({
   supplyCap,
   totalLiquidity,
   supplyAPY,
-  usageAsCollateralEnabledOnUser,
   isActive,
   underlyingAsset,
 }: SupplyAssetsItem) => {
@@ -33,7 +31,6 @@ export const SupplyAssetsListMobileItem = ({
       iconSymbol={iconSymbol}
       name={name}
       underlyingAsset={underlyingAsset}
-      showDebtCeilingTooltips
     >
       <ListValueRow
         title={<Trans>Supply balance</Trans>}
@@ -61,18 +58,6 @@ export const SupplyAssetsListMobileItem = ({
           incentives={[]}
           symbol={symbol}
           variant="secondary14"
-        />
-      </Row>
-
-      <Row
-        caption={<Trans>Can be collateral</Trans>}
-        align="flex-start"
-        captionVariant="description"
-        mb={2}
-      >
-        <ListItemCanBeCollateral
-          isIsolated={false}
-          usageAsCollateralEnabled={usageAsCollateralEnabledOnUser}
         />
       </Row>
 

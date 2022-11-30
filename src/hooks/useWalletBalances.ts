@@ -5,13 +5,13 @@ type WalletBalance = {
 
 export const useWalletBalances = () => {
   const walletBalances: Record<string, WalletBalance> = {
-    "0x2::coin::bitcoin": {
+    "0x1::coin::Bitcoin": {
       amount: '1.2',
       amountUSD: '18300',
     },
-    "0x2::coin::aptos": {
-      amount: '3312',
-      amountUSD: '13200',
+    "0x1::coin::Aptos": {
+      amount: '200.12',
+      amountUSD: '980',
     },
   };
   return {

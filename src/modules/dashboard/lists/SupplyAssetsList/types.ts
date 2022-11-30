@@ -11,6 +11,4 @@ export type SupplyAssetsItem = {
   totalLiquidity: string;
   supplyCap: string;
   isActive?: boolean;
-  usageAsCollateralEnabledOnUser: boolean;
-  detailsAddress: string;
 };

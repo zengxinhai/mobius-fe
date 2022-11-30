@@ -10,11 +10,7 @@ interface ListItemWrapperProps {
   symbol: string;
   iconSymbol: string;
   name: string;
-  detailsAddress: string;
   children: ReactNode;
-  showSupplyCapTooltips?: boolean;
-  showBorrowCapTooltips?: boolean;
-  showDebtCeilingTooltips?: boolean;
 }
 
 export const ListItemWrapper = ({
@@ -22,10 +18,6 @@ export const ListItemWrapper = ({
   iconSymbol,
   children,
   name,
-  detailsAddress,
-  showSupplyCapTooltips = false,
-  showBorrowCapTooltips = false,
-  showDebtCeilingTooltips = false,
   ...rest
 }: ListItemWrapperProps) => {
 

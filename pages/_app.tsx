@@ -1,3 +1,4 @@
+import 'styles/globals.css';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import createCache from '@emotion/cache';
 import Head from 'next/head';
@@ -12,6 +13,7 @@ import AppDataProvider from 'src/hooks/useAppDataProvider';
 import { ModalContextProvider } from 'src/hooks/useModal';
 import { BorrowModal } from 'src/components/transactions/Borrow/BorrowModal';
 import { RepayModal } from 'src/components/transactions/Repay/RepayModal';
+import { SupplyModal } from 'src/components/transactions/Supply/SupplyModal';
 
 
 // prepend: true moves MUI styles to the top of the <head> so they're loaded first.
@@ -47,6 +49,7 @@ export default function App(props: MyAppProps) {
                   <Component {...pageProps} />
                   <BorrowModal />
                   <RepayModal />
+                  <SupplyModal />
                 </MainLayout>
               </ModalContextProvider>
             </AppDataProvider>

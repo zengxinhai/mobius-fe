@@ -12,6 +12,7 @@ import { SupplyAssetsListItem } from './SupplyAssetsListItem';
 import { SupplyAssetsListMobileItem } from './SupplyAssetsListMobileItem';
 import { WalletEmptyInfo } from './WalletEmptyInfo';
 import { SupplyAssetsItem } from './types';
+import { useAppDataContext } from 'src/hooks/useAppDataProvider';
 
 export const SupplyAssetsList = () => {
   const networkName = 'Aptos';
@@ -24,6 +25,8 @@ export const SupplyAssetsList = () => {
   const [isShowZeroAssets, setIsShowZeroAssets] = useState(
     localStorage.getItem(localStorageName) === 'true'
   );
+
+  const { reserves } = useAppDataContext();
 
   const tokensToSupply: SupplyAssetsItem[] = [
     {
@@ -39,8 +42,6 @@ export const SupplyAssetsList = () => {
       totalLiquidity: '534000',
       supplyCap: '6000000',
       isActive: true,
-      usageAsCollateralEnabledOnUser: true,
-      detailsAddress: '0x1::coin::Aptos'
     },
     {
       underlyingAsset: '0x1::coin::Bitcoin',
@@ -55,8 +56,6 @@ export const SupplyAssetsList = () => {
       totalLiquidity: '4833.1',
       supplyCap: '600000',
       isActive: true,
-      usageAsCollateralEnabledOnUser: true,
-      detailsAddress: '0x1::coin::Bitcoin'
     },
   ];
 

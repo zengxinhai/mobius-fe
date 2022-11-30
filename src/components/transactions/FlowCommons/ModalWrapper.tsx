@@ -42,7 +42,7 @@ export const ModalWrapper: React.FC<{
   }) as ReserveData;
 
   const userReserve = userReserves.find((userReserve) => {
-    return underlyingAsset === userReserve.underlyingAsset;
+    return underlyingAsset === userReserve.reserve.underlyingAsset;
   }) as UserReserveData;
 
   const symbol = poolReserve.symbol;
@@ -55,7 +55,7 @@ export const ModalWrapper: React.FC<{
       {children({
         poolReserve,
         symbol,
-        tokenBalance: walletBalances[poolReserve.underlyingAsset.toLowerCase()]?.amount || '0',
+        tokenBalance: walletBalances[poolReserve.underlyingAsset]?.amount || '0',
         underlyingAsset,
         userReserve,
       })}
