@@ -2,7 +2,7 @@ import { useLingui } from '@lingui/react';
 import { Button, List, ListItem, Typography, useMediaQuery, useTheme } from '@mui/material';
 import * as React from 'react';
 
-import { Link } from '../../components/primitives/Link';
+import { Link } from 'src/components/primitives/Link';
 import { navigation } from 'src/ui-config/menu-items';
 
 interface NavItemsProps {
@@ -33,6 +33,7 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
             }}
             data-cy={item.dataCy}
             disablePadding
+            disabled={item.disabled}
             key={index}
           >
             {md ? (
@@ -50,6 +51,7 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
               <Button
                 component={Link}
                 href={item.link}
+                disabled={item.disabled}
                 sx={(theme) => ({
                   color: '#F1F1F3',
                   p: '6px 8px',
