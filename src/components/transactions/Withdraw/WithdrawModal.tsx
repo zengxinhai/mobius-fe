@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro';
-import React, { useState } from 'react';
+import React  from 'react';
 import { ModalContextType, ModalType, useModalContext } from 'src/hooks/useModal';
 
 import { BasicModal } from '../../primitives/BasicModal';
@@ -10,8 +10,6 @@ export const WithdrawModal = () => {
   const { type, close, args } = useModalContext() as ModalContextType<{
     underlyingAsset: string;
   }>;
-  const [withdrawUnWrapped, setWithdrawUnWrapped] = useState(true);
-
   return (
     <BasicModal open={type === ModalType.Withdraw} setOpen={close}>
       <ModalWrapper
@@ -21,8 +19,6 @@ export const WithdrawModal = () => {
         {(params) => (
           <WithdrawModalContent
             {...params}
-            unwrap={withdrawUnWrapped}
-            setUnwrap={setWithdrawUnWrapped}
           />
         )}
       </ModalWrapper>

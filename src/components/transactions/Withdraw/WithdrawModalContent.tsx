@@ -22,7 +22,7 @@ export const WithdrawModalContent = ({
   poolReserve,
   userReserve,
   symbol,
-}: ModalWrapperProps & { unwrap: boolean; setUnwrap: (unwrap: boolean) => void }) => {
+}: ModalWrapperProps) => {
   const { mainTxState: withdrawTxState, txError } = useModalContext();
   const { user } = useAppDataContext();
 

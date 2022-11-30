@@ -133,7 +133,7 @@ const userReserves: UserReserveData[] = [
   {
     underlyingBalance: '2500',
     variableBorrows: '460.7',
-    reserve: ethReserve
+    reserve: aptReserve
   }
 ];
 
