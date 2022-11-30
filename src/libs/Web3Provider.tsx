@@ -7,6 +7,7 @@ import {
   useWallet, WalletAdapter,
 } from '@manahippo/aptos-wallet-adapter'
 import {useRootStore} from "../store/root";
+import usePreviousState from 'src/hooks/usePreviousState';
 
 export type Web3Data = {
   connectWallet: (adapter: WalletAdapter) => Promise<void>;
@@ -29,6 +30,7 @@ export const useWeb3Context = () => {
 
 const Web3InnerProvider: FC<PropsWithChildren> = ({ children }) => {
   const aptosWallet = useWallet();
+  const previousConnected = usePreviousState(aptosWallet.connected)
   const setAccount = useRootStore(state => state.setAccount);
   const connectWallet = useCallback((adapter: WalletAdapter) => {
     return aptosWallet.connect(adapter.name)
@@ -38,6 +40,14 @@ const Web3InnerProvider: FC<PropsWithChildren> = ({ children }) => {
     const account = aptosWallet.account?.address?.toString()
     setAccount(account);
   }, [aptosWallet, setAccount])
+
+  // Atomatically close the wallet modal after close
+  useEffect(() => {
+    if (aptosWallet.connected && !previousConnected) {
+      setWalletModalOpen(false)
+    }
+  }, [aptosWallet.connected, previousConnected])
+
 
   const [isWalletModalOpen, setWalletModalOpen] = useState(false);
   
