@@ -29,7 +29,7 @@ export const SuppliedPositionsList = () => {
       isActive: true,
       underlyingBalance: '120000',
       underlyingBalanceUSD: '4800000',
-      underlyingAsset: '0x1::coin::AptosCoin'
+      underlyingAsset: '0x1::coin::Aptos'
     },
     {
       symbol: 'BTC',

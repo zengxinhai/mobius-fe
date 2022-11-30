@@ -8,6 +8,7 @@ export type ReserveData = {
   underlyingAsset: string;
   priceInUSD: string;
   totalLiquidity: number;
+  unborrowedLiquidity: number;
   supplyCap: number;
   supplyAPY: string;
   totalDebt: number;
@@ -18,6 +19,7 @@ export type ReserveData = {
   totalBorrows: string;
   totalLiquidityUSD: string;
   borrowingEnabled: boolean;
+  isActive: boolean;
 };
 
 export type UserReserveData = {
@@ -56,7 +58,8 @@ const btcReserve = {
   iconSymbol: 'BTC',
   underlyingAsset: '0x1::coin::Bitcoin',
   priceInUSD: '16521',
-  totalLiquidity: 3000,
+  totalLiquidity: 30000000,
+  unborrowedLiquidity: 8200000,
   supplyCap: 20000,
   supplyAPY: '0.04',
   totalDebt: 2500,
@@ -66,7 +69,8 @@ const btcReserve = {
   availableBorrowsInUSD: '6800000',
   totalBorrows: '2400',
   totalLiquidityUSD: '9800000',
-  borrowingEnabled: true
+  borrowingEnabled: true,
+  isActive: true,
 }
 
 const ethReserve = {
@@ -76,7 +80,8 @@ const ethReserve = {
   iconSymbol: 'ETH',
   underlyingAsset: '0x1::coin::Ethereum',
   priceInUSD: '1231',
-  totalLiquidity: 25000,
+  totalLiquidity: 25000000,
+  unborrowedLiquidity: 13200000,
   supplyCap: 200000,
   supplyAPY: '0.06',
   totalDebt: 13333,
@@ -86,7 +91,8 @@ const ethReserve = {
   availableBorrowsInUSD: '8340000',
   totalBorrows: '13000',
   totalLiquidityUSD: '32000000',
-  borrowingEnabled: true
+  borrowingEnabled: true,
+  isActive: true,
 }
 
 const aptReserve = {
@@ -97,6 +103,7 @@ const aptReserve = {
   underlyingAsset: '0x1::coin::Aptos',
   priceInUSD: '4.82',
   totalLiquidity: 4000000,
+  unborrowedLiquidity: 3200000,
   supplyCap: 80000000,
   supplyAPY: '0.08',
   totalDebt: 2300000,
@@ -106,7 +113,8 @@ const aptReserve = {
   availableBorrowsInUSD: '8620000',
   totalBorrows: '2250000',
   totalLiquidityUSD: '17100000',
-  borrowingEnabled: true
+  borrowingEnabled: true,
+  isActive: true,
 }
 
 const reserves: ReserveData[] = [ btcReserve, ethReserve, aptReserve ];
