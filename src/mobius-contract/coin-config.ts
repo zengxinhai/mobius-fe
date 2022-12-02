@@ -1,9 +1,13 @@
-import { NetworkMode, CoinMeta } from "../types";
 import { MOBIUS } from './resource-types';
 
-const getFullType = (typeName: string) => `0x1::coin::CoinStore<${typeName}>`;
+export type CoinMeta = {
+  name: string
+  symbol: string
+  type: string
+  decimal: number
+}
 
-const devCoins: CoinMeta[] = [
+export const devCoins: CoinMeta[] = [
   {
     name: "Aptos Coin",
     symbol: "APT",
@@ -28,24 +32,22 @@ const devCoins: CoinMeta[] = [
     type: `${MOBIUS}::MUSDT::MUSDT`,
     decimal: 9
   },
-].map(coin => ({ ...coin, type: getFullType(coin.type) }))
+];
 
-const testCoins: CoinMeta[] = [
+export const testCoins: CoinMeta[] = [
   {
     name: "Aptos Coin",
     symbol: "APT",
     type: "0x1::aptos_coin::AptosCoin",
     decimal: 9
   },
-].map(coin => ({ ...coin, type: getFullType(coin.type) }))
+];
 
-const mainCoins: CoinMeta[] = [
+export const mainCoins: CoinMeta[] = [
   {
     name: "Aptos Coin",
     symbol: "APT",
     type: "0x1::aptos_coin::AptosCoin",
     decimal: 9
   },
-].map(coin => ({ ...coin, type: getFullType(coin.type) }))
-
-export const COINS: Record<NetworkMode, CoinMeta[]> = { main: mainCoins, test: testCoins, dev: devCoins };
+];
