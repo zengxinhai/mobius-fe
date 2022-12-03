@@ -22,6 +22,8 @@ export const queryModule = `${MOBIUS}::query`;
 export const nftModule = `${MOBIUS}::nft`;
 export const assetsGalleryModule = `${MOBIUS}::assets_gallery`;
 
+export const marketScriptModule = `${MOBIUS}::market_script`;
+
 
 export const StandardPositionType = `${managementModule}::StandardPosition`;
 

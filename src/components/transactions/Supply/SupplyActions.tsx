@@ -1,7 +1,11 @@
 import { Trans } from '@lingui/macro';
 import { BoxProps } from '@mui/material';
-import { ReserveData } from 'src/hooks/useAppDataProvider';
+import {useWallet} from "@manahippo/aptos-wallet-adapter";
+import { useCallback } from "react";
+import { useModalContext } from "src/hooks/useModal";
+import { ReserveData } from 'src/store/types';
 import { TxActionsWrapper } from '../TxActionsWrapper';
+import {buildSupplyPayload} from "../../../mobius-contract";
 
 export interface SupplyActionProps extends BoxProps {
   amountToSupply: string;
@@ -17,8 +21,17 @@ export const SupplyActions = ({
   symbol,
   ...props
 }: SupplyActionProps) => {
-
-  const mainTxState = {};
+  const { setMainTxState, mainTxState } =  useModalContext();
+  const { signAndSubmitTransaction } = useWallet();
+  
+  const supplyAction = useCallback(async () => {
+    setMainTxState({ txHash: '', loading: true, success: false });
+    const tokenType = '0x1::aptos_coin::AptosCoin';
+    const payload = buildSupplyPayload(tokenType, Number(amountToSupply));
+    await signAndSubmitTransaction(payload)
+    setMainTxState({ txHash: '0x01', loading: false, success: true });
+  }, [setMainTxState, amountToSupply]);
+  
   return (
     <TxActionsWrapper
       mainTxState={mainTxState}
@@ -27,7 +40,7 @@ export const SupplyActions = ({
       preparingTransactions={false}
       actionText={<Trans>Supply {symbol}</Trans>}
       actionInProgressText={<Trans>Supplying {symbol}</Trans>}
-      handleAction={async () => {}}
+      handleAction={supplyAction}
       sx={sx}
       {...props}
     />
