@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
 import { Trans } from '@lingui/macro';
 import Image from 'next/image';
 import { CircularProgress, Paper, PaperProps, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { ConnectWalletButton } from './WalletConnection/ConnectWalletButton';
 
 interface ConnectWalletPaperProps extends PaperProps {
   loading?: boolean;
@@ -44,6 +45,7 @@ export const ConnectWalletPaper = ({
                 </Trans>
               )}
             </Typography>
+            <ConnectWalletButton />
           </>
         )}
       </>
