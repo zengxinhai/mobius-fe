@@ -34,6 +34,7 @@ export type ReserveData = {
 
 export interface ReserveDataSlice {
   reserves: ReserveData[]
+  loadingReserves: boolean
   fetchReserves: () => Promise<void>
 }
 
@@ -136,6 +137,7 @@ export const createReserveDataSlice: StateCreator<
   > = (set, get) => {
   return {
     reserves: [],
+    loadingReserves: false,
     fetchReserves: async () => set({reserves: [btcReserve, ethReserve, aptReserve]})
   }
 }

@@ -29,10 +29,6 @@ export const MarketAssetsListItemLoader = () => {
         <Skeleton width={70} height={24} />
       </ListColumn>
 
-      <ListColumn>
-        <Skeleton width={70} height={24} />
-      </ListColumn>
-
       <ListColumn maxWidth={95} minWidth={95} align="right">
         <Skeleton width={74} height={38} />
       </ListColumn>

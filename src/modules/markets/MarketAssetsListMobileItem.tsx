@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro';
 import { Box, Button, Divider } from '@mui/material';
-import { StableAPYTooltip } from 'src/components/infoTooltips/StableAPYTooltip';
 import { VariableAPYTooltip } from 'src/components/infoTooltips/VariableAPYTooltip';
 import { ReserveSubheader } from 'src/components/ReserveSubheader';
 
@@ -10,9 +9,9 @@ import { Link } from '../../components/primitives/Link';
 import { Row } from '../../components/primitives/Row';
 import { ListMobileItemWrapper } from './ListMobileItemWrapper';
 
-import { Reserve } from './MarketAssetsListItem'
+import { ReserveData } from '../../store/types'
 
-export const MarketAssetsListMobileItem = ({ ...reserve }: Reserve) => {
+export const MarketAssetsListMobileItem = ({ ...reserve }: ReserveData) => {
   return (
     <ListMobileItemWrapper
       symbol={reserve.symbol}
@@ -80,26 +79,6 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: Reserve) => {
         <IncentivesCard
           align="flex-end"
           value={reserve.borrowingEnabled ? reserve.variableBorrowAPY : '-1'}
-          incentives={[]}
-          symbol={reserve.symbol}
-          variant="secondary14"
-        />
-      </Row>
-      <Row
-        caption={
-          <StableAPYTooltip
-            text={<Trans>Borrow APY, stable</Trans>}
-            key="APY_list_mob_stable_type"
-            variant="description"
-          />
-        }
-        captionVariant="description"
-        mb={4}
-        align="flex-start"
-      >
-        <IncentivesCard
-          align="flex-end"
-          value={reserve.stableBorrowRateEnabled ? reserve.stableBorrowAPY : -1}
           incentives={[]}
           symbol={reserve.symbol}
           variant="secondary14"

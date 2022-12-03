@@ -9,6 +9,9 @@ import { ListHeaderWrapper } from 'src/components/lists/ListHeaderWrapper';
 import { ListWrapper } from 'src/components/lists/ListWrapper';
 import { MarketAssetListTitle } from './MarketAssetListTitle';
 import { MarketAssetsListItem } from './MarketAssetsListItem';
+import { MarketAssetsListMobileItem } from './MarketAssetsListMobileItem';
+import { MarketAssetsListItemLoader } from './MarketAssetsListItemLoader';
+import { MarketAssetsListMobileItemLoader } from './MarketAssetsListMobileItemLoader';
 import { useRootStore } from "../../store/root";
 
 export default function MarketAssetsList() {
@@ -20,7 +23,7 @@ export default function MarketAssetsList() {
   const [sortName, setSortName] = useState('');
   const [sortDesc, setSortDesc] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const reserves = useRootStore(state => state.reserves);
+  const [reserves, loading] = useRootStore(state => [state.reserves, state.loadingReserves]);
 
   const header = [
     {
@@ -82,10 +85,30 @@ export default function MarketAssetsList() {
           <ListColumn maxWidth={95} minWidth={95} />
         </ListHeaderWrapper>
       )}
-  
-      {reserves.map(reserve => (
-        <MarketAssetsListItem {...reserve} key={reserve.symbol} />
-      ))}
+      
+      {loading ? (
+        isTableChangedToCards ? (
+          <>
+            <MarketAssetsListMobileItemLoader />
+            <MarketAssetsListMobileItemLoader />
+            <MarketAssetsListMobileItemLoader />
+          </>
+        ) : (
+          <>
+            <MarketAssetsListItemLoader />
+            <MarketAssetsListItemLoader />
+            <MarketAssetsListItemLoader />
+            <MarketAssetsListItemLoader />
+            <MarketAssetsListItemLoader />
+          </>
+        )
+      ) : (
+        reserves.map(reserve =>
+          isTableChangedToCards
+            ? <MarketAssetsListMobileItem {...reserve} key={reserve.id} />
+            : <MarketAssetsListItem {...reserve} key={reserve.id} />
+        )
+      )}
     </ListWrapper>
   );
 }
