@@ -15,6 +15,7 @@ import { BorrowModal } from 'src/components/transactions/Borrow/BorrowModal';
 import { RepayModal } from 'src/components/transactions/Repay/RepayModal';
 import { SupplyModal } from 'src/components/transactions/Supply/SupplyModal';
 import { WithdrawModal } from 'src/components/transactions/Withdraw/WithdrawModal';
+import { FaucetModal } from 'src/components/transactions/Faucet/FaucetModal';
 
 
 // prepend: true moves MUI styles to the top of the <head> so they're loaded first.
@@ -52,6 +53,7 @@ export default function App(props: MyAppProps) {
                   <RepayModal />
                   <SupplyModal />
                   <WithdrawModal />
+                  <FaucetModal />
                 </MainLayout>
               </ModalContextProvider>
             </AppDataProvider>

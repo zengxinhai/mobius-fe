@@ -30,6 +30,7 @@ export type ReserveData = {
   liquidationThreshold: string;
   liquidationBonus: string;
   reserveFactor: string;
+  decimals: number;
 };
 
 export interface ReserveDataSlice {
@@ -66,6 +67,7 @@ export const btcReserve: ReserveData = {
   borrowCapUSD: '52000000',
   variableBorrowAPY: '0.02',
   totalDebtUSD: '32999999',
+  decimals: 9,
 }
 
 export const ethReserve: ReserveData = {
@@ -96,6 +98,7 @@ export const ethReserve: ReserveData = {
   borrowCapUSD: '82000000',
   variableBorrowAPY: '0.025',
   totalDebtUSD: '82495045',
+  decimals: 9,
 }
 
 export const aptReserve: ReserveData = {
@@ -126,6 +129,7 @@ export const aptReserve: ReserveData = {
   borrowCapUSD: '12000000',
   variableBorrowAPY: '0.04',
   totalDebtUSD: '6938123834',
+  decimals: 9,
 }
 
 
