@@ -3,12 +3,14 @@ import { devtools } from 'zustand/middleware'
 import { createTestSlice, TestSlice } from './testSlice'
 import { createProtocolDataSlice, ProtocolDataSlice } from './protocolDataSlice'
 import { createUserDataSlice, UserDataSlice } from './userDataSlice'
+import {  createReserveDataSlice, ReserveDataSlice } from './reserveDataSlice'
 import { createSingletonSubscriber } from './utils/createSingletonSubscriber'
 
 export type RootState =
   TestSlice &
   ProtocolDataSlice &
-  UserDataSlice
+  UserDataSlice &
+  ReserveDataSlice
 
 export const useRootStore = create<RootState>()(
   devtools(
@@ -16,6 +18,7 @@ export const useRootStore = create<RootState>()(
       ...createTestSlice(...args),
       ...createProtocolDataSlice(...args),
       ...createUserDataSlice(...args),
+      ...createReserveDataSlice(...args),
     })
   )
 )
