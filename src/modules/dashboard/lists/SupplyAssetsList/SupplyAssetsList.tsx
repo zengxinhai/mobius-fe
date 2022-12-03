@@ -27,37 +27,16 @@ export const SupplyAssetsList = () => {
   );
 
   const { reserves } = useAppDataContext();
-
-  const tokensToSupply: SupplyAssetsItem[] = [
-    {
-      underlyingAsset: '0x1::coin::Aptos',
-      symbol: 'APT',
-      iconSymbol: 'APT',
-      name: 'Aptos',
+  
+  const tokensToSupply: SupplyAssetsItem[] = reserves.map(r => {
+    return {
+      ...r,
       walletBalance: '200.12',
       walletBalanceUSD: '1050.48',
       availableToDeposit: '100',
       availableToDepositUSD: '480.12',
-      supplyAPY: 0.12,
-      totalLiquidity: '534000',
-      supplyCap: '6000000',
-      isActive: true,
-    },
-    {
-      underlyingAsset: '0x1::coin::Bitcoin',
-      symbol: 'BTC',
-      iconSymbol: 'BTC',
-      name: 'Bitcoin',
-      walletBalance: '1.2',
-      walletBalanceUSD: '18388.2',
-      availableToDeposit: '1.2',
-      availableToDepositUSD: '18388.2',
-      supplyAPY: 0.06,
-      totalLiquidity: '4833.1',
-      supplyCap: '600000',
-      isActive: true,
-    },
-  ];
+    }
+  })
 
   const sortedSupplyReserves = tokensToSupply.sort((a, b) =>
     +a.walletBalanceUSD > +b.walletBalanceUSD ? -1 : 1

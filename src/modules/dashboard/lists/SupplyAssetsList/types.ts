@@ -8,7 +8,7 @@ export type SupplyAssetsItem = {
   availableToDeposit: string;
   availableToDepositUSD: string;
   supplyAPY: number | string;
-  totalLiquidity: string;
-  supplyCap: string;
+  totalLiquidity: string | number;
+  supplyCap: string | number;
   isActive?: boolean;
 };
