@@ -4,13 +4,15 @@ import { createTestSlice, TestSlice } from './testSlice'
 import { createProtocolDataSlice, ProtocolDataSlice } from './protocolDataSlice'
 import { createUserDataSlice, UserDataSlice } from './userDataSlice'
 import {  createReserveDataSlice, ReserveDataSlice } from './reserveDataSlice'
+import {  createUserReserveDataSlice, UserReserveDataSlice } from './userReserveDataSlice'
 import { createSingletonSubscriber } from './utils/createSingletonSubscriber'
 
 export type RootState =
   TestSlice &
   ProtocolDataSlice &
   UserDataSlice &
-  ReserveDataSlice
+  ReserveDataSlice &
+  UserReserveDataSlice
 
 export const useRootStore = create<RootState>()(
   devtools(
@@ -19,6 +21,7 @@ export const useRootStore = create<RootState>()(
       ...createProtocolDataSlice(...args),
       ...createUserDataSlice(...args),
       ...createReserveDataSlice(...args),
+      ...createUserReserveDataSlice(...args),
     })
   )
 )
