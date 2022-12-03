@@ -16,6 +16,7 @@ import { NoData } from '../../components/primitives/NoData';
 import { TopInfoPanel } from '../../components/TopInfoPanel/TopInfoPanel';
 import { TopInfoPanelItem } from '../../components/TopInfoPanel/TopInfoPanelItem';
 import { LiquidationRiskParametresInfoModal } from './LiquidationRiskParametresModal/LiquidationRiskParametresModal';
+import {useRootStore} from "../../store/root";
 
 export const DashboardTopPanel = () => {
   const { currentAccount } = useContext(web3Context);
@@ -24,14 +25,15 @@ export const DashboardTopPanel = () => {
   const theme = useTheme();
   const downToSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const claimableRewardsUsd = 39800;
-
-  const userNetWorthUSD = 52000000;
-  const userNetApy = 0.12;
-  const userHealthFactor = '12';
-  const userCurrentLoanToValue = '6830000.34';
-  const userCurrentLiquidationThreshold = '95440023';
-  const loanToValue = '4220000.12';
+  const assetsOverview = useRootStore(state => state.userAssetsOverview);
+  
+  const claimableRewardsUsd = assetsOverview.claimableRewardsUsd;
+  const userNetWorthUSD = assetsOverview.netWorthUSD;
+  const userNetApy = assetsOverview.netApy;
+  const userHealthFactor = assetsOverview.healthFactor;
+  const userCurrentLoanToValue = assetsOverview.currentLoanToValue;
+  const userCurrentLiquidationThreshold = assetsOverview.currentLiquidationThreshold;
+  const loanToValue = assetsOverview.loanToValue;
 
   const valueTypographyVariant = downToSM ? 'main16' : 'main21';
   const noDataTypographyVariant = downToSM ? 'secondary16' : 'secondary21';
