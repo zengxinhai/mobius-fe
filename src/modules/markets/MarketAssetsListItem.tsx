@@ -4,30 +4,15 @@ import { useRouter } from 'next/router';
 import { ReserveSubheader } from 'src/components/ReserveSubheader';
 
 import { IncentivesCard } from 'src/components/incentives/IncentivesCard';
-import { AMPLToolTip } from 'src/components/infoTooltips/AMPLToolTip';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListItem } from 'src/components/lists/ListItem';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { Link } from 'src/components/primitives/Link';
 import { TokenIcon } from 'src/components/primitives/TokenIcon';
+import { ReserveData } from '../../store/types'
 
 
-export type Reserve = {
-  name: string
-  symbol: string
-  iconSymbol: string
-  totalLiquidity: number
-  totalLiquidityUSD: string
-  supplyAPY: number
-  totalDebt: number
-  totalDebtUSD: string
-  borrowingEnabled: boolean
-  variableBorrowAPY: number
-  stableBorrowRateEnabled: boolean
-  stableBorrowAPY: number
-  totalStableDebtUSD: string
-}
-export const MarketAssetsListItem = ({ ...reserve }: Reserve) => {
+export const MarketAssetsListItem = ({ ...reserve }: ReserveData) => {
   const router = useRouter();
 
   return (
@@ -55,7 +40,6 @@ export const MarketAssetsListItem = ({ ...reserve }: Reserve) => {
             </Typography>
           </Box>
         </Box>
-        {reserve.symbol === 'AMPL' && <AMPLToolTip />}
       </ListColumn>
 
       <ListColumn>
@@ -84,21 +68,6 @@ export const MarketAssetsListItem = ({ ...reserve }: Reserve) => {
             reserve.borrowingEnabled
               ? reserve.variableBorrowAPY
               : '-1'
-          }
-          incentives={[]}
-          symbol={reserve.symbol}
-          variant="main16"
-          symbolsVariant="secondary16"
-        />
-      </ListColumn>
-
-      <ListColumn>
-        <IncentivesCard
-          value={
-            (reserve.borrowingEnabled && reserve.stableBorrowRateEnabled) ||
-            Number(reserve.totalStableDebtUSD) > 0
-              ? reserve.stableBorrowAPY
-              : -1
           }
           incentives={[]}
           symbol={reserve.symbol}
