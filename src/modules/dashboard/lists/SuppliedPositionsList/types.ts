@@ -4,7 +4,7 @@ export type SupplyPositionItem = {
   name: string
   supplyAPY: string
   isActive: boolean
-  underlyingBalance: string
-  underlyingBalanceUSD: string
+  underlyingBalance: string | number
+  underlyingBalanceUSD: string | number
   underlyingAsset: string
 }

@@ -14,35 +14,23 @@ import { ListLoader } from '../ListLoader';
 import { SuppliedPositionsListItem } from './SuppliedPositionsListItem';
 import { SuppliedPositionsListMobileItem } from './SuppliedPositionsListMobileItem';
 import { SupplyPositionItem } from './types';
+import {useRootStore} from "../../../../store/root";
 
 export const SuppliedPositionsList = () => {
   const { user, loading } = useAppDataContext();
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
-
-  const suppliedPosition: SupplyPositionItem[] = [
-    {
-      symbol: 'APT',
-      iconSymbol: 'APT',
-      name: 'Aptos Coin',
-      supplyAPY: '0.12',
-      isActive: true,
-      underlyingBalance: '120000',
-      underlyingBalanceUSD: '4800000',
-      underlyingAsset: '0x1::coin::Aptos'
-    },
-    {
-      symbol: 'BTC',
-      iconSymbol: 'BTC',
-      name: 'Bitcoin',
-      supplyAPY: '0.04',
-      isActive: true,
-      underlyingBalance: '1.1',
-      underlyingBalanceUSD: '21000',
-      underlyingAsset: '0x1::coin::Bitcoin'
+  
+  const r = useRootStore(state => state.userReserves);
+  
+  const suppliedPosition: SupplyPositionItem[] = r.map(item => {
+    return {
+      ...item.reserve,
+      underlyingBalance: item.underlyingBalance,
+      underlyingBalanceUSD: Number(item.underlyingBalance) * Number(item.reserve.priceInUSD),
     }
-  ];
-
+  })
+  
   const head = [
     <Trans key="Balance">Balance</Trans>,
     <Trans key="APY">APY</Trans>,
