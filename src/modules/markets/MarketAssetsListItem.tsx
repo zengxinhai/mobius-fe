@@ -7,7 +7,7 @@ import { IncentivesCard } from 'src/components/incentives/IncentivesCard';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListItem } from 'src/components/lists/ListItem';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
-import { Link } from 'src/components/primitives/Link';
+import { Link, ROUTES } from 'src/components/primitives/Link';
 import { TokenIcon } from 'src/components/primitives/TokenIcon';
 import { ReserveData } from '../../store/types'
 
@@ -80,7 +80,7 @@ export const MarketAssetsListItem = ({ ...reserve }: ReserveData) => {
         <Button
           variant="outlined"
           component={Link}
-          href={'/'}
+          href={ROUTES.reserveOverview(reserve.underlyingAsset)}
         >
           <Trans>Details</Trans>
         </Button>
