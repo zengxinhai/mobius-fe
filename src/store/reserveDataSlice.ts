@@ -17,6 +17,7 @@ export type ReserveData = {
   borrowCap: number;
   borrowCapUSD: string;
   borrowUsageRatio: string;
+  borrowRateMode: 'Variable' | 'Stable';
   variableBorrowRate: number | string;
   variableBorrowAPY: string;
   availableBorrows: number | string;
@@ -36,7 +37,7 @@ export interface ReserveDataSlice {
   fetchReserves: () => Promise<void>
 }
 
-export const btcReserve = {
+export const btcReserve: ReserveData = {
   id: '1',
   name: 'Bitcoin',
   symbol: 'BTC',
@@ -50,6 +51,7 @@ export const btcReserve = {
   totalDebt: 2500,
   borrowCap: 2600,
   borrowUsageRatio: '0.2',
+  borrowRateMode: 'Variable',
   variableBorrowRate: '0.06',
   availableBorrows: '500',
   availableBorrowsInUSD: '6800000',
@@ -65,7 +67,7 @@ export const btcReserve = {
   totalDebtUSD: '32999999',
 }
 
-export const ethReserve = {
+export const ethReserve: ReserveData = {
   id: '2',
   name: 'Ethereum',
   symbol: 'ETH',
@@ -79,6 +81,7 @@ export const ethReserve = {
   totalDebt: 13333,
   borrowCap: 6066,
   borrowUsageRatio: '0.32',
+  borrowRateMode: 'Variable',
   variableBorrowRate: '0.08',
   availableBorrows: '7200',
   availableBorrowsInUSD: '8340000',
@@ -94,7 +97,7 @@ export const ethReserve = {
   totalDebtUSD: '82495045',
 }
 
-export const aptReserve = {
+export const aptReserve: ReserveData = {
   id: '3',
   name: 'Aptos',
   symbol: 'APT',
@@ -109,6 +112,7 @@ export const aptReserve = {
   borrowCap: 3000000,
   borrowUsageRatio: '0.46',
   variableBorrowRate: '0.12',
+  borrowRateMode: 'Variable',
   availableBorrows: '1700000',
   availableBorrowsInUSD: '8620000',
   totalBorrows: '2250000',

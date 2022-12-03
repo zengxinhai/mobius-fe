@@ -14,42 +14,25 @@ import { ListTopInfoItem } from '../ListTopInfoItem';
 import { BorrowedPositionsListItem } from './BorrowedPositionsListItem';
 import { BorrowedPositionsListMobileItem } from './BorrowedPositionsListMobileItem';
 import { BorrowedPositionsItem } from './types';
+import {useRootStore} from "../../../../store/root";
 
 export const BorrowedPositionsList = () => {
   const { user } = useAppDataContext();
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
+  
+  const userResrves = useRootStore(state => state.userReserves);
+  
+  const borrowPositions: BorrowedPositionsItem[] = userResrves.map(r => {
+    return {
+      ...r.reserve,
+      variableBorrows: r.variableBorrows,
+      variableBorrowsUSD: Number(r.variableBorrows) * Number(r.reserve.priceInUSD),
+      totalBorrows: r.variableBorrows,
+      totalBorrowsUSD: Number(r.variableBorrows) * Number(r.reserve.priceInUSD),
+    }
+  })
 
-  const borrowPositions: BorrowedPositionsItem[] = [
-    {
-      name: 'Bitcoin',
-      isActive: true,
-      borrowingEnabled: true,
-      borrowRateMode: 'Variable',
-      symbol: 'BTC',
-      iconSymbol: 'BTC',
-      underlyingAsset: '0x1::coin::Bitcoin',
-      variableBorrowAPY: '0.06',
-      variableBorrows: 4394,
-      variableBorrowsUSD: '5330434.34',
-      totalBorrows: '3982',
-      totalBorrowsUSD: '45749385'
-    },
-    {
-      name: 'Ethereum',
-      isActive: true,
-      borrowingEnabled: true,
-      borrowRateMode: 'Variable',
-      symbol: 'ETH',
-      iconSymbol: 'ETH',
-      underlyingAsset: '0x1::coin::Ethereum',
-      variableBorrowAPY: '0.08',
-      variableBorrows: 59040,
-      variableBorrowsUSD: '34330434.34',
-      totalBorrows: '59820',
-      totalBorrowsUSD: '0984239'
-    },
-  ];
   const loading = false;
   
   const collateralUsagePercent = '0.05';

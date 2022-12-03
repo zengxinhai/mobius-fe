@@ -7,8 +7,8 @@ export type BorrowedPositionsItem = {
   iconSymbol: string;
   underlyingAsset: string;
   variableBorrowAPY: string;
-  variableBorrows: number;
-  variableBorrowsUSD: string;
-  totalBorrows: string;
-  totalBorrowsUSD: string;
+  variableBorrows: number | string;
+  variableBorrowsUSD: string | number;
+  totalBorrows: string | number;
+  totalBorrowsUSD: string | number;
 };
