@@ -58,12 +58,12 @@ export const createDataRefreshSlice: StateCreator<
     borrowableAmountsList && borrowableAmountsList.forEach(amountInfo => {
       const reserve = reserves[amountInfo.tokenType];
       if (reserve) {
-        reserve.availableBorrows = amountInfo.borrowableAmount;
-        reserve.totalBorrows = amountInfo.borrowedAmount.toString();
-        reserve.totalDebt = amountInfo.borrowableAmount;
+        reserve.availableBorrows = amountInfo.borrowableAmount / 10 ** reserve.decimals;
+        reserve.totalBorrows = (amountInfo.borrowedAmount / 10 ** reserve.decimals).toString();
+        reserve.totalDebt = amountInfo.borrowableAmount / 10 ** reserve.decimals;
         reserve.borrowUsageRatio = (amountInfo.borrowedAmount / (amountInfo.borrowableAmount + amountInfo.borrowedAmount)).toString();
-        reserve.unborrowedLiquidity = amountInfo.borrowableAmount;
-        reserve.totalLiquidity = amountInfo.borrowableAmount;
+        reserve.unborrowedLiquidity = amountInfo.borrowableAmount / 10 ** reserve.decimals;
+        reserve.totalLiquidity = amountInfo.borrowableAmount / 10 ** reserve.decimals;
       }
     })
     
