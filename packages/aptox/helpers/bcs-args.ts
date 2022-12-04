@@ -9,7 +9,8 @@ export enum UintType {
 }
 
 export class EntryFuncArgs {
-  static fromHexString(hexString: string): Uint8Array {
+  static fromHexString(_hexString: string): Uint8Array {
+    const hexString = _hexString.startsWith('0x') ? _hexString.slice(2) : _hexString;
     if (hexString.length % 2 !== 0) throw Error('Bad hex string');
     const bytes = hexString.match(/.{1,2}/g);
     if (bytes === null) return Uint8Array.from([]);

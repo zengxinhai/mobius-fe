@@ -76,6 +76,7 @@ export const convertBorrowableAmountsList = (borrowableAmountsList: BorrowableAm
     return {
       tokenType: parseTypeInfo(item.token_code),
       borrowableAmount: item.total_borrowable_amount,
+      borrowedAmount: item.total_borrowed_amount,
       userBorrowableAmount: item.account_borrowable_amount
     }
   })

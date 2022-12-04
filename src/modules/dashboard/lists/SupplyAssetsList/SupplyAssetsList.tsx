@@ -13,6 +13,7 @@ import { SupplyAssetsListMobileItem } from './SupplyAssetsListMobileItem';
 import { WalletEmptyInfo } from './WalletEmptyInfo';
 import { SupplyAssetsItem } from './types';
 import { useAppDataContext } from 'src/hooks/useAppDataProvider';
+import {useRootStore} from "../../../../store/root";
 
 export const SupplyAssetsList = () => {
   const networkName = 'Aptos';
@@ -27,14 +28,17 @@ export const SupplyAssetsList = () => {
   );
 
   const { reserves } = useAppDataContext();
+  const walletBalances = useRootStore(state => state.walletBalances);
   
   const tokensToSupply: SupplyAssetsItem[] = reserves.map(r => {
+    const tokenAmount = walletBalances[r.underlyingAsset] / 10 ** r.decimals;
+    const tokenAmountUSD = tokenAmount * Number(r.priceInUSD);
     return {
       ...r,
-      walletBalance: '200.12',
-      walletBalanceUSD: '1050.48',
-      availableToDeposit: '100',
-      availableToDepositUSD: '480.12',
+      walletBalance: tokenAmount.toString(),
+      walletBalanceUSD: tokenAmountUSD.toString(),
+      availableToDeposit: tokenAmount.toString(),
+      availableToDepositUSD: tokenAmountUSD.toString(),
     }
   })
 

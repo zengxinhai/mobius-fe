@@ -27,6 +27,7 @@ type BorrowableAmounts = {
   account_borrowable_amount: number,
   token_code: TypeInfo,
   total_borrowable_amount: number,
+  total_borrowed_amount: number,
 }
 export type BorrowableAmountsList = {
   items: BorrowableAmounts[]

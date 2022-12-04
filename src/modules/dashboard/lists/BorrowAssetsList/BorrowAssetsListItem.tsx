@@ -9,7 +9,7 @@ import { ListAPRColumn } from '../ListAPRColumn';
 import { ListButtonsColumn } from '../ListButtonsColumn';
 import { ListItemWrapper } from '../ListItemWrapper';
 import { ListValueColumn } from '../ListValueColumn';
-import { ReserveData } from 'src/hooks/useAppDataProvider';
+import { ReserveData } from 'src/store/types';
 
 export const BorrowAssetsListItem = ({
   symbol,

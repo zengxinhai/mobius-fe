@@ -41,7 +41,7 @@ export const SupplyAssetsListItem = ({
         capsComponent={
           <CapsHint
             capType={CapType.supplyCap}
-            capAmount={supplyCap}
+            capAmount={supplyCap.toString()}
             totalAmount={totalLiquidity}
             withoutText
           />

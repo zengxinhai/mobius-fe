@@ -59,12 +59,11 @@ export const createDataRefreshSlice: StateCreator<
       const reserve = reserves[amountInfo.tokenType];
       if (reserve) {
         reserve.availableBorrows = amountInfo.borrowableAmount;
-        /// TODO: add total borrows
-        // reserve.totalBorrows = '';
-        // reserve.totalDebt = '';
-        // reserve.borrowUsageRatio = '';
-        // reserve.unborrowedLiquidity = '';
-        // reserve.totalLiquidity = '';
+        reserve.totalBorrows = amountInfo.borrowedAmount.toString();
+        reserve.totalDebt = amountInfo.borrowableAmount;
+        reserve.borrowUsageRatio = (amountInfo.borrowedAmount / (amountInfo.borrowableAmount + amountInfo.borrowedAmount)).toString();
+        reserve.unborrowedLiquidity = amountInfo.borrowableAmount;
+        reserve.totalLiquidity = amountInfo.borrowableAmount;
       }
     })
     
@@ -73,9 +72,8 @@ export const createDataRefreshSlice: StateCreator<
       if (reserve) {
         reserve.priceInUSD = price.tokenPriceUSD.toString();
         reserve.availableBorrowsInUSD = Number(reserve.availableBorrows) * Number(reserve.priceInUSD);
-        // reserve.totalDebtUSD = '';
-        // reserve.totalLiquidityUSD = '';
-        // reserve.totalLiquidityUSD = '';
+        reserve.totalDebtUSD = (Number(reserve.totalDebt) * Number(reserve.priceInUSD)).toString();
+        reserve.totalLiquidityUSD = (Number(reserve.totalLiquidity) * Number(reserve.priceInUSD)).toString();
       }
     })
     
@@ -98,7 +96,8 @@ export const createDataRefreshSlice: StateCreator<
       userSupplies.forEach(supplied => {
         const userReserve = userReserves[supplied.tokenType];
         if (userReserve) {
-          userReserve.underlyingBalance = (supplied.tokenAmount + supplied.interest).toString();
+          const decimal = userReserve.reserve.decimals;
+          userReserve.underlyingBalance = ((supplied.tokenAmount + supplied.interest) / 10 ** decimal).toString();
           userSuppliedUSD += Number(supplied.tokenAmount) * Number(userReserve.reserve.priceInUSD);
           userSuppliedInterestUSD += Number(supplied.interest) * Number(userReserve.reserve.priceInUSD);
         }
@@ -106,7 +105,8 @@ export const createDataRefreshSlice: StateCreator<
       userBorrows.forEach(borrowed => {
         const userReserve = userReserves[borrowed.tokenType];
         if (userReserve) {
-          userReserve.underlyingBalance = (borrowed.tokenAmount + borrowed.interest).toString();
+          const decimal = userReserve.reserve.decimals;
+          userReserve.variableBorrows = ((borrowed.tokenAmount + borrowed.interest) / 10 ** decimal).toString();
           userBorrowedUSD += Number(borrowed.tokenAmount) * Number(userReserve.reserve.priceInUSD);
           userBorrowInterestUSD += Number(borrowed.interest) * Number(userReserve.reserve.priceInUSD);
         }
@@ -134,8 +134,6 @@ export const createDataRefreshSlice: StateCreator<
         }
         return res;
       }
-      console.log('reserves', reserves)
-      console.log('userReserves', userReserves)
       get().setReserves(convertRecordToValueArr(reserves));
       get().setUserReserves(convertRecordToValueArr(userReserves));
     }

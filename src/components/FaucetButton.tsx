@@ -8,7 +8,7 @@ import { Link, ROUTES } from './primitives/Link';
 export const FaucetButton = () => {
 
   return (
-    <DarkTooltip title="Get free assets to test the Aave Protocol">
+    <DarkTooltip title="Get free assets to test the Mobius Protocol">
       <Button
         endIcon={
           <SvgIcon sx={{ width: 14, height: 14 }}>

@@ -12,25 +12,25 @@ export const devCoins: CoinMeta[] = [
     name: "Aptos Coin",
     symbol: "APT",
     type: "0x1::aptos_coin::AptosCoin",
-    decimal: 9
+    decimal: 8
   },
   {
     name: "MBTC",
     symbol: "BTC",
     type: `${MOBIUS}::MBTC::MBTC`,
-    decimal: 9
+    decimal: 8
   },
   {
     name: "METH",
     symbol: "ETH",
     type: `${MOBIUS}::METH::METH`,
-    decimal: 9
+    decimal: 8
   },
   {
     name: "MUSDT",
     symbol: "USDT",
     type: `${MOBIUS}::MUSDT::MUSDT`,
-    decimal: 9
+    decimal: 8
   },
 ];
 
@@ -39,7 +39,7 @@ export const testCoins: CoinMeta[] = [
     name: "Aptos Coin",
     symbol: "APT",
     type: "0x1::aptos_coin::AptosCoin",
-    decimal: 9
+    decimal: 8
   },
 ];
 
@@ -48,6 +48,6 @@ export const mainCoins: CoinMeta[] = [
     name: "Aptos Coin",
     symbol: "APT",
     type: "0x1::aptos_coin::AptosCoin",
-    decimal: 9
+    decimal: 8
   },
 ];

@@ -8,13 +8,13 @@ export interface UserAssetsOverviewSlice {
 }
 
 const assetsOverview: UserAssetsOverview = {
-  netWorthUSD: 52000000,
-  netApy: 0.12,
-  healthFactor: '12',
-  currentLoanToValue: '6830000.34',
-  currentLiquidationThreshold: '95440023',
-  loanToValue: '4220000.12',
-  claimableRewardsUsd: 390120,
+  netWorthUSD: 0,
+  netApy: 0,
+  healthFactor: '0',
+  currentLoanToValue: '0',
+  currentLiquidationThreshold: '0',
+  loanToValue: '0',
+  claimableRewardsUsd: 0,
 }
 
 export const createUserAssetsOverviewSlice: StateCreator<
