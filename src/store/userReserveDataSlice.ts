@@ -1,16 +1,10 @@
 import { StateCreator } from 'zustand'
 import { RootState } from './root'
-import { btcReserve, aptReserve, ethReserve, ReserveData } from './reserveDataSlice'
-
-export type UserReserveData = {
-  underlyingBalance: string
-  variableBorrows: string
-  reserve: ReserveData
-};
+import { UserReserveData } from './types'
 
 export interface UserReserveDataSlice {
   userReserves: UserReserveData[]
-  fetchUserReserves: () => Promise<void>
+  setUserReserves: (userReserves: UserReserveData[]) => void
 }
 
 export const createUserReserveDataSlice: StateCreator<
@@ -19,28 +13,8 @@ export const createUserReserveDataSlice: StateCreator<
   [],
   UserReserveDataSlice
   > = (set, get) => {
-  const fetchUserReserves = async() => {
-    const r = [
-      {
-        underlyingBalance: '0.8',
-        variableBorrows: '0.21',
-        reserve: btcReserve,
-      },
-      {
-        underlyingBalance: '4',
-        variableBorrows: '1.52',
-        reserve: ethReserve,
-      },
-      {
-        underlyingBalance: '2500',
-        variableBorrows: '460.7',
-        reserve: aptReserve,
-      },
-    ]
-    set({ userReserves: r })
-  }
   return {
     userReserves: [],
-    fetchUserReserves,
+    setUserReserves: (userReserves) => set({ userReserves })
   }
 }

@@ -1,6 +1,7 @@
 import React, {useContext, createContext, useEffect} from 'react'
-import { useRootStore } from '../store/root'
+import {useAppDataSubscription, useRootStore} from '../store/root'
 import { UserReserveData, ReserveData } from '../store/types'
+import {useWeb3Context} from "../libs/Web3Provider";
 
 export type UserData = {
   earnedAPY: number
@@ -26,12 +27,11 @@ export const useAppDataContext = () => {
 }
 
 const AppDataProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [reserves, fetchReserves] = useRootStore(state => [state.reserves, state.fetchReserves]);
-  const [userReserves, fetchUserReserves] = useRootStore(state => [state.userReserves, state.fetchUserReserves]);
+  const [reserves, userReserves] = useRootStore(state => [state.reserves, state.userReserves, state.refreshAppData]);
+  const refreshAppData = useAppDataSubscription();
   useEffect(() => {
-    fetchReserves()
-    fetchUserReserves()
-  }, [fetchReserves, fetchUserReserves])
+    refreshAppData()
+  }, [refreshAppData])
   const value: AppDataContextType = {
     user: {
       earnedAPY: 0.06,

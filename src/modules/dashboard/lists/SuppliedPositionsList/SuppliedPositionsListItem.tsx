@@ -24,9 +24,6 @@ export const SuppliedPositionsListItem = ({
       symbol={reserve.symbol}
       iconSymbol={reserve.iconSymbol}
       name={reserve.name}
-      detailsAddress={underlyingAsset}
-      showSupplyCapTooltips
-      showDebtCeilingTooltips
     >
       <ListValueColumn
         symbol={reserve.iconSymbol}

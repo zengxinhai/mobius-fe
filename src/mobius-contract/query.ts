@@ -1,7 +1,7 @@
 import { aptox } from './aptox';
 import { EntryFuncArgs } from '../../packages/aptox';
 import { StandardAssetsNftGalleryType, queryModule, StandardPositionType } from './resource-types';
-import { RateList, AssetsOverview, BorrowableAmountsList, ToUsdPriceList, AssetNftGallery } from './struct-types';
+import { RateList, AssetsOverview, BorrowableAmountsList, ToUSDPriceList, AssetNftGallery } from './struct-types';
 
 export const getUserAssets = (address: string) => {
   return aptox.getResource<AssetNftGallery>(StandardAssetsNftGalleryType, address)
@@ -33,7 +33,7 @@ export const getCurrentAssetsOverview = () => {
 }
 
 export const getCurrentToUsdPriceList = () => {
-  return aptox.queryFromEntryFunSimulation<ToUsdPriceList>({
+  return aptox.queryFromEntryFunSimulation<ToUSDPriceList>({
     moduleName: queryModule,
     func: 'get_current_to_usd_price_list',
   }, 'CurrentToUsdPriceList')

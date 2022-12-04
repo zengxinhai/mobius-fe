@@ -16,19 +16,19 @@ export const devCoins: CoinMeta[] = [
   },
   {
     name: "MBTC",
-    symbol: "MBTC",
+    symbol: "BTC",
     type: `${MOBIUS}::MBTC::MBTC`,
     decimal: 9
   },
   {
     name: "METH",
-    symbol: "METH",
+    symbol: "ETH",
     type: `${MOBIUS}::METH::METH`,
     decimal: 9
   },
   {
     name: "MUSDT",
-    symbol: "MUSDT",
+    symbol: "USDT",
     type: `${MOBIUS}::MUSDT::MUSDT`,
     decimal: 9
   },

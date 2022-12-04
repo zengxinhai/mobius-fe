@@ -1,18 +1,10 @@
 import { StateCreator } from 'zustand'
 import { RootState } from './root'
-
-type UserAssetsOverview = {
-  netWorthUSD: number
-  netApy: number
-  healthFactor: string
-  currentLoanToValue: string
-  currentLiquidationThreshold: string
-  loanToValue: string
-  claimableRewardsUsd: number
-}
+import { UserAssetsOverview } from './types'
 
 export interface UserAssetsOverviewSlice {
   userAssetsOverview: UserAssetsOverview;
+  setUserAssetsOverview: (userAssetsOverview: UserAssetsOverview) => void;
 }
 
 const assetsOverview: UserAssetsOverview = {
@@ -25,7 +17,6 @@ const assetsOverview: UserAssetsOverview = {
   claimableRewardsUsd: 390120,
 }
 
-
 export const createUserAssetsOverviewSlice: StateCreator<
   RootState,
   [['zustand/devtools', never]],
@@ -33,6 +24,7 @@ export const createUserAssetsOverviewSlice: StateCreator<
   UserAssetsOverviewSlice
   > = (set, get) => {
   return {
-    userAssetsOverview: assetsOverview
+    userAssetsOverview: assetsOverview,
+    setUserAssetsOverview: (userAssetsOverview) => set({ userAssetsOverview })
   }
 }

@@ -30,6 +30,7 @@ export const useWeb3Context = () => {
 
 const Web3InnerProvider: FC<PropsWithChildren> = ({ children }) => {
   const aptosWallet = useWallet();
+  const { account } = useWallet();
   const previousConnected = usePreviousState(aptosWallet.connected)
   const setAccount = useRootStore(state => state.setAccount);
   const connectWallet = useCallback((adapter: WalletAdapter) => {
@@ -37,9 +38,8 @@ const Web3InnerProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [aptosWallet])
 
   useEffect(() => {
-    const account = aptosWallet.account?.address?.toString()
-    setAccount(account);
-  }, [aptosWallet, setAccount])
+    setAccount(account?.address?.toString());
+  }, [account, setAccount])
 
   // Atomatically close the wallet modal after close
   useEffect(() => {

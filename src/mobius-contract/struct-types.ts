@@ -33,14 +33,14 @@ export type BorrowableAmountsList = {
 }
 
 
-export type ToUsdPrice = {
+export type ToUSDPrice = {
   token_code: TypeInfo,
   amount: number,
   value: Exp
 }
 
-export type ToUsdPriceList = {
-  items: ToUsdPrice[]
+export type ToUSDPriceList = {
+  items: ToUSDPrice[]
 }
 
 // for nft asset
@@ -51,7 +51,7 @@ type AssetNftMeta = {
   name: string
 }
 
-type Asset = {
+export type UserAsset = {
   interest: number,
   rate: {
     "vec": [
@@ -67,8 +67,8 @@ type Asset = {
 
 type AssetNftBody = {
   assets: {
-    collateral: Asset[]
-    debt: Asset[]
+    collateral: UserAsset[]
+    debt: UserAsset[]
     last_borrow_index: number
     last_supply_index: number
     last_update_at: number
