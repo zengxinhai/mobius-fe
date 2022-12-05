@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { CircleIcon } from 'src/components/CircleIcon';
 import { TokenIcon } from 'src/components/primitives/TokenIcon';
-import { ReserveData } from 'src/hooks/useAppDataProvider';
+import { ReserveData } from 'src/store/types';
 import { useProtocolDataContext } from 'src/hooks/useProtocolDataContext';
 
 interface TokenLinkDropdownProps {

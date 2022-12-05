@@ -8,7 +8,7 @@ import { MaxLTVTooltip } from 'src/components/infoTooltips/MaxLTVTooltip';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { ReserveOverviewBox } from 'src/components/ReserveOverviewBox';
 import { ReserveSubheader } from 'src/components/ReserveSubheader';
-import { ReserveData } from 'src/hooks/useAppDataProvider';
+import { ReserveData } from 'src/store/types';
 import { PanelItem } from './ReservePanels';
 
 interface SupplyInfoProps {

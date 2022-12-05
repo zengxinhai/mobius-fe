@@ -10,7 +10,7 @@ import { Row } from 'src/components/primitives/Row';
 import { useModalContext } from 'src/hooks/useModal';
 import { ListMobileItemWrapper } from '../ListMobileItemWrapper';
 import { ListValueRow } from '../ListValueRow';
-import { ReserveData } from 'src/hooks/useAppDataProvider';
+import { ReserveData } from 'src/store/types';
 
 export const BorrowAssetsListMobileItem = ({
   symbol,

@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import StyledToggleButton from 'src/components/StyledToggleButton';
 import StyledToggleButtonGroup from 'src/components/StyledToggleButtonGroup';
 import {
-  ReserveData,
   useAppDataContext,
 } from 'src/hooks/useAppDataProvider';
+import { ReserveData } from 'src/store/types'
 import { ReserveActions } from 'src/modules/reserve-overview/ReserveActions';
 import { ReserveConfiguration } from 'src/modules/reserve-overview/ReserveConfiguration';
 import { ReserveTopDetails } from 'src/modules/reserve-overview/ReserveTopDetails';
