@@ -14,7 +14,7 @@ import React, { ReactNode } from 'react';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { Warning } from 'src/components/primitives/Warning';
 import { ConnectWalletButton } from 'src/components/WalletConnection/ConnectWalletButton';
-import { ReserveData } from 'src/store/types';
+import {ReserveData, UserReserveData} from 'src/store/types';
 import { useAppDataContext } from 'src/hooks/useAppDataProvider'
 import { useWalletBalances } from 'src/hooks/useWalletBalances';
 import { useModalContext } from 'src/hooks/useModal';
@@ -39,15 +39,16 @@ const PaperWrapper = ({ children }: { children: ReactNode }) => {
 };
 
 interface ReserveActionsProps {
-  underlyingAsset: string;
+  poolReserve: ReserveData;
+  userReserve: UserReserveData;
 }
 
-export const ReserveActions = ({ underlyingAsset }: ReserveActionsProps) => {
+export const ReserveActions = ({ poolReserve, userReserve }: ReserveActionsProps) => {
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
   const { openBorrow, openSupply } = useModalContext();
   const { currentAccount, connecting: web3Loading } = useWeb3Context();
-  const { user, reserves, loading: loadingReserves } = useAppDataContext();
+  const { user, loading: loadingReserves } = useAppDataContext();
   const { walletBalances, loading: loadingBalance } = useWalletBalances();
   const networkName = 'Aptos';
 
@@ -97,14 +98,10 @@ export const ReserveActions = ({ underlyingAsset }: ReserveActionsProps) => {
       </PaperWrapper>
     );
 
-  const poolReserve = reserves.find(
-    (reserve) => reserve.underlyingAsset === underlyingAsset
-  ) as ReserveData;
-
-  const balance = walletBalances[underlyingAsset];
+  const balance = walletBalances[poolReserve.underlyingAsset];
   const canBorrow = new BigNumber(user.healthFactor).gt(1);
   /// TODO, implement logic
-  const maxAmountToBorrow = '100';
+  const maxAmountToBorrow = userReserve.borrowableAmount;
   const maxAmountToSupply = balance.amount;
 
   return (
@@ -191,7 +188,7 @@ export const ReserveActions = ({ underlyingAsset }: ReserveActionsProps) => {
         <Button
           variant="contained"
           disabled={balance?.amount === '0'}
-          onClick={() => openSupply(underlyingAsset)}
+          onClick={() => openSupply(poolReserve.underlyingAsset)}
           fullWidth={downToXSM}
           data-cy={'supplyButton'}
         >
@@ -200,7 +197,7 @@ export const ReserveActions = ({ underlyingAsset }: ReserveActionsProps) => {
         <Button
           disabled={!canBorrow}
           variant="contained"
-          onClick={() => openBorrow(underlyingAsset)}
+          onClick={() => openBorrow(poolReserve.underlyingAsset)}
           fullWidth={downToXSM}
           data-cy={'borrowButton'}
         >

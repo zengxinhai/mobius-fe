@@ -7,7 +7,7 @@ import StyledToggleButtonGroup from 'src/components/StyledToggleButtonGroup';
 import {
   useAppDataContext,
 } from 'src/hooks/useAppDataProvider';
-import { ReserveData } from 'src/store/types'
+import { ReserveData, UserReserveData } from 'src/store/types'
 import { ReserveActions } from 'src/modules/reserve-overview/ReserveActions';
 import { ReserveConfiguration } from 'src/modules/reserve-overview/ReserveConfiguration';
 import { ReserveTopDetails } from 'src/modules/reserve-overview/ReserveTopDetails';
@@ -16,7 +16,7 @@ import { ContentContainer } from 'src/components/ContentContainer';
 
 export default function ReserveOverview() {
   const router = useRouter();
-  const { reserves } = useAppDataContext();
+  const { reserves, userReserves } = useAppDataContext();
   const underlyingAsset = router.query.underlyingAsset as string;
   const { breakpoints } = useTheme();
   const lg = useMediaQuery(breakpoints.up('lg'));
@@ -32,11 +32,19 @@ export default function ReserveOverview() {
     (reserve) => reserve.underlyingAsset === underlyingAsset
   ) as ReserveData;
 
+  const userReserve = userReserves.find(
+    (userReserve) => userReserve.reserve.underlyingAsset === underlyingAsset
+  ) as UserReserveData;
+
   const isOverview = mode === 'overview';
+
+  if (!reserve || !userReserve) return (
+    <Typography>Loading</Typography>
+  )
 
   return (
     <>
-      <ReserveTopDetails underlyingAsset={underlyingAsset} />
+      <ReserveTopDetails poolReserve={reserve} />
 
       <ContentContainer>
         <Box
@@ -85,7 +93,7 @@ export default function ReserveOverview() {
               width: { xs: '100%', lg: '416px' },
             }}
           >
-            <ReserveActions underlyingAsset={underlyingAsset} />
+            <ReserveActions poolReserve={reserve} userReserve={userReserve} />
           </Box>
         </Box>
       </ContentContainer>

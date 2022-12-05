@@ -25,20 +25,16 @@ import { TokenLinkDropdown } from './TokenLinkDropdown';
 import Image from "next/image";
 
 interface ReserveTopDetailsProps {
-  underlyingAsset: string;
+  poolReserve: ReserveData;
 }
 
-export const ReserveTopDetails = ({ underlyingAsset }: ReserveTopDetailsProps) => {
+export const ReserveTopDetails = ({ poolReserve }: ReserveTopDetailsProps) => {
   const router = useRouter();
   const { reserves, loading } = useAppDataContext();
   const { currentNetworkConfig } = useProtocolDataContext();
 
   const theme = useTheme();
   const downToSM = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const poolReserve = reserves.find(
-    (reserve) => reserve.underlyingAsset === underlyingAsset
-  ) as ReserveData;
 
   const valueTypographyVariant = downToSM ? 'main16' : 'main21';
   const symbolsTypographyVariant = downToSM ? 'secondary16' : 'secondary21';

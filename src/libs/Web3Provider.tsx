@@ -42,8 +42,8 @@ const Web3InnerProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [account, setAccount])
 
   useEffect(() => {
-    network.chainId && setNetwork(Number(network.chainId));
-  }, [network.chainId, setNetwork])
+    network?.chainId && setNetwork(Number(network.chainId));
+  }, [network, setNetwork])
 
   // Atomatically close the wallet modal after close
   useEffect(() => {
