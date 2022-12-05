@@ -1,6 +1,7 @@
 export type UserReserveData = {
   underlyingBalance: string
   variableBorrows: string
+  borrowableAmount: number
   reserve: ReserveData
 };
 

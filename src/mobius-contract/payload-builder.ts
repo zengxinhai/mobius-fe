@@ -1,4 +1,5 @@
 import {marketScriptModule} from './resource-types'
+import { decimals } from './coin-config'
 
 const buildEntryFuncPayload = (params: {
                                  moduleName: string
@@ -24,38 +25,42 @@ export const buildInitAssetPayload = (coinType: string, amount: number) => {
 }
 
 export const buildBorrowPayload = (coinType: string, amount: number) => {
+  const decimal = decimals[coinType] || 0;
   return buildEntryFuncPayload({
     moduleName: marketScriptModule,
     func: 'borrow',
     tyArgs: [coinType],
-    args: ["4", amount * (10 ** 8)]
+    args: ["4", amount * (10 ** decimal)]
   })
 }
 
 export const buildRepayPayload = (coinType: string, amount: number) => {
+  const decimal = decimals[coinType] || 0;
   return buildEntryFuncPayload({
     moduleName: marketScriptModule,
     func: 'repay',
     tyArgs: [coinType],
-    args: ["4", amount * (10 ** 8)]
+    args: ["4", amount * (10 ** decimal)]
   })
 
 }
 
 export const buildSupplyPayload = (coinType: string, amount: number) => {
+  const decimal = decimals[coinType] || 0;
   return buildEntryFuncPayload({
     moduleName: marketScriptModule,
     func: 'deposit',
     tyArgs: [coinType],
-    args: ["4", amount * (10 ** 8)]
+    args: ["4", amount * (10 ** decimal)]
   })
 }
 
 export const buildWithdrawPayload = (coinType: string, amount: number) => {
+  const decimal = decimals[coinType] || 0;
   return buildEntryFuncPayload({
     moduleName: marketScriptModule,
     func: 'withdraw',
     tyArgs: [coinType],
-    args: ["4", amount * (10 ** 8)]
+    args: ["4", amount * (10 ** decimal)]
   })
 }

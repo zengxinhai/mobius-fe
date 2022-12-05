@@ -1,9 +1,11 @@
 import React from 'react';
 import {
-  UserReserveData,
-  ReserveData,
   useAppDataContext,
 } from 'src/hooks/useAppDataProvider';
+import {
+  UserReserveData,
+  ReserveData,
+} from 'src/store/types';
 import { useWalletBalances } from 'src/hooks/useWalletBalances';
 import { useModalContext } from 'src/hooks/useModal';
 

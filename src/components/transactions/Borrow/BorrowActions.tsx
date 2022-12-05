@@ -6,15 +6,18 @@ import { useCallback } from "react";
 import { useModalContext } from "src/hooks/useModal";
 import {buildBorrowPayload} from 'src/mobius-contract'
 import {useWallet} from "@manahippo/aptos-wallet-adapter";
+import {ReserveData} from "../../../store/types";
 
 export interface BorrowActionsProps extends BoxProps {
   amountToBorrow: string;
   symbol: string;
+  poolReserve: ReserveData;
 }
 
 export const BorrowActions = ({
   symbol,
   amountToBorrow,
+  poolReserve,
   sx,
 }: BorrowActionsProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
@@ -22,10 +25,10 @@ export const BorrowActions = ({
   
   const borrowAction = useCallback(async () => {
     setMainTxState({ txHash: '', loading: true, success: false });
-    const tokenType = '0x1::aptos_coin::AptosCoin';
+    const tokenType = poolReserve.underlyingAsset;
     const payload = buildBorrowPayload(tokenType, Number(amountToBorrow));
-    await signAndSubmitTransaction(payload)
-    setMainTxState({ txHash: '0x01', loading: false, success: true });
+    const txn = await signAndSubmitTransaction(payload)
+    setMainTxState({ txHash: txn.hash, loading: false, success: true });
   }, [setMainTxState, amountToBorrow]);
 
   return (

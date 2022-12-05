@@ -23,6 +23,7 @@ import BigNumber from "bignumber.js";
 
 export const BorrowModalContent = ({
   poolReserve,
+  userReserve,
   symbol,
 }: ModalWrapperProps) => {
   const { mainTxState: borrowTxState, txError } = useModalContext();
@@ -33,7 +34,7 @@ export const BorrowModalContent = ({
   const amountRef = useRef<string>();
 
   // amount calculations
-  const maxAmountToBorrow = BigNumber(243884.43);
+  const maxAmountToBorrow = userReserve.borrowableAmount;
   const formattedMaxAmountToBorrow = maxAmountToBorrow.toString(10);
 
   const isMaxSelected = _amount === '-1';
@@ -127,6 +128,7 @@ export const BorrowModalContent = ({
       <BorrowActions
         amountToBorrow={amount}
         symbol={symbol}
+        poolReserve={poolReserve}
         sx={displayRiskCheckbox ? { mt: 0 } : {}}
       />
     </>

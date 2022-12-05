@@ -97,11 +97,19 @@ export const createDataRefreshSlice: StateCreator<
       const userReserve: UserReserveData = {
         underlyingBalance: '0',
         variableBorrows: '0',
+        borrowableAmount: 0,
         reserve: reserves[coin.type]
       }
       return {...accu, [coin.type]: userReserve }
     }, {} as Record<string, UserReserveData>)
-    
+
+    borrowableAmountsList && borrowableAmountsList.forEach(amountInfo => {
+      const userReserve = userReserves[amountInfo.tokenType];
+      if (userReserve) {
+        userReserve.borrowableAmount = amountInfo.userBorrowableAmount / 10 ** userReserve.reserve.decimals;
+      }
+    })
+
     if (userAssets) {
       const userSupplies = userAssets.collateral;
       const userBorrows = userAssets.debt;
