@@ -57,7 +57,7 @@ export const BorrowedPositionsListItem = ({
       
       <ListButtonsColumn>
         <Button
-          disabled={!isActive}
+          disabled={!isActive || Number(variableBorrows) <= 0}
           variant="contained"
           onClick={() => openRepay(underlyingAsset)}
         >

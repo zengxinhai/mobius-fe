@@ -38,7 +38,7 @@ export const SuppliedPositionsListItem = ({
 
       <ListButtonsColumn>
         <Button
-          disabled={!isActive}
+          disabled={!isActive || Number(underlyingBalance) <= 0}
           variant="contained"
           onClick={() => openWithdraw(underlyingAsset)}
         >
