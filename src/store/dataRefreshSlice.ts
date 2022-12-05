@@ -136,19 +136,50 @@ export const createDataRefreshSlice: StateCreator<
           userBorrowInterestUSD += (Number(borrowed.interest) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
         }
       })
-      
       const netWorthUSD = userSuppliedUSD + userSuppliedInterestUSD - userBorrowedUSD - userBorrowInterestUSD;
       const healthFactor = (userSuppliedUSD + userSuppliedInterestUSD) / (userBorrowInterestUSD + userBorrowedUSD);
       const currentLoanToValue = (userBorrowedUSD + userBorrowInterestUSD).toString();
       const currentLiquidationThreshold = (userSuppliedUSD + userSuppliedInterestUSD) * LIQUIDATION_FACTOR;
       const loanToValue = currentLoanToValue;
-      const claimableRewardsUsd = 0;
-      /// TODO: calculate real APY
-      const netApy = 0;
-      get().setUserAssetsOverview({
-        netApy, netWorthUSD, healthFactor: healthFactor.toString(),
+
+      let earnedAPYNumerator = 0, earnedAPYDenominator = 0;
+      let debtAPYNumerator = 0, debtAPYDenominator = 0;
+      for (const tokenType in userReserves) {
+        const userReserve = userReserves[tokenType];
+        const price = Number(userReserve.reserve.priceInUSD);
+        const supplied = Number(userReserve.underlyingBalance);
+        const borrowed = Number(userReserve.variableBorrows);
+        const supplyAPY = Number(userReserve.reserve.supplyAPY);
+        const borrowAPY = Number(userReserve.reserve.variableBorrowAPY);
+        const suppliedUSD = price * supplied;
+        const borrowedUSD = price * borrowed;
+
+        earnedAPYNumerator += suppliedUSD * supplyAPY;
+        earnedAPYDenominator += suppliedUSD;
+
+        debtAPYNumerator += borrowedUSD * borrowAPY;
+        debtAPYDenominator += borrowedUSD;
+      }
+      const earnedAPY = earnedAPYNumerator / earnedAPYDenominator;
+      const debtAPY = debtAPYNumerator / debtAPYDenominator;
+      const netAPY = (earnedAPYNumerator - debtAPYNumerator) / earnedAPYDenominator;
+
+      const totalCollateralUSD = earnedAPYDenominator;
+      const totalBorrowsUSD = debtAPYDenominator;
+      const totalLiquidityUSD = totalCollateralUSD - totalBorrowsUSD;
+
+        get().setUserAssetsOverview({
+        netAPY,
+        earnedAPY,
+        debtAPY,
+        netWorthUSD,
+        totalLiquidityUSD,
+        totalCollateralUSD,
+        totalBorrowsUSD,
+        claimableRewardsUSD: 0, // We don't have token incentives for now
+        healthFactor: healthFactor.toString(),
         currentLiquidationThreshold: currentLiquidationThreshold.toString(),
-        loanToValue, claimableRewardsUsd,
+        loanToValue,
         currentLoanToValue: currentLoanToValue.toString(),
       })
     }

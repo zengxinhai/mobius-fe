@@ -39,12 +39,17 @@ export type ReserveData = {
 
 export type UserAssetsOverview = {
   netWorthUSD: number
-  netApy: number
+  netAPY: number
+  earnedAPY: number
+  debtAPY: number
   healthFactor: string
   currentLoanToValue: string
   currentLiquidationThreshold: string
   loanToValue: string
-  claimableRewardsUsd: number
+  totalLiquidityUSD: number
+  totalCollateralUSD: number
+  totalBorrowsUSD: number
+  claimableRewardsUSD: number
 }
 
 export type WalletBalance = {

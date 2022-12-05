@@ -27,9 +27,9 @@ export const DashboardTopPanel = () => {
 
   const assetsOverview = useRootStore(state => state.userAssetsOverview);
   
-  const claimableRewardsUsd = assetsOverview.claimableRewardsUsd;
+  const claimableRewardsUSD = assetsOverview.claimableRewardsUSD;
   const userNetWorthUSD = assetsOverview.netWorthUSD;
-  const userNetApy = assetsOverview.netApy;
+  const userNetApy = assetsOverview.netAPY;
   const userHealthFactor = assetsOverview.healthFactor;
   const userCurrentLoanToValue = assetsOverview.currentLoanToValue;
   const userCurrentLiquidationThreshold = assetsOverview.currentLiquidationThreshold;
@@ -101,7 +101,7 @@ export const DashboardTopPanel = () => {
           </TopInfoPanelItem>
         )}
 
-        {currentAccount && claimableRewardsUsd > 0 && (
+        {currentAccount && Number(claimableRewardsUSD) > 0 && (
           <TopInfoPanelItem
             title={<Trans>Available rewards</Trans>}
             icon={<ClaimGiftIcon />}
@@ -116,7 +116,7 @@ export const DashboardTopPanel = () => {
             >
               <Box sx={{ display: 'inline-flex', alignItems: 'center' }} data-cy={'Claim_Box'}>
                 <FormattedNumber
-                  value={claimableRewardsUsd}
+                  value={claimableRewardsUSD}
                   variant={valueTypographyVariant}
                   visibleDecimals={2}
                   compact
