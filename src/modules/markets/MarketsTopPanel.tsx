@@ -6,6 +6,7 @@ import { ChartPieIcon, InboxIcon, FlagIcon } from '@heroicons/react/24/outline'
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { TopInfoPanel } from 'src/components/TopInfoPanel/TopInfoPanel';
 import { TopInfoPanelItem } from 'src/components/TopInfoPanel/TopInfoPanelItem';
+import {useRootStore} from "../../store/root";
 
 export const MarketsTopPanel = () => {
 
@@ -15,6 +16,8 @@ export const MarketsTopPanel = () => {
   const valueTypographyVariant = downToSM ? 'main16' : 'main21';
   const symbolsVariant = downToSM ? 'secondary16' : 'secondary21';
 
+  const { totalAvailableUSD, totalBorrowsUSD, totalMarketSizeUSD } = useRootStore(state => state.overview)
+
   return (
     <TopInfoPanel pageTitle={<Trans>Markets</Trans>}>
       <TopInfoPanelItem
@@ -23,7 +26,7 @@ export const MarketsTopPanel = () => {
         loading={false}
       >
         <FormattedNumber
-          value={8993284934843}
+          value={totalMarketSizeUSD}
           symbol="USD"
           variant={valueTypographyVariant}
           visibleDecimals={2}
@@ -38,7 +41,7 @@ export const MarketsTopPanel = () => {
         loading={false}
       >
         <FormattedNumber
-          value={4574385584}
+          value={totalAvailableUSD}
           symbol="USD"
           variant={valueTypographyVariant}
           visibleDecimals={2}
@@ -53,7 +56,7 @@ export const MarketsTopPanel = () => {
         loading={false}
       >
         <FormattedNumber
-          value={348947549}
+          value={totalBorrowsUSD}
           symbol="USD"
           variant={valueTypographyVariant}
           visibleDecimals={2}
