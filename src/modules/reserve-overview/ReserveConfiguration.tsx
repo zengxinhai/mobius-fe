@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro';
 import { Box, Divider, Paper, SvgIcon, Typography } from '@mui/material';
 import { Warning } from 'src/components/primitives/Warning';
-import { ReserveData } from 'src/hooks/useAppDataProvider';
+import { ReserveData } from 'src/store/types';
 
 import { BorrowInfo } from './BorrowInfo';
 import { PanelRow, PanelTitle } from './ReservePanels';

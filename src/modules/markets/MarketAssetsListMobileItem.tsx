@@ -5,7 +5,7 @@ import { ReserveSubheader } from 'src/components/ReserveSubheader';
 
 import { IncentivesCard } from '../../components/incentives/IncentivesCard';
 import { FormattedNumber } from '../../components/primitives/FormattedNumber';
-import { Link } from '../../components/primitives/Link';
+import {Link, ROUTES} from '../../components/primitives/Link';
 import { Row } from '../../components/primitives/Row';
 import { ListMobileItemWrapper } from './ListMobileItemWrapper';
 
@@ -88,7 +88,7 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: ReserveData) => {
       <Button
         variant="outlined"
         component={Link}
-        href={'/'}
+        href={ROUTES.reserveOverview(reserve.underlyingAsset)}
         fullWidth
       >
         <Trans>View details</Trans>
