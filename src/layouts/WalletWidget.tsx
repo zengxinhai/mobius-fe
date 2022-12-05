@@ -235,7 +235,7 @@ const WalletWidget: React.FC<WalletWidgetProps> = ({ open, setOpen, headerHeight
           </ListItemText>
         </Box>
       
-        <Link href='https://aptos.com/aptos-explorer'>
+        <Link href={`https://explorer.aptoslabs.com/account/${currentAccount}?network=devnet`}>
           <Box
             component={component}
             sx={{color: {xs: '#F1F1F3', md: 'text.primary'}}}
