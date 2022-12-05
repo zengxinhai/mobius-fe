@@ -29,7 +29,7 @@ export const useRootStore = create<RootState>()(
   )
 )
 
-const RFRESH_INTERVAL = 60000;
+const RFRESH_INTERVAL = 600000;
 export const useAppDataSubscription = createSingletonSubscriber(() => {
   return useRootStore.getState().refreshAppData();
 }, RFRESH_INTERVAL);
