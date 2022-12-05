@@ -30,7 +30,7 @@ export function createSingletonSubscriber<T extends () => Promise<void>>(
     }
   }
   return () => {
-    const [account, nodeUrl ] = useRootStore((state) => [state.account, state.nodeUrl ]);
+    const [account, nodeUrl ] = useRootStore((state) => [state.account, state.nodeUrl]);
     useEffect(() => {
       subscribe();
       return unsubscribe;

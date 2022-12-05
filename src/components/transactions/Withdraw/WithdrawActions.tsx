@@ -34,7 +34,7 @@ export const WithdrawActions = ({
     const txn = await signAndSubmitTransaction(payload)
     setMainTxState({ txHash: txn.hash, loading: false, success: true });
     refreshAppData();
-  }, [setMainTxState, amountToWithdraw, userAssetId, refreshAppData]);
+  }, [setMainTxState, amountToWithdraw, poolReserve.underlyingAsset, userAssetId, refreshAppData, signAndSubmitTransaction]);
   return (
     <TxActionsWrapper
       preparingTransactions={false}

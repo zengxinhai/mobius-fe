@@ -33,7 +33,7 @@ export const BorrowActions = ({
     const txn = await signAndSubmitTransaction(payload)
     setMainTxState({ txHash: txn.hash, loading: false, success: true });
     refreshAppData();
-  }, [setMainTxState, amountToBorrow, userAssetId, refreshAppData]);
+  }, [setMainTxState, amountToBorrow, poolReserve.underlyingAsset, userAssetId, refreshAppData, signAndSubmitTransaction]);
 
   return (
     <TxActionsWrapper

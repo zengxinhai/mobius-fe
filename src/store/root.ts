@@ -1,6 +1,5 @@
 import create from 'zustand'
 import { devtools } from 'zustand/middleware'
-import { createTestSlice, TestSlice } from './testSlice'
 import { createProtocolDataSlice, ProtocolDataSlice } from './protocolDataSlice'
 import { createUserDataSlice, UserDataSlice } from './userDataSlice'
 import { createReserveDataSlice, ReserveDataSlice } from './reserveDataSlice'
@@ -10,7 +9,6 @@ import { createDataRefreshSlice, DataRefreshSlice } from './dataRefreshSlice'
 import { createSingletonSubscriber } from './utils/createSingletonSubscriber'
 
 export type RootState =
-  TestSlice &
   ProtocolDataSlice &
   UserDataSlice &
   ReserveDataSlice &
@@ -21,7 +19,6 @@ export type RootState =
 export const useRootStore = create<RootState>()(
   devtools(
     (...args) => ({
-      ...createTestSlice(...args),
       ...createProtocolDataSlice(...args),
       ...createUserDataSlice(...args),
       ...createReserveDataSlice(...args),
@@ -32,7 +29,7 @@ export const useRootStore = create<RootState>()(
   )
 )
 
-const RFRESH_INTERVAL = 600000;
+const RFRESH_INTERVAL = 60000;
 export const useAppDataSubscription = createSingletonSubscriber(() => {
   return useRootStore.getState().refreshAppData();
 }, RFRESH_INTERVAL);

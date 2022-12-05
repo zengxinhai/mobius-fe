@@ -35,7 +35,7 @@ export const RepayActions = ({
     const txn = await signAndSubmitTransaction(payload)
     setMainTxState({txHash: txn.hash, loading: false, success: true});
     refreshAppData();
-  }, [setMainTxState, amountToRepay, userAssetId, refreshAppData]);
+  }, [setMainTxState, amountToRepay, poolReserve.underlyingAsset, userAssetId, refreshAppData, signAndSubmitTransaction]);
   return (
     <TxActionsWrapper
       preparingTransactions={false}

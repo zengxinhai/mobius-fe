@@ -37,7 +37,7 @@ export const SupplyActions = ({
     const txn = await signAndSubmitTransaction(payload)
     await setMainTxState({ txHash: txn.hash, loading: false, success: true });
     refreshAppData()
-  }, [setMainTxState, amountToSupply, userAssetId, refreshAppData]);
+  }, [setMainTxState, amountToSupply, userAssetId, poolReserve.underlyingAsset, refreshAppData, signAndSubmitTransaction]);
   
   return (
     <TxActionsWrapper

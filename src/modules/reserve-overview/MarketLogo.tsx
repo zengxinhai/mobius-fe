@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
+import Image from "next/image";
 
 type MarketLogoProps = {
   size: number;
@@ -10,7 +11,7 @@ type MarketLogoProps = {
 export const MarketLogo = ({ size, logo, testChainName }: MarketLogoProps) => {
   return (
     <Box sx={{ mr: 2, width: size, height: size, position: 'relative' }}>
-      <img src={logo} alt="" width="100%" height="100%" />
+      <Image src={logo} alt="Market logo" width={20} height={20} />
 
       {testChainName && (
         <Tooltip title={testChainName} arrow>
