@@ -3,11 +3,8 @@ import { AlertColor, Typography } from '@mui/material';
 
 import { HealthFactorNumber } from 'src/components/HealthFactorNumber';
 import { BasicModal } from 'src/components/primitives/BasicModal';
-import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
-import { Link } from 'src/components/primitives/Link';
 import { HFContent } from './components/HFContent';
 import { InfoWrapper } from './components/InfoWrapper';
-import { LTVContent } from './components/LTVContent';
 
 interface LiquidationRiskParametresInfoModalProps {
   open: boolean;
@@ -54,14 +51,6 @@ export const LiquidationRiskParametresInfoModal = ({
           Your health factor and loan to value determine the assurance of your collateral. To avoid
           liquidations you can supply more collateral or repay borrow positions.
         </Trans>{' '}
-        <Link
-          href="https://docs.aave.com/faq/"
-          sx={{ textDecoration: 'underline' }}
-          color="text.primary"
-          variant="description"
-        >
-          <Trans>Learn more</Trans>
-        </Link>
       </Typography>
 
       <InfoWrapper
@@ -90,35 +79,6 @@ export const LiquidationRiskParametresInfoModal = ({
         <HFContent healthFactor={healthFactor} />
       </InfoWrapper>
 
-      <InfoWrapper
-        topTitle={<Trans>Current LTV</Trans>}
-        topDescription={
-          <Trans>Your current loan to value based on your collateral supplied.</Trans>
-        }
-        topValue={
-          <FormattedNumber
-            value={loanToValue}
-            percent
-            variant="main12"
-            color="common.white"
-            symbolsColor="common.white"
-          />
-        }
-        bottomText={
-          <Trans>
-            If your loan to value goes above the liquidation threshold your collateral supplied may
-            be liquidated.
-          </Trans>
-        }
-        color={ltvColor}
-      >
-        <LTVContent
-          loanToValue={loanToValue}
-          currentLoanToValue={currentLoanToValue}
-          currentLiquidationThreshold={currentLiquidationThreshold}
-          color={ltvColor}
-        />
-      </InfoWrapper>
     </BasicModal>
   );
 };
