@@ -34,11 +34,6 @@ export const SuppliedPositionsList = () => {
   const head = [
     <Trans key="Balance">Balance</Trans>,
     <Trans key="APY">APY</Trans>,
-    <CollateralSwitchTooltip
-      text={<Trans>Collateral</Trans>}
-      key="Collateral"
-      variant="subheader2"
-    />,
   ];
 
   if (loading) return <ListLoader title={<Trans>Your supplies</Trans>} head={head} />;
@@ -65,11 +60,6 @@ export const SuppliedPositionsList = () => {
                 value={user?.earnedAPY || 0}
                 percent
                 tooltip={<TotalSupplyAPYTooltip />}
-              />
-              <ListTopInfoItem
-                title={<Trans>Collateral</Trans>}
-                value={user?.totalCollateralUSD || 0}
-                tooltip={<CollateralTooltip />}
               />
             </>
           )}

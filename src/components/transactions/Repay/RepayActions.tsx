@@ -7,6 +7,7 @@ import {useWallet} from "@manahippo/aptos-wallet-adapter";
 import {useCallback} from "react";
 import {useModalContext} from "../../../hooks/useModal";
 import {buildRepayPayload} from "../../../mobius-contract";
+import {useRootStore} from "../../../store/root";
 
 export interface RepayActionProps extends BoxProps {
   amountToRepay: string;
@@ -24,14 +25,16 @@ export const RepayActions = ({
   
   const { setMainTxState, mainTxState } =  useModalContext();
   const { signAndSubmitTransaction } = useWallet();
-  
+  const userAssetId = useRootStore(state => state.assetId);
+
   const repayAction = useCallback(async () => {
+    if (userAssetId === undefined) return;
     setMainTxState({txHash: '', loading: true, success: false});
-    const tokenType = '0x1::aptos_coin::AptosCoin';
-    const payload = buildRepayPayload(tokenType, Number(amountToRepay));
-    await signAndSubmitTransaction(payload)
-    setMainTxState({txHash: '0x01', loading: false, success: true});
-  }, [setMainTxState, amountToRepay]);
+    const tokenType = poolReserve.underlyingAsset;
+    const payload = buildRepayPayload(tokenType, Number(amountToRepay), userAssetId);
+    const txn = await signAndSubmitTransaction(payload)
+    setMainTxState({txHash: txn.hash, loading: false, success: true});
+  }, [setMainTxState, amountToRepay, userAssetId]);
   return (
     <TxActionsWrapper
       preparingTransactions={false}

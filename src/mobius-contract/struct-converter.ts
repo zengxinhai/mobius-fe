@@ -26,7 +26,7 @@ const parseTypeInfo = (typeInfo: TypeInfo) => {
   return `${typeInfo.account_address}::${moduleName}::${structName}`;
 }
 
-const parseExp = (exp: Exp) => exp.mantissa / EXP_SCALE;
+const parseExp = (exp: Exp) =>  exp.mantissa / EXP_SCALE;
 
 const parseUserAsset = (userAsset: UserAsset) => {
   const interest = userAsset.interest;

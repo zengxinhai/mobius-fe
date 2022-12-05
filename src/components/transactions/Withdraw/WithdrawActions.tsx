@@ -7,6 +7,7 @@ import {useWallet} from "@manahippo/aptos-wallet-adapter";
 import {useCallback} from "react";
 import {useModalContext} from "../../../hooks/useModal";
 import {buildWithdrawPayload} from "../../../mobius-contract";
+import {useRootStore} from "../../../store/root";
 
 export interface WithdrawActionsProps extends BoxProps {
   poolReserve: ReserveData;
@@ -24,13 +25,15 @@ export const WithdrawActions = ({
 
   const { setMainTxState, mainTxState } =  useModalContext();
   const { signAndSubmitTransaction } = useWallet();
-  
+  const userAssetId = useRootStore(state => state.assetId);
+
   const withdrawAction = useCallback(async () => {
+    if (userAssetId === undefined) return;
     setMainTxState({ txHash: '', loading: true, success: false });
-    const payload = buildWithdrawPayload(poolReserve.underlyingAsset, Number(amountToWithdraw));
+    const payload = buildWithdrawPayload(poolReserve.underlyingAsset, Number(amountToWithdraw), userAssetId);
     const txn = await signAndSubmitTransaction(payload)
     setMainTxState({ txHash: txn.hash, loading: false, success: true });
-  }, [setMainTxState, amountToWithdraw]);
+  }, [setMainTxState, amountToWithdraw, userAssetId]);
   return (
     <TxActionsWrapper
       preparingTransactions={false}

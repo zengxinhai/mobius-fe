@@ -7,6 +7,8 @@ export interface UserDataSlice {
   walletBalances: Record<string, WalletBalance>;
   setAccount: (account: string | undefined) => void;
   setWalletBalances: (_balances: Record<string, WalletBalance>) => void;
+  assetId: number | undefined,
+  setAssetId: (id: number | undefined) => void,
 }
 
 export const createUserDataSlice: StateCreator<
@@ -18,6 +20,8 @@ export const createUserDataSlice: StateCreator<
   return {
     account: '',
     walletBalances: {},
+    assetId: undefined,
+    setAssetId: (assetId: number | undefined) => set ({assetId}),
     setAccount: (account) => set({ account }),
     setWalletBalances: (_balances: Record<string, WalletBalance>) => set({ walletBalances: _balances }),
   }

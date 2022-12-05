@@ -2,10 +2,8 @@ import { Trans } from '@lingui/macro';
 import { Button } from '@mui/material';
 import { useModalContext } from 'src/hooks/useModal';
 
-import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListAPRColumn } from '../ListAPRColumn';
 import { ListButtonsColumn } from '../ListButtonsColumn';
-import { ListItemUsedAsCollateral } from '../ListItemUsedAsCollateral';
 import { ListItemWrapper } from '../ListItemWrapper';
 import { ListValueColumn } from '../ListValueColumn';
 import { SupplyPositionItem } from './types';
@@ -37,16 +35,6 @@ export const SuppliedPositionsListItem = ({
         incentives={[]}
         symbol={reserve.symbol}
       />
-
-      <ListColumn>
-        <ListItemUsedAsCollateral
-          isIsolated={false}
-          usageAsCollateralEnabledOnUser={true}
-          canBeEnabledAsCollateral={true}
-          onToggleSwitch={() => {}}
-          data-cy={`collateralStatus`}
-        />
-      </ListColumn>
 
       <ListButtonsColumn>
         <Button

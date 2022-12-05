@@ -40,11 +40,10 @@ export const RepayModalContent = ({
   const debtUSD = new BigNumber(debt)
     .multipliedBy(poolReserve.priceInUSD)
 
-  const balance = userReserve.underlyingBalance;
   const safeAmountToRepayAll = valueToBigNumber(debt).multipliedBy('1.0025');
 
   // calculate max amount abailable to repay
-  let maxAmountToRepay = BigNumber.min(balance, debt);
+  let maxAmountToRepay = BigNumber.min(tokenBalance, debt);
 
   const isMaxSelected = _amount === '-1';
   const amount = isMaxSelected ? maxAmountToRepay.toString(10) : _amount;
@@ -57,7 +56,7 @@ export const RepayModalContent = ({
       setRepayMax('-1');
     } else {
       setRepayMax(
-        safeAmountToRepayAll.lt(balance)
+        safeAmountToRepayAll.lt(tokenBalance)
           ? safeAmountToRepayAll.toString(10)
           : maxAmountToRepay.toString(10)
       );
@@ -97,7 +96,7 @@ export const RepayModalContent = ({
         symbol={poolReserve.symbol}
         isMaxSelected={isMaxSelected}
         assets={[{
-          balance: userReserve.underlyingBalance,
+          balance: tokenBalance,
           symbol: poolReserve.symbol,
           iconSymbol: poolReserve.iconSymbol,
         }]}

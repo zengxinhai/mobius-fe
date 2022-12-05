@@ -8,7 +8,7 @@ export type CoinMeta = {
 }
 
 export const decimals = {
-  ["0x1::aptos_coin::AptosCoin"]: 9,
+  ["0x1::aptos_coin::AptosCoin"]: 8,
   [`${MOBIUS}::MBTC::MBTC`]: 9,
   [`${MOBIUS}::METH::METH`]: 9,
   [`${MOBIUS}::MUSDT::MUSDT`]: 9

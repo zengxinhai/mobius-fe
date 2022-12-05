@@ -115,24 +115,25 @@ export const createDataRefreshSlice: StateCreator<
       const userBorrows = userAssets.debt;
       // used for contract to idenfity user data
       const userAssetsId = userAssets.assetNftId;
+      get().setAssetId(userAssetsId);
   
       let userBorrowedUSD = 0, userBorrowInterestUSD = 0, userSuppliedUSD = 0, userSuppliedInterestUSD = 0;
       userSupplies.forEach(supplied => {
         const userReserve = userReserves[supplied.tokenType];
         if (userReserve) {
           const decimal = userReserve.reserve.decimals;
-          userReserve.underlyingBalance = ((supplied.tokenAmount + supplied.interest) / 10 ** decimal).toString();
-          userSuppliedUSD += Number(supplied.tokenAmount) * Number(userReserve.reserve.priceInUSD);
-          userSuppliedInterestUSD += Number(supplied.interest) * Number(userReserve.reserve.priceInUSD);
+          userReserve.underlyingBalance = ((Number(supplied.tokenAmount) + Number(supplied.interest)) / 10 ** decimal).toString();
+          userSuppliedUSD += (Number(supplied.tokenAmount) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
+          userSuppliedInterestUSD += (Number(supplied.interest) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
         }
       })
       userBorrows.forEach(borrowed => {
         const userReserve = userReserves[borrowed.tokenType];
         if (userReserve) {
           const decimal = userReserve.reserve.decimals;
-          userReserve.variableBorrows = ((borrowed.tokenAmount + borrowed.interest) / 10 ** decimal).toString();
-          userBorrowedUSD += Number(borrowed.tokenAmount) * Number(userReserve.reserve.priceInUSD);
-          userBorrowInterestUSD += Number(borrowed.interest) * Number(userReserve.reserve.priceInUSD);
+          userReserve.variableBorrows = ((Number(borrowed.tokenAmount) + Number(borrowed.interest)) / 10 ** decimal).toString();
+          userBorrowedUSD += (Number(borrowed.tokenAmount) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
+          userBorrowInterestUSD += (Number(borrowed.interest) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
         }
       })
       
@@ -150,17 +151,16 @@ export const createDataRefreshSlice: StateCreator<
         loanToValue, claimableRewardsUsd,
         currentLoanToValue: currentLoanToValue.toString(),
       })
-      
-      const convertRecordToValueArr = <T>(r: Record<string, T>): T[] => {
-        let res: T[] = [];
-        for(const key in r) {
-          res.push(r[key])
-        }
-        return res;
-      }
-      get().setReserves(convertRecordToValueArr(reserves));
-      get().setUserReserves(convertRecordToValueArr(userReserves));
     }
+    const convertRecordToValueArr = <T>(r: Record<string, T>): T[] => {
+      let res: T[] = [];
+      for(const key in r) {
+        res.push(r[key])
+      }
+      return res;
+    }
+    get().setReserves(convertRecordToValueArr(reserves));
+    get().setUserReserves(convertRecordToValueArr(userReserves));
   }
   return { refreshAppData }
 }

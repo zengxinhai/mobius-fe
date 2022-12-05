@@ -5,7 +5,8 @@ import { useCallback } from "react";
 import { useModalContext } from "src/hooks/useModal";
 import { ReserveData } from 'src/store/types';
 import { TxActionsWrapper } from '../TxActionsWrapper';
-import {buildSupplyPayload} from "../../../mobius-contract";
+import {buildInitAssetPayload, buildSupplyPayload} from "../../../mobius-contract";
+import {useRootStore} from "../../../store/root";
 
 export interface SupplyActionProps extends BoxProps {
   amountToSupply: string;
@@ -24,14 +25,18 @@ export const SupplyActions = ({
 }: SupplyActionProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
   const { signAndSubmitTransaction } = useWallet();
+  const userAssetId = useRootStore(state => state.assetId);
   
   const supplyAction = useCallback(async () => {
     setMainTxState({ txHash: '', loading: true, success: false });
     const tokenType = poolReserve.underlyingAsset;
-    const payload = buildSupplyPayload(tokenType, Number(amountToSupply));
+    const payload = userAssetId
+      ? buildSupplyPayload(tokenType, Number(amountToSupply), userAssetId)
+      : buildInitAssetPayload(tokenType, Number(amountToSupply))
+
     const txn = await signAndSubmitTransaction(payload)
     await setMainTxState({ txHash: txn.hash, loading: false, success: true });
-  }, [setMainTxState, amountToSupply]);
+  }, [setMainTxState, amountToSupply, userAssetId]);
   
   return (
     <TxActionsWrapper

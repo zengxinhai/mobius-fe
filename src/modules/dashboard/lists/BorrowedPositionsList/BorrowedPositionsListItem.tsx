@@ -30,9 +30,7 @@ export const BorrowedPositionsListItem = ({
       symbol={symbol}
       iconSymbol={iconSymbol}
       name={name}
-      detailsAddress={underlyingAsset}
       data-cy={`dashboardBorrowedListItem_${symbol.toUpperCase()}_${borrowRateMode}`}
-      showBorrowCapTooltips
     >
       <ListValueColumn
         symbol={symbol}
