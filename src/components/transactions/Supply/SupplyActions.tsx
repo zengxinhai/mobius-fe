@@ -25,8 +25,8 @@ export const SupplyActions = ({
 }: SupplyActionProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
   const { signAndSubmitTransaction } = useWallet();
-  const userAssetId = useRootStore(state => state.assetId);
-  
+  const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
+
   const supplyAction = useCallback(async () => {
     setMainTxState({ txHash: '', loading: true, success: false });
     const tokenType = poolReserve.underlyingAsset;
@@ -36,7 +36,8 @@ export const SupplyActions = ({
 
     const txn = await signAndSubmitTransaction(payload)
     await setMainTxState({ txHash: txn.hash, loading: false, success: true });
-  }, [setMainTxState, amountToSupply, userAssetId]);
+    refreshAppData()
+  }, [setMainTxState, amountToSupply, userAssetId, refreshAppData]);
   
   return (
     <TxActionsWrapper

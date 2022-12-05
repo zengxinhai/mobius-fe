@@ -17,7 +17,8 @@ import { SupplyPositionItem } from './types';
 import {useRootStore} from "../../../../store/root";
 
 export const SuppliedPositionsList = () => {
-  const { user, loading } = useAppDataContext();
+  const { user } = useAppDataContext();
+  const loading = useRootStore(state => state.isRefreshingAppData);
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
   

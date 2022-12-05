@@ -6,7 +6,8 @@ import { LIQUIDATION_FACTOR } from '../mobius-contract/config';
 import {ReserveData, emptyReserve, UserReserveData, WalletBalance} from "./types";
 
 export interface DataRefreshSlice {
-  refreshAppData: () => Promise<void>,
+  isRefreshingAppData: boolean
+  refreshAppData: () => Promise<void>
 }
 
 export const createDataRefreshSlice: StateCreator<
@@ -18,6 +19,7 @@ export const createDataRefreshSlice: StateCreator<
   const refreshAppData = async () => {
     const account = get().account;
     if (!account) return;
+    set({ isRefreshingAppData: true })
     const [
       coinAmounts,
       assetOverview,
@@ -25,7 +27,8 @@ export const createDataRefreshSlice: StateCreator<
       priceList,
       userAssets,
       borrowableAmountsList] = await getAllData(account);
-    
+    set({ isRefreshingAppData: false })
+
     const walletBalances: Record<string, WalletBalance> = devCoins.reduce((accu, coin) => {
       const coinAmount = coinAmounts[coin.type] / 10 ** coin.decimal || 0;
       const balance: WalletBalance = {
@@ -193,5 +196,5 @@ export const createDataRefreshSlice: StateCreator<
     get().setReserves(convertRecordToValueArr(reserves));
     get().setUserReserves(convertRecordToValueArr(userReserves));
   }
-  return { refreshAppData }
+  return { refreshAppData, isRefreshingAppData: false }
 }

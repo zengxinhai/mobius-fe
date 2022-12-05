@@ -12,14 +12,15 @@ import { ListLoader } from '../ListLoader';
 import { BorrowAssetsListItem } from './BorrowAssetsListItem';
 import { BorrowAssetsListMobileItem } from './BorrowAssetsListMobileItem';
 import { useAppDataContext } from 'src/hooks/useAppDataProvider';
+import {useRootStore} from "../../../../store/root";
 
 export const BorrowAssetsList = () => {
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
 
-  const loading = false;
-  
+
   const { reserves: borrowReserves } = useAppDataContext();
+  const loading = useRootStore(state => state.isRefreshingAppData);
 
   const collateralUsagePercent = 0.2;
   

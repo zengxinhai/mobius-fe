@@ -18,6 +18,7 @@ import {useRootStore} from "../../../../store/root";
 
 export const BorrowedPositionsList = () => {
   const { user } = useAppDataContext();
+  const loading = useRootStore(state => state.isRefreshingAppData);
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
   
@@ -33,8 +34,6 @@ export const BorrowedPositionsList = () => {
     }
   })
 
-  const loading = false;
-  
   const collateralUsagePercent = '0.05';
 
   const head = [

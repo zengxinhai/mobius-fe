@@ -25,7 +25,7 @@ export const WithdrawActions = ({
 
   const { setMainTxState, mainTxState } =  useModalContext();
   const { signAndSubmitTransaction } = useWallet();
-  const userAssetId = useRootStore(state => state.assetId);
+  const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
 
   const withdrawAction = useCallback(async () => {
     if (userAssetId === undefined) return;
@@ -33,7 +33,8 @@ export const WithdrawActions = ({
     const payload = buildWithdrawPayload(poolReserve.underlyingAsset, Number(amountToWithdraw), userAssetId);
     const txn = await signAndSubmitTransaction(payload)
     setMainTxState({ txHash: txn.hash, loading: false, success: true });
-  }, [setMainTxState, amountToWithdraw, userAssetId]);
+    refreshAppData();
+  }, [setMainTxState, amountToWithdraw, userAssetId, refreshAppData]);
   return (
     <TxActionsWrapper
       preparingTransactions={false}

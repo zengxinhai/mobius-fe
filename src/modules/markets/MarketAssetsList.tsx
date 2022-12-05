@@ -23,7 +23,7 @@ export default function MarketAssetsList() {
   const [sortName, setSortName] = useState('');
   const [sortDesc, setSortDesc] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [reserves, loading] = useRootStore(state => [state.reserves, state.loadingReserves]);
+  const [reserves, loading] = useRootStore(state => [state.reserves, state.isRefreshingAppData]);
 
   const header = [
     {

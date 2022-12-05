@@ -25,7 +25,7 @@ export const RepayActions = ({
   
   const { setMainTxState, mainTxState } =  useModalContext();
   const { signAndSubmitTransaction } = useWallet();
-  const userAssetId = useRootStore(state => state.assetId);
+  const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
 
   const repayAction = useCallback(async () => {
     if (userAssetId === undefined) return;
@@ -34,7 +34,8 @@ export const RepayActions = ({
     const payload = buildRepayPayload(tokenType, Number(amountToRepay), userAssetId);
     const txn = await signAndSubmitTransaction(payload)
     setMainTxState({txHash: txn.hash, loading: false, success: true});
-  }, [setMainTxState, amountToRepay, userAssetId]);
+    refreshAppData();
+  }, [setMainTxState, amountToRepay, userAssetId, refreshAppData]);
   return (
     <TxActionsWrapper
       preparingTransactions={false}

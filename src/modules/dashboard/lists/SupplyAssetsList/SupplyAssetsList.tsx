@@ -20,7 +20,7 @@ export const SupplyAssetsList = () => {
   const isTestnet = true;
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
-  const loading = false;
+  const loading = useRootStore(state => state.isRefreshingAppData);
 
   const localStorageName = 'showSupplyZeroAssets';
   const [isShowZeroAssets, setIsShowZeroAssets] = useState(

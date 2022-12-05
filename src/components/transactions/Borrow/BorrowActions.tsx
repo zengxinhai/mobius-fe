@@ -23,7 +23,7 @@ export const BorrowActions = ({
 }: BorrowActionsProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
   const { signAndSubmitTransaction } = useWallet();
-  const userAssetId = useRootStore(state => state.assetId);
+  const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
 
   const borrowAction = useCallback(async () => {
     if (userAssetId === undefined) return;
@@ -32,7 +32,8 @@ export const BorrowActions = ({
     const payload = buildBorrowPayload(tokenType, Number(amountToBorrow), userAssetId);
     const txn = await signAndSubmitTransaction(payload)
     setMainTxState({ txHash: txn.hash, loading: false, success: true });
-  }, [setMainTxState, amountToBorrow, userAssetId]);
+    refreshAppData();
+  }, [setMainTxState, amountToBorrow, userAssetId, refreshAppData]);
 
   return (
     <TxActionsWrapper
