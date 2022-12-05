@@ -19,6 +19,7 @@ export const SupplyActions = ({
   poolAddress,
   sx,
   symbol,
+  poolReserve,
   ...props
 }: SupplyActionProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
@@ -26,10 +27,10 @@ export const SupplyActions = ({
   
   const supplyAction = useCallback(async () => {
     setMainTxState({ txHash: '', loading: true, success: false });
-    const tokenType = '0x1::aptos_coin::AptosCoin';
+    const tokenType = poolReserve.underlyingAsset;
     const payload = buildSupplyPayload(tokenType, Number(amountToSupply));
-    await signAndSubmitTransaction(payload)
-    setMainTxState({ txHash: '0x01', loading: false, success: true });
+    const txn = await signAndSubmitTransaction(payload)
+    await setMainTxState({ txHash: txn.hash, loading: false, success: true });
   }, [setMainTxState, amountToSupply]);
   
   return (
