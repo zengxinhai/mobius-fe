@@ -5,9 +5,9 @@ import { TxActionsWrapper } from '../TxActionsWrapper';
 import { useCallback } from "react";
 import { useModalContext } from "src/hooks/useModal";
 import {buildBorrowPayload} from 'src/mobius-contract'
-import {useWallet} from "@manahippo/aptos-wallet-adapter";
 import {ReserveData} from "../../../store/types";
 import {useRootStore} from "../../../store/root";
+import {useSubmitAndWaitTxn} from "../../../hooks/useTransactionHandler";
 
 export interface BorrowActionsProps extends BoxProps {
   amountToBorrow: string;
@@ -22,7 +22,7 @@ export const BorrowActions = ({
   sx,
 }: BorrowActionsProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
-  const { signAndSubmitTransaction } = useWallet();
+  const submitAndWaitTxn = useSubmitAndWaitTxn();
   const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
 
   const borrowAction = useCallback(async () => {
@@ -30,10 +30,10 @@ export const BorrowActions = ({
     setMainTxState({ txHash: '', loading: true, success: false });
     const tokenType = poolReserve.underlyingAsset;
     const payload = buildBorrowPayload(tokenType, Number(amountToBorrow), userAssetId);
-    const txn = await signAndSubmitTransaction(payload)
+    const txn = await submitAndWaitTxn(payload)
     setMainTxState({ txHash: txn.hash, loading: false, success: true });
     refreshAppData();
-  }, [setMainTxState, amountToBorrow, poolReserve.underlyingAsset, userAssetId, refreshAppData, signAndSubmitTransaction]);
+  }, [setMainTxState, amountToBorrow, poolReserve.underlyingAsset, userAssetId, refreshAppData, submitAndWaitTxn]);
 
   return (
     <TxActionsWrapper

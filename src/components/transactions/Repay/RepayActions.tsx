@@ -8,6 +8,7 @@ import {useCallback} from "react";
 import {useModalContext} from "../../../hooks/useModal";
 import {buildRepayPayload} from "../../../mobius-contract";
 import {useRootStore} from "../../../store/root";
+import {useSubmitAndWaitTxn} from "../../../hooks/useTransactionHandler";
 
 export interface RepayActionProps extends BoxProps {
   amountToRepay: string;
@@ -24,7 +25,7 @@ export const RepayActions = ({
 }: RepayActionProps) => {
   
   const { setMainTxState, mainTxState } =  useModalContext();
-  const { signAndSubmitTransaction } = useWallet();
+  const submitAndWaitTxn = useSubmitAndWaitTxn();
   const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
 
   const repayAction = useCallback(async () => {
@@ -32,10 +33,10 @@ export const RepayActions = ({
     setMainTxState({txHash: '', loading: true, success: false});
     const tokenType = poolReserve.underlyingAsset;
     const payload = buildRepayPayload(tokenType, Number(amountToRepay), userAssetId);
-    const txn = await signAndSubmitTransaction(payload)
+    const txn = await submitAndWaitTxn(payload)
     setMainTxState({txHash: txn.hash, loading: false, success: true});
     refreshAppData();
-  }, [setMainTxState, amountToRepay, poolReserve.underlyingAsset, userAssetId, refreshAppData, signAndSubmitTransaction]);
+  }, [setMainTxState, amountToRepay, poolReserve.underlyingAsset, userAssetId, refreshAppData, submitAndWaitTxn]);
   return (
     <TxActionsWrapper
       preparingTransactions={false}

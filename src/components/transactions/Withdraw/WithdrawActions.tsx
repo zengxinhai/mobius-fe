@@ -8,6 +8,7 @@ import {useCallback} from "react";
 import {useModalContext} from "../../../hooks/useModal";
 import {buildWithdrawPayload} from "../../../mobius-contract";
 import {useRootStore} from "../../../store/root";
+import {useSubmitAndWaitTxn} from "../../../hooks/useTransactionHandler";
 
 export interface WithdrawActionsProps extends BoxProps {
   poolReserve: ReserveData;
@@ -24,17 +25,17 @@ export const WithdrawActions = ({
 }: WithdrawActionsProps) => {
 
   const { setMainTxState, mainTxState } =  useModalContext();
-  const { signAndSubmitTransaction } = useWallet();
+  const submitAndWaitTxn = useSubmitAndWaitTxn();
   const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
 
   const withdrawAction = useCallback(async () => {
     if (userAssetId === undefined) return;
     setMainTxState({ txHash: '', loading: true, success: false });
     const payload = buildWithdrawPayload(poolReserve.underlyingAsset, Number(amountToWithdraw), userAssetId);
-    const txn = await signAndSubmitTransaction(payload)
+    const txn = await submitAndWaitTxn(payload)
     setMainTxState({ txHash: txn.hash, loading: false, success: true });
     refreshAppData();
-  }, [setMainTxState, amountToWithdraw, poolReserve.underlyingAsset, userAssetId, refreshAppData, signAndSubmitTransaction]);
+  }, [setMainTxState, amountToWithdraw, poolReserve.underlyingAsset, userAssetId, refreshAppData, submitAndWaitTxn]);
   return (
     <TxActionsWrapper
       preparingTransactions={false}

@@ -7,6 +7,7 @@ import { ReserveData } from 'src/store/types';
 import { TxActionsWrapper } from '../TxActionsWrapper';
 import {buildInitAssetPayload, buildSupplyPayload} from "../../../mobius-contract";
 import {useRootStore} from "../../../store/root";
+import {useSubmitAndWaitTxn} from "../../../hooks/useTransactionHandler";
 
 export interface SupplyActionProps extends BoxProps {
   amountToSupply: string;
@@ -24,7 +25,7 @@ export const SupplyActions = ({
   ...props
 }: SupplyActionProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
-  const { signAndSubmitTransaction } = useWallet();
+  const submitAndWaitTxn = useSubmitAndWaitTxn();
   const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
 
   const supplyAction = useCallback(async () => {
@@ -34,10 +35,10 @@ export const SupplyActions = ({
       ? buildSupplyPayload(tokenType, Number(amountToSupply), userAssetId)
       : buildInitAssetPayload(tokenType, Number(amountToSupply))
 
-    const txn = await signAndSubmitTransaction(payload)
+    const txn = await submitAndWaitTxn(payload)
     await setMainTxState({ txHash: txn.hash, loading: false, success: true });
     refreshAppData()
-  }, [setMainTxState, amountToSupply, userAssetId, poolReserve.underlyingAsset, refreshAppData, signAndSubmitTransaction]);
+  }, [setMainTxState, amountToSupply, userAssetId, poolReserve.underlyingAsset, refreshAppData, submitAndWaitTxn]);
   
   return (
     <TxActionsWrapper
