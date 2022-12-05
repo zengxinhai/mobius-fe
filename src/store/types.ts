@@ -4,7 +4,6 @@ export type UserReserveData = {
   reserve: ReserveData
 };
 
-
 export type ReserveData = {
   id: string;
   name: string;
@@ -47,6 +46,11 @@ export type UserAssetsOverview = {
   claimableRewardsUsd: number
 }
 
+export type WalletBalance = {
+  amount: string
+  amountUSD: string
+}
+
 export const emptyReserve: ReserveData = {
   id: '',
   name: '',
@@ -59,7 +63,7 @@ export const emptyReserve: ReserveData = {
   supplyCap: 0,
   supplyAPY: '',
   totalDebt: 0,
-  borrowCap: 10 * 30, // Infinite
+  borrowCap: 10 ** 30, // Infinite
   borrowUsageRatio: '',
   borrowRateMode: 'Variable',
   variableBorrowRate: '',

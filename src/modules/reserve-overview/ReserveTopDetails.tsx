@@ -19,10 +19,8 @@ import { useProtocolDataContext } from 'src/hooks/useProtocolDataContext';
 
 import { TopInfoPanel } from '../../components/TopInfoPanel/TopInfoPanel';
 import { TopInfoPanelItem } from '../../components/TopInfoPanel/TopInfoPanelItem';
-import {
-  ReserveData,
-  useAppDataContext,
-} from 'src/hooks/useAppDataProvider';
+import { useAppDataContext } from 'src/hooks/useAppDataProvider';
+import { ReserveData } from 'src/store/types'
 import { TokenLinkDropdown } from './TokenLinkDropdown';
 import Image from "next/image";
 

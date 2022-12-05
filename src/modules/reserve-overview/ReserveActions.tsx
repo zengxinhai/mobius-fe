@@ -14,10 +14,8 @@ import React, { ReactNode } from 'react';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { Warning } from 'src/components/primitives/Warning';
 import { ConnectWalletButton } from 'src/components/WalletConnection/ConnectWalletButton';
-import {
-  ReserveData,
-  useAppDataContext,
-} from 'src/hooks/useAppDataProvider';
+import { ReserveData } from 'src/store/types';
+import { useAppDataContext } from 'src/hooks/useAppDataProvider'
 import { useWalletBalances } from 'src/hooks/useWalletBalances';
 import { useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/Web3Provider';

@@ -3,7 +3,7 @@ import { RootState } from './root'
 import { getAllData } from "../mobius-contract/aggr";
 import { devCoins } from '../mobius-contract/coin-config';
 import { LIQUIDATION_FACTOR } from '../mobius-contract/config';
-import {ReserveData, emptyReserve, UserReserveData} from "./types";
+import {ReserveData, emptyReserve, UserReserveData, WalletBalance} from "./types";
 
 export interface DataRefreshSlice {
   refreshAppData: () => Promise<void>,
@@ -19,14 +19,30 @@ export const createDataRefreshSlice: StateCreator<
     const account = get().account;
     if (!account) return;
     const [
-      coinBalances,
+      coinAmounts,
       assetOverview,
       rateList,
       priceList,
       userAssets,
       borrowableAmountsList] = await getAllData(account);
     
-    get().setWalletBalances(coinBalances);
+    const walletBalances: Record<string, WalletBalance> = devCoins.reduce((accu, coin) => {
+      const coinAmount = coinAmounts[coin.type] / 10 ** coin.decimal || 0;
+      const balance: WalletBalance = {
+        amount: coinAmount.toString(),
+        amountUSD: '',
+      }
+      return {...accu, [coin.type]: balance}
+    }, {} as Record<string, WalletBalance>)
+    
+    priceList && priceList.forEach(price => {
+      const walletBalance = walletBalances[price.tokenType];
+      if (walletBalance) {
+        walletBalance.amountUSD = (Number(walletBalance.amount) * price.tokenPriceUSD).toString();
+      }
+    })
+    
+    get().setWalletBalances(walletBalances);
     
     assetOverview && get().setOverview({
       totalMarketSizeUSD: assetOverview.totalSuppliedUSD,

@@ -1,19 +1,7 @@
-type WalletBalance = {
-  amount: string
-  amountUSD: string
-}
+import {useRootStore} from "../store/root";
 
 export const useWalletBalances = () => {
-  const walletBalances: Record<string, WalletBalance> = {
-    "0x1::coin::Bitcoin": {
-      amount: '1.2',
-      amountUSD: '18300',
-    },
-    "0x1::coin::Aptos": {
-      amount: '200.12',
-      amountUSD: '980',
-    },
-  };
+  const walletBalances = useRootStore(state => state.walletBalances)
   return {
     loading: false,
     walletBalances,
