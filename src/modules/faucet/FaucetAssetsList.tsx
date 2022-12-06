@@ -90,8 +90,6 @@ export default function FaucetAssetsList() {
             <FaucetItemLoader />
             <FaucetItemLoader />
             <FaucetItemLoader />
-            <FaucetItemLoader />
-            <FaucetItemLoader />
           </>
         )
       ) : (
