@@ -49,7 +49,8 @@ export const BorrowModalContent = ({
     setAmount(value);
   };
 
-  const newHealthFactor = BigNumber(0.12);
+  /// TODO: calculate real health factor
+  const newHealthFactor = BigNumber(user.healthFactor);
   const displayRiskCheckbox =
     newHealthFactor.toNumber() < 1.5 && newHealthFactor.toString() !== '-1';
 
