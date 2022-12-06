@@ -18,6 +18,7 @@ import { useWeb3Context } from 'src/libs/Web3Provider';
 
 import { FaucetItemLoader } from './FaucetItemLoader';
 import { FaucetMobileItemLoader } from './FaucetMobileItemLoader';
+import {useRootStore} from "../../store/root";
 
 export default function FaucetAssetsList() {
   const { reserves, loading } = useAppDataContext();
@@ -28,7 +29,10 @@ export default function FaucetAssetsList() {
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
 
+  const nativeCoin = useRootStore(state => state.nativeCoin);
+
   const listData = reserves
+    .filter(reserve => reserve.underlyingAsset !== nativeCoin) // we don't need faucet for native coin
     .map((reserve) => {
       const walletBalance = valueToBigNumber(
         walletBalances[reserve.underlyingAsset]?.amount || '0'

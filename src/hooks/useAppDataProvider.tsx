@@ -1,7 +1,6 @@
 import React, {useContext, createContext, useEffect} from 'react'
 import {useAppDataSubscription, useRootStore} from '../store/root'
 import { UserReserveData, ReserveData, UserAssetsOverview } from '../store/types'
-import {useWeb3Context} from "../libs/Web3Provider";
 export interface AppDataContextType {
   loading: boolean;
   reserves: ReserveData[];
@@ -16,7 +15,8 @@ export const useAppDataContext = () => {
 }
 
 const AppDataProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [reserves, userReserves, userAssetOverview] = useRootStore(state => [state.reserves, state.userReserves, state.userAssetsOverview]);
+  const [reserves, userReserves, userAssetOverview, loading]
+    = useRootStore(state => [state.reserves, state.userReserves, state.userAssetsOverview, state.isRefreshingAppData]);
   const refreshAppData = useAppDataSubscription();
   useEffect(() => {
     refreshAppData()
@@ -25,7 +25,7 @@ const AppDataProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     user: userAssetOverview,
     reserves,
     userReserves,
-    loading: false
+    loading,
   }
   return (
     <appDataContext.Provider value={value}>

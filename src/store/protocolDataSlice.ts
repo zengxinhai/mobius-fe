@@ -6,6 +6,7 @@ const TEST_NET = "https://fullnode.testnet.aptoslabs.com";
 const DEV_NET = "https://fullnode.devnet.aptoslabs.com";
 export interface ProtocolDataSlice {
   nodeUrl: string
+  nativeCoin: string
   setNetwork: (networkName: string) => void
 }
 
@@ -14,9 +15,10 @@ export const createProtocolDataSlice: StateCreator<
   [['zustand/devtools', never]],
   [],
   ProtocolDataSlice
-  > = (set, get) => {
+  > = (set) => {
   return {
     nodeUrl: MAIN_NET,
+    nativeCoin: '0x1::aptos_coin::AptosCoin',
     setNetwork: (networkName) => {
       const nodeUrl =
         networkName === 'Mainnet'
