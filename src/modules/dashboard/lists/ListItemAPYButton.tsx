@@ -63,10 +63,6 @@ export const ListItemAPYButton = ({
         keepMounted={true}
         data-cy={`apyMenu_${borrowRateMode}`}
       >
-        <Typography variant="subheader2" sx={{ px: 4, py: 3 }}>
-          <Trans>Select APY type to switch</Trans>
-        </Typography>
-
         <MenuItem
           selected={true}
           value={'Variable'}
@@ -82,23 +78,6 @@ export const ListItemAPYButton = ({
         </MenuItem>
 
         <Divider />
-
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          <Button
-            sx={{ my: 2, ml: 4 }}
-            size="small"
-            component={Link}
-            target="_blank"
-            href={'/'}
-            endIcon={
-              <SvgIcon>
-                <LinkIcon />
-              </SvgIcon>
-            }
-          >
-            <Trans>SEE CHARTS</Trans>
-          </Button>
-        </Box>
       </Menu>
     </>
   );

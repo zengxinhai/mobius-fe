@@ -34,8 +34,6 @@ export const BorrowedPositionsList = () => {
     }
   })
 
-  const collateralUsagePercent = '0.05';
-
   const head = [
     <Trans key="Debt">Debt</Trans>,
     <Trans key="APY">APY</Trans>,
@@ -63,12 +61,6 @@ export const BorrowedPositionsList = () => {
                 value={user?.debtAPY || 0}
                 percent
                 tooltip={<TotalBorrowAPYTooltip />}
-              />
-              <ListTopInfoItem
-                title={<Trans>Borrow power used</Trans>}
-                value={collateralUsagePercent || 0}
-                percent
-                tooltip={<BorrowPowerTooltip />}
               />
             </>
           )}
