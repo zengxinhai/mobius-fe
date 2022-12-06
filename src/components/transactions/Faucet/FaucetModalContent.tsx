@@ -1,4 +1,3 @@
-import { normalize } from '@aave/math-utils';
 import { Trans } from '@lingui/macro';
 import { useModalContext } from 'src/hooks/useModal';
 
@@ -16,15 +15,14 @@ export enum ErrorType {}
 
 export const FaucetModalContent = ({ poolReserve }: ModalWrapperProps) => {
   const { mainTxState: faucetTxState, txError } = useModalContext();
-  const mintAmount = 1000;
-  const normalizedAmount = normalize(mintAmount, poolReserve.decimals);
+  const mintAmount = '1';
 
   if (faucetTxState.success)
     return (
       <TxSuccessView
         action={<Trans>Received</Trans>}
         symbol={poolReserve.symbol}
-        amount={normalizedAmount}
+        amount={mintAmount}
       />
     );
 
@@ -35,7 +33,7 @@ export const FaucetModalContent = ({ poolReserve }: ModalWrapperProps) => {
           description={<Trans>Amount</Trans>}
           iconSymbol={poolReserve.symbol}
           symbol={poolReserve.symbol}
-          value={normalizedAmount}
+          value={mintAmount}
         />
       </TxModalDetails>
 

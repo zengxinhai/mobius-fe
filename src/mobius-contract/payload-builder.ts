@@ -1,4 +1,4 @@
-import {marketScriptModule} from './resource-types'
+import { marketScriptModule, faucetModule } from './resource-types'
 import { decimals } from './coin-config'
 
 const buildEntryFuncPayload = (params: {
@@ -63,5 +63,15 @@ export const buildWithdrawPayload = (coinType: string, amount: number, assetId: 
     func: 'withdraw',
     tyArgs: [coinType],
     args: [assetId, amount * (10 ** decimal)]
+  })
+}
+
+export const buildFaucetPayload = (coinType: string, amount: number) => {
+  const decimal = decimals[coinType] || 0;
+  return buildEntryFuncPayload({
+    moduleName: faucetModule,
+    func: 'drip',
+    tyArgs: [coinType],
+    args: [amount * (10 ** decimal)]
   })
 }
