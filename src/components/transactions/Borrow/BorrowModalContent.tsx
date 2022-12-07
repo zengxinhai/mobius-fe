@@ -35,10 +35,10 @@ export const BorrowModalContent = ({
 
   // amount calculations
   const maxAmountToBorrow = userReserve.borrowableAmount;
-  const formattedMaxAmountToBorrow = maxAmountToBorrow.toString(10);
+  const formattedMaxAmountToBorrow = maxAmountToBorrow;
 
   const isMaxSelected = _amount === '-1';
-  const amount = isMaxSelected ? maxAmountToBorrow.toString(10) : _amount;
+  const amount = isMaxSelected ? maxAmountToBorrow : _amount;
 
   // We set this in a useEffect, so it doesn't constantly change when
   // max amount selected
@@ -82,7 +82,7 @@ export const BorrowModalContent = ({
         symbol={symbol}
         capType={CapType.borrowCap}
         isMaxSelected={isMaxSelected}
-        maxValue={maxAmountToBorrow.toString(10)}
+        maxValue={maxAmountToBorrow}
       />
 
       <TxModalDetails>

@@ -14,6 +14,7 @@ import { BorrowedPositionsListItem } from './BorrowedPositionsListItem';
 import { BorrowedPositionsListMobileItem } from './BorrowedPositionsListMobileItem';
 import { BorrowedPositionsItem } from './types';
 import {useRootStore} from "../../../../store/root";
+import BigNumber from "bignumber.js";
 
 export const BorrowedPositionsList = () => {
   const { user } = useAppDataContext();
@@ -27,9 +28,9 @@ export const BorrowedPositionsList = () => {
     return {
       ...r.reserve,
       variableBorrows: r.variableBorrows,
-      variableBorrowsUSD: Number(r.variableBorrows) * Number(r.reserve.priceInUSD),
+      variableBorrowsUSD: BigNumber(r.variableBorrows).multipliedBy(r.reserve.priceInUSD).toString(),
       totalBorrows: r.variableBorrows,
-      totalBorrowsUSD: Number(r.variableBorrows) * Number(r.reserve.priceInUSD),
+      totalBorrowsUSD: BigNumber(r.variableBorrows).multipliedBy(r.reserve.priceInUSD).toString()
     }
   })
 
