@@ -22,7 +22,7 @@ function CompactNumber({ value, visibleDecimals = 2, roundDown }: CompactNumberP
     POSTFIXES.length - 1
   );
   const postfix = POSTFIXES[significantDigitsGroup];
-  let formattedValue = bnValue.shiftedBy(3 * significantDigitsGroup).toNumber();
+  let formattedValue = bnValue.shiftedBy(-3 * significantDigitsGroup).toNumber();
   if (roundDown) {
     // Truncates decimals after the visible decimal point, i.e. 10.237 with 2 decimals becomes 10.23
     formattedValue =
