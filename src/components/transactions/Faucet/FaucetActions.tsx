@@ -16,17 +16,16 @@ export const FaucetActions = ({ poolReserve }: FaucetActionsProps) => {
 
   const { setMainTxState, mainTxState } =  useModalContext();
   const submitAndWaitTxn = useSubmitAndWaitTxn();
-  const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
+  const refreshAppData = useRootStore(state => state.refreshAppData);
 
   const faucetAction = useCallback(async () => {
-    if (userAssetId === undefined) return;
     setMainTxState({ txHash: '', loading: true, success: false });
     const tokenType = poolReserve.underlyingAsset;
     const payload = buildFaucetPayload(tokenType, 1);
     const txn = await submitAndWaitTxn(payload)
     setMainTxState({ txHash: txn.hash, loading: false, success: true });
     refreshAppData();
-  }, [setMainTxState, poolReserve.underlyingAsset, userAssetId, refreshAppData, submitAndWaitTxn]);
+  }, [setMainTxState, poolReserve.underlyingAsset, refreshAppData, submitAndWaitTxn]);
 
   return (
     <TxActionsWrapper

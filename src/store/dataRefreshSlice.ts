@@ -140,7 +140,7 @@ export const createDataRefreshSlice: StateCreator<
         }
       })
       const netWorthUSD = userSuppliedUSD + userSuppliedInterestUSD - userBorrowedUSD - userBorrowInterestUSD;
-      const healthFactor = (userSuppliedUSD + userSuppliedInterestUSD) / (userBorrowInterestUSD + userBorrowedUSD);
+      const healthFactor = (userSuppliedUSD + userSuppliedInterestUSD) * LIQUIDATION_FACTOR / (userBorrowInterestUSD + userBorrowedUSD);
       const currentLoanToValue = (userBorrowedUSD + userBorrowInterestUSD).toString();
       const currentLiquidationThreshold = (userSuppliedUSD + userSuppliedInterestUSD) * LIQUIDATION_FACTOR;
       const loanToValue = currentLoanToValue;
