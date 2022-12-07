@@ -12,6 +12,7 @@ interface TxActionsWrapperProps extends BoxProps {
   preparingTransactions: boolean;
   requiresAmount?: boolean;
   symbol?: string;
+  blocked?: boolean;
 }
 
 export const TxActionsWrapper = ({
@@ -24,6 +25,7 @@ export const TxActionsWrapper = ({
   requiresAmount,
   sx,
   symbol,
+  blocked,
   ...rest
 }: TxActionsWrapperProps) => {
   const isAmountMissing = requiresAmount && requiresAmount && Number(amount) === 0;
@@ -43,7 +45,7 @@ export const TxActionsWrapper = ({
     <Box sx={{ display: 'flex', flexDirection: 'column', mt: 12, ...sx }} {...rest}>
       <Button
         variant="contained"
-        disabled={disabled }
+        disabled={ disabled || blocked === true }
         onClick={handleClick}
         size="large"
         sx={{ minHeight: '44px' }}

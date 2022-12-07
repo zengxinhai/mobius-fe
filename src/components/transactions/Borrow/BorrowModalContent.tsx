@@ -21,6 +21,7 @@ import {
 import { BorrowActions } from './BorrowActions';
 import BigNumber from "bignumber.js";
 import { useMaxborrowableAmount } from "./hooks";
+import {useHealthFactorAfterBorrow} from "../health-factor";
 
 export const BorrowModalContent = ({
   poolReserve,
@@ -49,13 +50,15 @@ export const BorrowModalContent = ({
     setAmount(value);
   };
 
-  /// TODO: calculate real health factor
-  const newHealthFactor = BigNumber(user.healthFactor);
+  const newHealthFactor = useHealthFactorAfterBorrow(amount, poolReserve.priceInUSD);
   const displayRiskCheckbox =
-    newHealthFactor.toNumber() < 1.5 && newHealthFactor.toString() !== '-1';
+    Number(newHealthFactor) < 1.5 && newHealthFactor.toString() !== '-1';
 
   // calculating input usd value
   const usdValue = valueToBigNumber(amount).multipliedBy(poolReserve.priceInUSD);
+  
+  // block action when risk is not checked or amout to large
+  const blocked = (displayRiskCheckbox && !riskCheckboxAccepted) || BigNumber(amount).gt(maxAmountToBorrow)
 
   if (borrowTxState.success)
     return (
@@ -90,7 +93,7 @@ export const BorrowModalContent = ({
         <DetailsHFLine
           visibleHfChange={!!_amount}
           healthFactor={user.healthFactor}
-          futureHealthFactor={newHealthFactor.toString(10)}
+          futureHealthFactor={newHealthFactor}
         />
       </TxModalDetails>
 
@@ -127,6 +130,7 @@ export const BorrowModalContent = ({
       )}
 
       <BorrowActions
+        blocked={blocked}
         amountToBorrow={amount}
         symbol={symbol}
         poolReserve={poolReserve}

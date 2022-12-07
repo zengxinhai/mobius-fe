@@ -13,12 +13,14 @@ export interface BorrowActionsProps extends BoxProps {
   amountToBorrow: string;
   symbol: string;
   poolReserve: ReserveData;
+  blocked?: boolean;
 }
 
 export const BorrowActions = ({
   symbol,
   amountToBorrow,
   poolReserve,
+  blocked,
   sx,
 }: BorrowActionsProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
@@ -37,6 +39,7 @@ export const BorrowActions = ({
 
   return (
     <TxActionsWrapper
+      blocked={blocked}
       mainTxState={mainTxState}
       requiresAmount={true}
       amount={amountToBorrow}
