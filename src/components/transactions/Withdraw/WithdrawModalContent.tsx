@@ -17,6 +17,8 @@ import {
   TxModalDetails,
 } from '../FlowCommons/TxModalDetails';
 import { WithdrawActions } from './WithdrawActions';
+import {useHealthFactorAfterWithdraw} from "../health-factor";
+import {useMaxborrowableAmount} from "../Borrow/hooks";
 
 export const WithdrawModalContent = ({
   poolReserve,
@@ -33,32 +35,31 @@ export const WithdrawModalContent = ({
 
   // calculations
   const underlyingBalance = valueToBigNumber(userReserve?.underlyingBalance || '0');
-  const unborrowedLiquidity = valueToBigNumber(poolReserve.unborrowedLiquidity);
-  let maxAmountToWithdraw = BigNumber.min(underlyingBalance, unborrowedLiquidity);
+  let maxAmountToWithdraw = useMaxborrowableAmount(poolReserve.priceInUSD, poolReserve.decimals)
 
   const isMaxSelected = _amount === '-1';
-  const amount = isMaxSelected ? maxAmountToWithdraw.toString(10) : _amount;
+  const amount = isMaxSelected ? maxAmountToWithdraw : _amount;
 
   const handleChange = (value: string) => {
     const maxSelected = value === '-1';
-    amountRef.current = maxSelected ? maxAmountToWithdraw.toString(10) : value;
+    amountRef.current = maxSelected ? maxAmountToWithdraw : value;
     setAmount(value);
-    if (maxSelected && maxAmountToWithdraw.eq(underlyingBalance)) {
+    if (maxSelected && underlyingBalance.eq(maxAmountToWithdraw)) {
       setWithdrawMax('-1');
     } else {
-      setWithdrawMax(maxAmountToWithdraw.toString(10));
+      setWithdrawMax(maxAmountToWithdraw.toString());
     }
   };
 
   // health factor calculations
-  let healthFactorAfterWithdraw = valueToBigNumber(user.healthFactor);
+  let healthFactorAfterWithdraw = useHealthFactorAfterWithdraw(amount, poolReserve.priceInUSD);
 
-  const displayRiskCheckbox =
-    healthFactorAfterWithdraw.toNumber() >= 1 &&
-    healthFactorAfterWithdraw.toNumber() < 1.5
+  const displayRiskCheckbox = Number(healthFactorAfterWithdraw) < 1.5
 
   // calculating input usd value
   const usdValue = valueToBigNumber(amount).multipliedBy(userReserve?.reserve.priceInUSD || 0);
+  
+  const blocked = (displayRiskCheckbox && !riskCheckboxAccepted) || BigNumber(amount).gt(maxAmountToWithdraw)
 
   if (withdrawTxState.success)
     return (
@@ -77,14 +78,14 @@ export const WithdrawModalContent = ({
         symbol={symbol}
         assets={[
           {
-            balance: maxAmountToWithdraw.toString(10),
+            balance: maxAmountToWithdraw,
             symbol: symbol,
             iconSymbol: poolReserve.iconSymbol},
         ]}
         usdValue={usdValue.toString(10)}
         isMaxSelected={isMaxSelected}
         disabled={withdrawTxState.loading}
-        maxValue={maxAmountToWithdraw.toString(10)}
+        maxValue={maxAmountToWithdraw}
       />
 
       <TxModalDetails>
@@ -96,7 +97,7 @@ export const WithdrawModalContent = ({
         <DetailsHFLine
           visibleHfChange={!!_amount}
           healthFactor={user ? user.healthFactor : '-1'}
-          futureHealthFactor={healthFactorAfterWithdraw.toString(10)}
+          futureHealthFactor={healthFactorAfterWithdraw}
         />
       </TxModalDetails>
 
@@ -134,6 +135,7 @@ export const WithdrawModalContent = ({
       )}
 
       <WithdrawActions
+        blocked={blocked}
         poolReserve={poolReserve}
         amountToWithdraw={isMaxSelected ? withdrawMax : amount}
         poolAddress={poolReserve.underlyingAsset}

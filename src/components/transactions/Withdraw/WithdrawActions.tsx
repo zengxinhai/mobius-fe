@@ -15,9 +15,11 @@ export interface WithdrawActionsProps extends BoxProps {
   amountToWithdraw: string;
   poolAddress: string;
   symbol: string;
+  blocked: boolean;
 }
 
 export const WithdrawActions = ({
+  blocked,
   amountToWithdraw,
   symbol,
   sx,
@@ -38,6 +40,7 @@ export const WithdrawActions = ({
   }, [setMainTxState, amountToWithdraw, poolReserve.underlyingAsset, userAssetId, refreshAppData, submitAndWaitTxn]);
   return (
     <TxActionsWrapper
+      blocked={blocked}
       preparingTransactions={false}
       mainTxState={mainTxState}
       amount={amountToWithdraw}
