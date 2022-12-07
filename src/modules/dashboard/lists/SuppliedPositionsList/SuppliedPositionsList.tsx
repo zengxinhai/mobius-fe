@@ -52,7 +52,7 @@ export const SuppliedPositionsList = () => {
             <>
               <ListTopInfoItem
                 title={<Trans>Balance</Trans>}
-                value={user?.totalLiquidityUSD || '0'}
+                value={user?.totalCollateralUSD || '0'}
               />
               <ListTopInfoItem
                 title={<Trans>APY</Trans>}

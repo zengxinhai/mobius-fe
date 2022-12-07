@@ -130,55 +130,54 @@ const formatUserAssetOverview = ({ userAssets }: AllData, reserves: Record<strin
   // used for contract to idenfity user data
   const userAssetsId = userAssets.assetNftId;
 
-  let userBorrowedUSD = BigNumber(0), userBorrowInterestUSD = BigNumber(0), userSuppliedUSD = BigNumber(0),
-    userSuppliedInterestUSD = BigNumber(0);
-  let earnedAPYNumerator = BigNumber(0), earnedAPYDenominator = BigNumber(0);
-  let debtAPYNumerator = BigNumber(0), debtAPYDenominator = BigNumber(0);
+  let earnedAPYNumerator = BigNumber(0), debtAPYNumerator = BigNumber(0);
+  let totalCollateralUSD = BigNumber(0), totalDebtUSD = BigNumber(0);
   userSupplies.forEach(supplied => {
     const reserve = reserves[supplied.tokenType];
     if (reserve) {
       const decimal = reserve.decimals;
-      userSuppliedUSD = userSuppliedUSD.plus(
+      let userSuppliedUSD =
         BigNumber(supplied.tokenAmount).shiftedBy(-decimal).multipliedBy(reserve.priceInUSD)
-      )
-      userSuppliedInterestUSD = userSuppliedInterestUSD.plus(
+      let userSuppliedInterestUSD =
         BigNumber(supplied.interest).shiftedBy(-decimal).multipliedBy(reserve.priceInUSD)
-      )
+      
+      totalCollateralUSD = totalCollateralUSD.plus(userSuppliedUSD).plus(userSuppliedInterestUSD)
+      
       earnedAPYNumerator = earnedAPYNumerator.plus(
         userSuppliedUSD.multipliedBy(reserve.supplyAPY)
       )
-      earnedAPYDenominator = earnedAPYDenominator.plus(userSuppliedUSD)
     }
   })
   userBorrows.forEach(borrowed => {
     const reserve = reserves[borrowed.tokenType];
     if (reserve) {
       const decimal = reserve.decimals;
-      userBorrowedUSD = userSuppliedUSD.plus(
-        BigNumber(borrowed.tokenAmount).shiftedBy(-decimal).multipliedBy(reserve.priceInUSD)
-      )
-      userBorrowInterestUSD = userBorrowedUSD.plus(
-        BigNumber(borrowed.interest).shiftedBy(-decimal).multipliedBy(reserve.priceInUSD)
-      )
+      let userBorrowedUSD
+        = BigNumber(borrowed.tokenAmount).shiftedBy(-decimal).multipliedBy(reserve.priceInUSD)
+      let userBorrowInterestUSD
+        = BigNumber(borrowed.interest).shiftedBy(-decimal).multipliedBy(reserve.priceInUSD)
+      
+      totalDebtUSD = totalDebtUSD.plus(userBorrowedUSD).plus(userBorrowInterestUSD)
+      
       debtAPYNumerator = debtAPYNumerator.plus(
         userBorrowedUSD.multipliedBy(reserve.variableBorrowAPY)
       )
-      debtAPYDenominator = debtAPYDenominator.plus(userBorrowedUSD)
     }
   })
-  const netWorthUSD = userSuppliedUSD.plus(userSuppliedInterestUSD).minus(userBorrowedUSD).minus(userBorrowInterestUSD);
-  const healthFactor = userSuppliedUSD.plus(userSuppliedInterestUSD).multipliedBy(LIQUIDATION_FACTOR).div(userBorrowInterestUSD.plus(userBorrowedUSD));
-  const currentLoanToValue = userBorrowedUSD.plus(userBorrowInterestUSD);
-  const currentLiquidationThreshold = userSuppliedUSD.plus(userSuppliedInterestUSD).multipliedBy(LIQUIDATION_FACTOR);
+  const netWorthUSD = totalCollateralUSD.minus(totalDebtUSD);
+  const healthFactor = totalCollateralUSD.multipliedBy(LIQUIDATION_FACTOR).div(totalDebtUSD);
+  const currentLiquidationThreshold = totalCollateralUSD.multipliedBy(LIQUIDATION_FACTOR);
+  const currentLoanToValue = totalDebtUSD;
   const loanToValue = currentLoanToValue;
-
+  
+  const earnedAPYDenominator = totalCollateralUSD;
+  const debtAPYDenominator = totalDebtUSD;
+  
   const earnedAPY = earnedAPYNumerator.div(earnedAPYDenominator);
   const debtAPY = debtAPYNumerator.div(debtAPYDenominator);
   const netAPY = earnedAPYNumerator.minus(debtAPYNumerator).div(earnedAPYDenominator);
 
-  const totalCollateralUSD = earnedAPYDenominator;
-  const totalBorrowsUSD = debtAPYDenominator;
-  const totalLiquidityUSD = totalCollateralUSD.minus(totalBorrowsUSD);
+  const totalLiquidityUSD = totalCollateralUSD.minus(totalDebtUSD);
 
   return {
     userAssetsId,
@@ -188,7 +187,7 @@ const formatUserAssetOverview = ({ userAssets }: AllData, reserves: Record<strin
     netWorthUSD: netWorthUSD.toString(),
     totalLiquidityUSD: totalLiquidityUSD.toString(),
     totalCollateralUSD: totalCollateralUSD.toString(),
-    totalBorrowsUSD: totalBorrowsUSD.toString(),
+    totalBorrowsUSD: totalDebtUSD.toString(),
     claimableRewardsUSD: '0', // We don't have token incentives for now
     healthFactor: healthFactor.toString(),
     currentLiquidationThreshold: currentLiquidationThreshold.toString(),
