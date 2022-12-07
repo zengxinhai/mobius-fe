@@ -1,4 +1,3 @@
-import { valueToBigNumber } from '@aave/math-utils';
 import { Trans } from '@lingui/macro';
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import { TypographyProps } from '@mui/material/Typography';
@@ -20,7 +19,7 @@ export const HealthFactorNumber = ({
 }: HealthFactorNumberProps) => {
   const { palette } = useTheme();
 
-  const formattedHealthFactor = Number(valueToBigNumber(value).toFixed(2, BigNumber.ROUND_DOWN));
+  const formattedHealthFactor = Number(BigNumber(value).toFixed(2, BigNumber.ROUND_DOWN));
   let healthFactorColor = '';
   if (formattedHealthFactor >= 3) {
     healthFactorColor = palette.success.main;

@@ -42,7 +42,6 @@ export const BorrowedPositionsListMobileItem = (props: BorrowedPositionsItem) =>
       <Row caption={<Trans>APY</Trans>} align="flex-start" captionVariant="description" mb={2}>
         <IncentivesCard
           value={variableBorrowAPY}
-          incentives={[]}
           symbol={symbol}
           variant="secondary14"
         />

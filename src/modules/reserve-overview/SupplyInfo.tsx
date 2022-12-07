@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import {Box, SvgIcon, Typography} from '@mui/material';
-import { IncentivesButton } from 'src/components/incentives/IncentivesButton';
 import { LiquidationPenaltyTooltip } from 'src/components/infoTooltips/LiquidationPenaltyTooltip';
 import { LiquidationThresholdTooltip } from 'src/components/infoTooltips/LiquidationThresholdTooltip';
 import { MaxLTVTooltip } from 'src/components/infoTooltips/MaxLTVTooltip';
@@ -41,11 +40,6 @@ export const SupplyInfo = ({
         </PanelItem>
         <PanelItem title={<Trans>APY</Trans>}>
           <FormattedNumber value={reserve.supplyAPY} percent variant="main16" />
-          <IncentivesButton
-            symbol={reserve.symbol}
-            incentives={[]}
-            displayBlank={true}
-          />
         </PanelItem>
       </Box>
       <Box

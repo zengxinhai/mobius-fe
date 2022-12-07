@@ -48,7 +48,7 @@ export const SupplyAssetsListItem = ({
         }
       />
 
-      <ListAPRColumn value={Number(supplyAPY)} incentives={[]} symbol={symbol} />
+      <ListAPRColumn value={Number(supplyAPY)} symbol={symbol} />
 
       <ListButtonsColumn>
         <Button

@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro';
 import { Box } from '@mui/material';
-import { IncentivesButton } from 'src/components/incentives/IncentivesButton';
 import { VariableAPYTooltip } from 'src/components/infoTooltips/VariableAPYTooltip';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { ReserveSubheader } from 'src/components/ReserveSubheader';
@@ -44,11 +43,6 @@ export const BorrowInfo = ({
           }
         >
           <FormattedNumber value={reserve.variableBorrowAPY} percent variant="main16" />
-          <IncentivesButton
-            symbol={reserve.symbol}
-            incentives={[]}
-            displayBlank={true}
-          />
         </PanelItem>
         {reserve.borrowCapUSD && reserve.borrowCapUSD !== '0' && (
           <PanelItem title={<Trans>Borrow cap</Trans>}>

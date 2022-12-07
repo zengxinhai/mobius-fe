@@ -1,10 +1,10 @@
-import { valueToBigNumber } from '@aave/math-utils';
 import { Trans } from '@lingui/macro';
 import { Box, Typography } from '@mui/material';
 
 import { FormattedNumber } from '../primitives/FormattedNumber';
 import { CapsTooltip } from './CapsTooltip';
 import { CapType } from './helper';
+import BigNumber from "bignumber.js";
 
 interface CapsHintProps {
   capType: CapType;
@@ -24,8 +24,8 @@ export const CapsHint = ({
   const cap = Number(capAmount);
   if (cap <= 0) return null;
 
-  const percentageOfCap = valueToBigNumber(totalAmount).dividedBy(cap).toNumber();
-  const value = valueToBigNumber(cap).minus(totalAmount).multipliedBy('0.995').toNumber();
+  const percentageOfCap = BigNumber(totalAmount).dividedBy(cap).toNumber();
+  const value = BigNumber(cap).minus(totalAmount).multipliedBy('0.995').toNumber();
 
   const title =
     capType === CapType.supplyCap ? (

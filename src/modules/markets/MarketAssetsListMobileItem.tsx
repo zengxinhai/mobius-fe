@@ -42,7 +42,6 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: ReserveData) => {
         <IncentivesCard
           align="flex-end"
           value={reserve.supplyAPY}
-          incentives={[]}
           symbol={reserve.symbol}
           variant="secondary14"
         />
@@ -79,7 +78,6 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: ReserveData) => {
         <IncentivesCard
           align="flex-end"
           value={reserve.borrowingEnabled ? reserve.variableBorrowAPY : '-1'}
-          incentives={[]}
           symbol={reserve.symbol}
           variant="secondary14"
         />

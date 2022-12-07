@@ -1,4 +1,3 @@
-import { valueToBigNumber } from '@aave/math-utils';
 import { Trans } from '@lingui/macro';
 import { Box, Checkbox, Typography } from '@mui/material';
 import BigNumber from 'bignumber.js';
@@ -34,7 +33,7 @@ export const WithdrawModalContent = ({
   const amountRef = useRef<string>();
 
   // calculations
-  const underlyingBalance = valueToBigNumber(userReserve?.underlyingBalance || '0');
+  const underlyingBalance = BigNumber(userReserve?.underlyingBalance || '0');
   let maxAmountToWithdraw = useMaxborrowableAmount(poolReserve.priceInUSD, poolReserve.decimals)
 
   const isMaxSelected = _amount === '-1';
@@ -57,7 +56,7 @@ export const WithdrawModalContent = ({
   const displayRiskCheckbox = Number(healthFactorAfterWithdraw) < 1.5
 
   // calculating input usd value
-  const usdValue = valueToBigNumber(amount).multipliedBy(userReserve?.reserve.priceInUSD || 0);
+  const usdValue = BigNumber(amount).multipliedBy(userReserve?.reserve.priceInUSD || 0);
   
   const blocked = (displayRiskCheckbox && !riskCheckboxAccepted) || BigNumber(amount).gt(maxAmountToWithdraw)
 

@@ -1,6 +1,3 @@
-import {
-  valueToBigNumber,
-} from '@aave/math-utils';
 import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
@@ -14,14 +11,13 @@ import { ModalWrapperProps } from '../FlowCommons/ModalWrapper';
 import { TxSuccessView } from '../FlowCommons/Success';
 import {
   DetailsHFLine,
-  DetailsIncentivesLine,
   DetailsNumberLine,
   TxModalDetails,
 } from '../FlowCommons/TxModalDetails';
 import { SupplyActions } from './SupplyActions';
+import {useHealthFactorAfterSupply} from "../health-factor";
 
 export const SupplyModalContent = ({
-  underlyingAsset,
   poolReserve,
   tokenBalance,
   symbol,
@@ -35,7 +31,6 @@ export const SupplyModalContent = ({
 
   const supplyApy = poolReserve.supplyAPY;
 
-  // Calculate max amount to supply
   const maxAmountToSupply = tokenBalance;
   const isMaxSelected = _amount === '-1';
   const amount = isMaxSelected ? maxAmountToSupply.toString() : _amount;
@@ -48,7 +43,7 @@ export const SupplyModalContent = ({
 
   const amountInUsd = new BigNumber(amount).multipliedBy(poolReserve.priceInUSD);
 
-  let healthFactorAfterDeposit = user ? valueToBigNumber(user.healthFactor) : '-1';
+  let healthFactorAfterDeposit = useHealthFactorAfterSupply(amount, poolReserve.priceInUSD)
 
   if (supplyTxState.success)
     return (
@@ -81,14 +76,10 @@ export const SupplyModalContent = ({
 
       <TxModalDetails>
         <DetailsNumberLine description={<Trans>Supply APY</Trans>} value={supplyApy} percent />
-        <DetailsIncentivesLine
-          incentives={[]}
-          symbol={poolReserve.symbol}
-        />
         <DetailsHFLine
           visibleHfChange={!!_amount}
           healthFactor={user ? user.healthFactor : '-1'}
-          futureHealthFactor={healthFactorAfterDeposit.toString(10)}
+          futureHealthFactor={healthFactorAfterDeposit}
         />
       </TxModalDetails>
 

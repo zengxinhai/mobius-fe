@@ -1,9 +1,9 @@
-import { normalizeBN, valueToBigNumber } from '@aave/math-utils';
 import { Typography } from '@mui/material';
 import { Variant } from '@mui/material/styles/createTypography';
 import { TypographyProps } from '@mui/material/Typography';
 import { TypographyPropsVariantOverrides } from '@mui/material/Typography/Typography';
 import { OverridableStringUnion } from '@mui/types';
+import BigNumber from "bignumber.js";
 
 interface CompactNumberProps {
   value: string | number;
@@ -14,7 +14,7 @@ interface CompactNumberProps {
 const POSTFIXES = ['', 'K', 'M', 'B', 'T', 'P', 'E', 'Z', 'Y'];
 
 function CompactNumber({ value, visibleDecimals = 2, roundDown }: CompactNumberProps) {
-  const bnValue = valueToBigNumber(value);
+  const bnValue = BigNumber(value);
 
   const integerPlaces = bnValue.toFixed(0).length;
   const significantDigitsGroup = Math.min(
@@ -22,7 +22,7 @@ function CompactNumber({ value, visibleDecimals = 2, roundDown }: CompactNumberP
     POSTFIXES.length - 1
   );
   const postfix = POSTFIXES[significantDigitsGroup];
-  let formattedValue = normalizeBN(bnValue, 3 * significantDigitsGroup).toNumber();
+  let formattedValue = bnValue.shiftedBy(3 * significantDigitsGroup).toNumber();
   if (roundDown) {
     // Truncates decimals after the visible decimal point, i.e. 10.237 with 2 decimals becomes 10.23
     formattedValue =

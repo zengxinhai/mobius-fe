@@ -50,7 +50,6 @@ export const MarketAssetsListItem = ({ ...reserve }: ReserveData) => {
       <ListColumn>
         <IncentivesCard
           value={reserve.supplyAPY}
-          incentives={[]}
           symbol={reserve.symbol}
           variant="main16"
           symbolsVariant="secondary16"
@@ -69,7 +68,6 @@ export const MarketAssetsListItem = ({ ...reserve }: ReserveData) => {
               ? reserve.variableBorrowAPY
               : '-1'
           }
-          incentives={[]}
           symbol={reserve.symbol}
           variant="main16"
           symbolsVariant="secondary16"

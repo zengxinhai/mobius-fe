@@ -1,6 +1,3 @@
-import {
-  valueToBigNumber,
-} from '@aave/math-utils';
 import { Trans } from '@lingui/macro';
 import Typography from '@mui/material/Typography';
 import BigNumber from 'bignumber.js';
@@ -20,10 +17,6 @@ import {
 import { RepayActions } from './RepayActions';
 import {useHealthFactorAfterRepay} from "../health-factor";
 
-interface RepayAsset extends Asset {
-  balance: string;
-}
-
 export const RepayModalContent = ({
   poolReserve,
   userReserve,
@@ -41,7 +34,7 @@ export const RepayModalContent = ({
   const debtUSD = new BigNumber(debt)
     .multipliedBy(poolReserve.priceInUSD)
 
-  const safeAmountToRepayAll = valueToBigNumber(debt).multipliedBy('1.0025');
+  const safeAmountToRepayAll = BigNumber(debt).multipliedBy('1.0025');
 
   // calculate max amount abailable to repay
   let maxAmountToRepay = BigNumber.min(tokenBalance, debt);
@@ -65,7 +58,7 @@ export const RepayModalContent = ({
   };
 
   // debt remaining after repay
-  const amountAfterRepay = valueToBigNumber(debt)
+  const amountAfterRepay = BigNumber(debt)
     .minus(amount || '0')
     .toString(10);
   const displayAmountAfterRepay = BigNumber.min(amountAfterRepay, maxAmountToRepay);
@@ -77,7 +70,7 @@ export const RepayModalContent = ({
   const newHF = useHealthFactorAfterRepay(amount, poolReserve.priceInUSD)
 
   // calculating input usd value
-  const usdValue = valueToBigNumber(amount).multipliedBy(poolReserve.priceInUSD);
+  const usdValue = BigNumber(amount).multipliedBy(poolReserve.priceInUSD);
 
   if (repayTxState.success)
     return (

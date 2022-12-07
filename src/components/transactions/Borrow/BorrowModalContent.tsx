@@ -1,6 +1,3 @@
-import {
-  valueToBigNumber,
-} from '@aave/math-utils';
 import { Trans } from '@lingui/macro';
 import { Box, Checkbox, Typography } from '@mui/material';
 import { useRef, useState } from 'react';
@@ -15,7 +12,6 @@ import { ModalWrapperProps } from '../FlowCommons/ModalWrapper';
 import { TxSuccessView } from '../FlowCommons/Success';
 import {
   DetailsHFLine,
-  DetailsIncentivesLine,
   TxModalDetails,
 } from '../FlowCommons/TxModalDetails';
 import { BorrowActions } from './BorrowActions';
@@ -55,7 +51,7 @@ export const BorrowModalContent = ({
     Number(newHealthFactor) < 1.5 && newHealthFactor.toString() !== '-1';
 
   // calculating input usd value
-  const usdValue = valueToBigNumber(amount).multipliedBy(poolReserve.priceInUSD);
+  const usdValue = BigNumber(amount).multipliedBy(poolReserve.priceInUSD);
   
   // block action when risk is not checked or amout to large
   const blocked = (displayRiskCheckbox && !riskCheckboxAccepted) || BigNumber(amount).gt(maxAmountToBorrow)
@@ -89,7 +85,6 @@ export const BorrowModalContent = ({
       />
 
       <TxModalDetails>
-        <DetailsIncentivesLine incentives={[]} symbol={poolReserve.symbol} />
         <DetailsHFLine
           visibleHfChange={!!_amount}
           healthFactor={user.healthFactor}

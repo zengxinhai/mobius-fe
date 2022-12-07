@@ -40,7 +40,6 @@ export const BorrowedPositionsListItem = ({
       
       <ListAPRColumn
         value={variableBorrowAPY}
-        incentives={[]}
         symbol={symbol}
       />
       

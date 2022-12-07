@@ -55,7 +55,6 @@ export const SupplyAssetsListMobileItem = ({
       >
         <IncentivesCard
           value={supplyAPY}
-          incentives={[]}
           symbol={symbol}
           variant="secondary14"
         />

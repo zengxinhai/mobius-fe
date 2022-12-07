@@ -1,4 +1,3 @@
-import { valueToBigNumber } from '@aave/math-utils';
 import { Trans } from '@lingui/macro';
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import * as React from 'react';
@@ -19,6 +18,7 @@ import { useWeb3Context } from 'src/libs/Web3Provider';
 import { FaucetItemLoader } from './FaucetItemLoader';
 import { FaucetMobileItemLoader } from './FaucetMobileItemLoader';
 import {useRootStore} from "../../store/root";
+import BigNumber from "bignumber.js";
 
 export default function FaucetAssetsList() {
   const { reserves, loading } = useAppDataContext();
@@ -34,7 +34,7 @@ export default function FaucetAssetsList() {
   const listData = reserves
     .filter(reserve => reserve.underlyingAsset !== nativeCoin) // we don't need faucet for native coin
     .map((reserve) => {
-      const walletBalance = valueToBigNumber(
+      const walletBalance = BigNumber(
         walletBalances[reserve.underlyingAsset]?.amount || '0'
       );
       return {

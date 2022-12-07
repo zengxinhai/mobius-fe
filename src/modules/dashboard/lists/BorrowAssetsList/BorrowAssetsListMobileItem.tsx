@@ -62,7 +62,6 @@ export const BorrowAssetsListMobileItem = ({
       >
         <IncentivesCard
           value={Number(variableBorrowRate)}
-          incentives={[]}
           symbol={symbol}
           variant="secondary14"
         />

@@ -1,11 +1,9 @@
-import { ReserveIncentiveResponse } from '@aave/math-utils/dist/esm/formatters/incentive/calculate-reserve-incentives';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Trans } from '@lingui/macro';
-import { Box, FormControlLabel, SvgIcon, Switch, Typography } from '@mui/material';
+import { Box, SvgIcon, Typography } from '@mui/material';
 import React, { ReactNode } from 'react';
 
 import { HealthFactorNumber } from '../../HealthFactorNumber';
-import { IncentivesButton } from '../../incentives/IncentivesButton';
 import { FormattedNumber, FormattedNumberProps } from '../../primitives/FormattedNumber';
 import { Row } from '../../primitives/Row';
 import { TokenIcon } from '../../primitives/TokenIcon';
@@ -129,36 +127,6 @@ export const DetailsNumberLineWithSub = ({
   );
 };
 
-interface DetailsIncentivesLineProps {
-  futureIncentives?: ReserveIncentiveResponse[];
-  futureSymbol?: string;
-  incentives?: ReserveIncentiveResponse[];
-  // the token yielding the incentive, not the incentive itself
-  symbol: string;
-}
-
-export const DetailsIncentivesLine = ({
-  incentives,
-  symbol,
-  futureIncentives,
-  futureSymbol,
-}: DetailsIncentivesLineProps) => {
-  if (!incentives || incentives.filter((i) => i.incentiveAPR !== '0').length === 0) return null;
-  return (
-    <Row caption={<Trans>Rewards APR</Trans>} captionVariant="description" mb={4} minHeight={24}>
-      <IncentivesButton incentives={incentives} symbol={symbol} />
-      {futureSymbol && (
-        <>
-          <SvgIcon color="primary" sx={{ fontSize: '14px', mx: 1 }}>
-            <ArrowRightIcon />
-          </SvgIcon>
-          <IncentivesButton incentives={futureIncentives} symbol={futureSymbol} />
-        </>
-      )}
-    </Row>
-  );
-};
-
 export interface DetailsHFLineProps {
   healthFactor: string;
   futureHealthFactor: string;
@@ -201,39 +169,6 @@ export const DetailsHFLine = ({
           {' <1.0'}
         </Typography>
       </Box>
-    </Row>
-  );
-};
-
-export interface DetailsUnwrapSwitchProps {
-  unwrapped: boolean;
-  setUnWrapped: (value: boolean) => void;
-  symbol: string;
-  unwrappedSymbol: string;
-}
-
-export const DetailsUnwrapSwitch = ({
-  unwrapped,
-  setUnWrapped,
-  symbol,
-  unwrappedSymbol,
-}: DetailsUnwrapSwitchProps) => {
-  return (
-    <Row captionVariant="description" mb={4}>
-      <FormControlLabel
-        value="darkmode"
-        control={
-          <Switch
-            disableRipple
-            checked={unwrapped}
-            onClick={() => setUnWrapped(!unwrapped)}
-            data-cy={'wrappedSwitcher'}
-          />
-        }
-        labelPlacement="end"
-        label={''}
-      />
-      <Typography>{`Unwrap ${symbol} (to withdraw ${unwrappedSymbol})`}</Typography>
     </Row>
   );
 };
