@@ -38,6 +38,7 @@ export type ReserveData = {
 };
 
 export type UserAssetsOverview = {
+  assetId: string
   netWorthUSD: string
   netAPY: string
   earnedAPY: string

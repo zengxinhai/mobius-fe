@@ -27,7 +27,7 @@ export const buildInitAssetPayload = (coinType: string, amount: number) => {
   })
 }
 
-export const buildBorrowPayload = (coinType: string, amount: number, assetId: number) => {
+export const buildBorrowPayload = (coinType: string, amount: number, assetId: string) => {
   const decimal = decimals[coinType] || 0;
   const realAmount = BigNumber(amount).shiftedBy(decimal);
   return buildEntryFuncPayload({
@@ -38,7 +38,7 @@ export const buildBorrowPayload = (coinType: string, amount: number, assetId: nu
   })
 }
 
-export const buildRepayPayload = (coinType: string, amount: number, assetId: number) => {
+export const buildRepayPayload = (coinType: string, amount: number, assetId: string) => {
   const decimal = decimals[coinType] || 0;
   const realAmount = BigNumber(amount).shiftedBy(decimal);
   return buildEntryFuncPayload({
@@ -50,7 +50,7 @@ export const buildRepayPayload = (coinType: string, amount: number, assetId: num
 
 }
 
-export const buildSupplyPayload = (coinType: string, amount: number, assetId: number) => {
+export const buildSupplyPayload = (coinType: string, amount: number, assetId: string) => {
   const decimal = decimals[coinType] || 0;
   const realAmount = BigNumber(amount).shiftedBy(decimal);
   return buildEntryFuncPayload({
@@ -61,9 +61,9 @@ export const buildSupplyPayload = (coinType: string, amount: number, assetId: nu
   })
 }
 
-export const buildWithdrawPayload = (coinType: string, amount: number, assetId: number) => {
+export const buildWithdrawPayload = (coinType: string, amount: number, assetId: string) => {
   const decimal = decimals[coinType] || 0;
-  const realAmount = BigNumber(amount).multipliedBy(decimal);
+  const realAmount = BigNumber(amount).shiftedBy(decimal);
   return buildEntryFuncPayload({
     moduleName: marketScriptModule,
     func: 'withdraw',

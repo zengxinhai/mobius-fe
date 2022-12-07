@@ -1,7 +1,7 @@
 import { getAllData } from "./aggr";
 import {devCoins} from './coin-config';
 import { LIQUIDATION_FACTOR } from './config';
-import {ReserveData, emptyReserve, UserReserveData, WalletBalance} from "./types";
+import {ReserveData, emptyReserve, UserReserveData, WalletBalance, UserAssetsOverview} from "./types";
 import { AllData } from './aggr'
 import BigNumber from "bignumber.js";
 import {convertRecordToValueArr} from "./util";
@@ -122,7 +122,7 @@ const formatUserReserves = ({ borrowableAmounts, userAssets }: AllData, reserves
   return userReserves;
 }
 
-const formatUserAssetOverview = ({ userAssets }: AllData, reserves: Record<string, ReserveData>) => {
+const formatUserAssetOverview = ({ userAssets }: AllData, reserves: Record<string, ReserveData>): UserAssetsOverview | undefined => {
   if (!userAssets) return undefined;
   
   const userSupplies = userAssets.collateral;
@@ -180,7 +180,7 @@ const formatUserAssetOverview = ({ userAssets }: AllData, reserves: Record<strin
   const totalLiquidityUSD = totalCollateralUSD.minus(totalDebtUSD);
 
   return {
-    userAssetsId,
+    assetId: userAssetsId.toString(),
     netAPY: netAPY.toString(),
     earnedAPY: earnedAPY.toString(),
     debtAPY: debtAPY.toString(),

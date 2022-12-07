@@ -26,7 +26,7 @@ export const WithdrawActions = ({
 
   const { setMainTxState, mainTxState } =  useModalContext();
   const submitAndWaitTxn = useSubmitAndWaitTxn();
-  const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
+  const [userAssetId, refreshAppData] = useRootStore(state => [state.userAssetsOverview?.assetId, state.refreshAppData]);
 
   const withdrawAction = useCallback(async () => {
     if (userAssetId === undefined) return;

@@ -26,7 +26,7 @@ export const SupplyActions = ({
 }: SupplyActionProps) => {
   const { setMainTxState, mainTxState } =  useModalContext();
   const submitAndWaitTxn = useSubmitAndWaitTxn();
-  const [userAssetId, refreshAppData] = useRootStore(state => [state.assetId, state.refreshAppData]);
+  const [userAssetId, refreshAppData] = useRootStore(state => [state.userAssetsOverview?.assetId, state.refreshAppData]);
 
   const supplyAction = useCallback(async () => {
     setMainTxState({ txHash: '', loading: true, success: false });

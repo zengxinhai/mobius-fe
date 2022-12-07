@@ -13,7 +13,7 @@ import { ListTopInfoItem } from '../ListTopInfoItem';
 import { BorrowedPositionsListItem } from './BorrowedPositionsListItem';
 import { BorrowedPositionsListMobileItem } from './BorrowedPositionsListMobileItem';
 import { BorrowedPositionsItem } from './types';
-import {useRootStore} from "../../../../store/root";
+import {useRootStore} from "src/store/root";
 import BigNumber from "bignumber.js";
 
 export const BorrowedPositionsList = () => {

@@ -7,21 +7,6 @@ export interface UserAssetsOverviewSlice {
   setUserAssetsOverview: (userAssetsOverview: UserAssetsOverview) => void;
 }
 
-const assetsOverview: UserAssetsOverview = {
-  netWorthUSD: '0',
-  netAPY: '0',
-  earnedAPY: '0',
-  debtAPY: '0',
-  totalLiquidityUSD: '0',
-  totalCollateralUSD: '0',
-  totalBorrowsUSD: '0',
-  healthFactor: '0',
-  currentLoanToValue: '0',
-  currentLiquidationThreshold: '0',
-  loanToValue: '0',
-  claimableRewardsUSD: '0',
-}
-
 export const createUserAssetsOverviewSlice: StateCreator<
   RootState,
   [['zustand/devtools', never]],
@@ -29,7 +14,21 @@ export const createUserAssetsOverviewSlice: StateCreator<
   UserAssetsOverviewSlice
   > = (set, get) => {
   return {
-    userAssetsOverview: assetsOverview,
+    userAssetsOverview: {
+      assetId: '',
+      netWorthUSD: '0',
+      netAPY: '0',
+      earnedAPY: '0',
+      debtAPY: '0',
+      currentLoanToValue: '0',
+      loanToValue: '0',
+      currentLiquidationThreshold: '0',
+      totalCollateralUSD: '0',
+      totalBorrowsUSD: '0',
+      totalLiquidityUSD: '0',
+      healthFactor: '0',
+      claimableRewardsUSD: '0',
+    },
     setUserAssetsOverview: (userAssetsOverview) => set({ userAssetsOverview })
   }
 }
