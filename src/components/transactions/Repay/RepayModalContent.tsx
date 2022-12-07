@@ -18,6 +18,7 @@ import {
   TxModalDetails,
 } from '../FlowCommons/TxModalDetails';
 import { RepayActions } from './RepayActions';
+import {useHealthFactorAfterRepay} from "../health-factor";
 
 interface RepayAsset extends Asset {
   balance: string;
@@ -73,7 +74,7 @@ export const RepayModalContent = ({
 
   const maxRepayWithDustRemaining = isMaxSelected && displayAmountAfterRepayInUsd.toNumber() > 0;
 
-  const newHF = '1.2';
+  const newHF = useHealthFactorAfterRepay(amount, poolReserve.priceInUSD)
 
   // calculating input usd value
   const usdValue = valueToBigNumber(amount).multipliedBy(poolReserve.priceInUSD);
