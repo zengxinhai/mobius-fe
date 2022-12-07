@@ -7,8 +7,8 @@ export type SupplyAssetsItem = {
   walletBalanceUSD: string;
   availableToDeposit: string;
   availableToDepositUSD: string;
-  supplyAPY: number | string;
-  totalLiquidity: string | number;
-  supplyCap: string | number;
+  supplyAPY: string;
+  totalLiquidity: string;
+  supplyCap: string;
   isActive?: boolean;
 };

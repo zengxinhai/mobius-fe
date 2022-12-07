@@ -1,9 +1,6 @@
 import { StateCreator } from 'zustand'
 import { RootState } from './root'
-import { getAllData } from "../mobius-contract/aggr";
-import { devCoins } from '../mobius-contract/coin-config';
-import { LIQUIDATION_FACTOR } from '../mobius-contract/config';
-import {ReserveData, emptyReserve, UserReserveData, WalletBalance} from "./types";
+import { getAppData } from '../mobius-contract/formatted-data'
 
 export interface DataRefreshSlice {
   isRefreshingAppData: boolean
@@ -20,181 +17,23 @@ export const createDataRefreshSlice: StateCreator<
     const account = get().account;
     if (!account) return;
     set({ isRefreshingAppData: true })
-    const [
-      coinAmounts,
+    const {
+      walletBalances,
       assetOverview,
-      rateList,
-      priceList,
-      userAssets,
-      borrowableAmountsList] = await getAllData(account);
+      reserves,
+      userReserves,
+      userAssetOverview
+    } = await getAppData(account);
     set({ isRefreshingAppData: false })
+    
 
-    const walletBalances: Record<string, WalletBalance> = devCoins.reduce((accu, coin) => {
-      const coinAmount = coinAmounts[coin.type] / 10 ** coin.decimal || 0;
-      const balance: WalletBalance = {
-        amount: coinAmount.toString(),
-        amountUSD: '',
-      }
-      return {...accu, [coin.type]: balance}
-    }, {} as Record<string, WalletBalance>)
-    
-    priceList && priceList.forEach(price => {
-      const walletBalance = walletBalances[price.tokenType];
-      if (walletBalance) {
-        walletBalance.amountUSD = (Number(walletBalance.amount) * price.tokenPriceUSD).toString();
-      }
-    })
-    
     get().setWalletBalances(walletBalances);
     
-    assetOverview && get().setOverview({
-      totalMarketSizeUSD: assetOverview.totalSuppliedUSD,
-      totalBorrowsUSD: assetOverview.totalBorrowedUSD,
-      totalAvailableUSD: assetOverview.totalSuppliedUSD - assetOverview.totalBorrowedUSD
-    })
+    assetOverview && get().setOverview(assetOverview)
     
-    const reserves: Record<string, ReserveData> = devCoins.reduce((accu, coin) => {
-      const reserve = {
-        ...emptyReserve,
-        name: coin.name,
-        symbol: coin.symbol,
-        iconSymbol: coin.symbol,
-        decimals: coin.decimal,
-        underlyingAsset: coin.type
-      }
-      return {...accu, [coin.type]: reserve}
-    }, {} as Record<string, ReserveData>);
-    
-    rateList && rateList.forEach(rate => {
-      const reserve = reserves[rate.tokenType];
-      if (reserve) {
-        reserve.variableBorrowAPY = rate.borrowAPY.toString()
-        reserve.supplyAPY = rate.supplyAPY.toString()
-        reserve.variableBorrowRate = rate.borrowAPY.toString()
-      }
-    })
-    
-    borrowableAmountsList && borrowableAmountsList.forEach(amountInfo => {
-      const reserve = reserves[amountInfo.tokenType];
-      if (reserve) {
-        reserve.availableBorrows = amountInfo.borrowableAmount / 10 ** reserve.decimals;
-        reserve.totalBorrows = (amountInfo.borrowedAmount / 10 ** reserve.decimals).toString();
-        reserve.totalDebt = amountInfo.borrowableAmount / 10 ** reserve.decimals;
-        reserve.borrowUsageRatio = (amountInfo.borrowedAmount / (amountInfo.borrowableAmount + amountInfo.borrowedAmount)).toString();
-        reserve.unborrowedLiquidity = amountInfo.borrowableAmount / 10 ** reserve.decimals;
-        reserve.totalLiquidity = amountInfo.borrowableAmount / 10 ** reserve.decimals;
-      }
-    })
-    
-    priceList && priceList.forEach(price => {
-      const reserve = reserves[price.tokenType];
-      if (reserve) {
-        reserve.priceInUSD = price.tokenPriceUSD.toString();
-        reserve.availableBorrowsInUSD = Number(reserve.availableBorrows) * Number(reserve.priceInUSD);
-        reserve.totalDebtUSD = (Number(reserve.totalDebt) * Number(reserve.priceInUSD)).toString();
-        reserve.totalLiquidityUSD = (Number(reserve.totalLiquidity) * Number(reserve.priceInUSD)).toString();
-      }
-    })
-    
-    const userReserves: Record<string, UserReserveData> = devCoins.reduce((accu, coin) => {
-      const userReserve: UserReserveData = {
-        underlyingBalance: '0',
-        variableBorrows: '0',
-        borrowableAmount: 0,
-        reserve: reserves[coin.type]
-      }
-      return {...accu, [coin.type]: userReserve }
-    }, {} as Record<string, UserReserveData>)
-
-    borrowableAmountsList && borrowableAmountsList.forEach(amountInfo => {
-      const userReserve = userReserves[amountInfo.tokenType];
-      if (userReserve) {
-        userReserve.borrowableAmount = amountInfo.userBorrowableAmount / 10 ** userReserve.reserve.decimals;
-      }
-    })
-
-    if (userAssets) {
-      const userSupplies = userAssets.collateral;
-      const userBorrows = userAssets.debt;
-      // used for contract to idenfity user data
-      const userAssetsId = userAssets.assetNftId;
-      get().setAssetId(userAssetsId);
-  
-      let userBorrowedUSD = 0, userBorrowInterestUSD = 0, userSuppliedUSD = 0, userSuppliedInterestUSD = 0;
-      userSupplies.forEach(supplied => {
-        const userReserve = userReserves[supplied.tokenType];
-        if (userReserve) {
-          const decimal = userReserve.reserve.decimals;
-          userReserve.underlyingBalance = ((Number(supplied.tokenAmount) + Number(supplied.interest)) / 10 ** decimal).toString();
-          userSuppliedUSD += (Number(supplied.tokenAmount) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
-          userSuppliedInterestUSD += (Number(supplied.interest) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
-        }
-      })
-      userBorrows.forEach(borrowed => {
-        const userReserve = userReserves[borrowed.tokenType];
-        if (userReserve) {
-          const decimal = userReserve.reserve.decimals;
-          userReserve.variableBorrows = ((Number(borrowed.tokenAmount) + Number(borrowed.interest)) / 10 ** decimal).toString();
-          userBorrowedUSD += (Number(borrowed.tokenAmount) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
-          userBorrowInterestUSD += (Number(borrowed.interest) / 10 ** decimal) * Number(userReserve.reserve.priceInUSD);
-        }
-      })
-      const netWorthUSD = userSuppliedUSD + userSuppliedInterestUSD - userBorrowedUSD - userBorrowInterestUSD;
-      const healthFactor = (userSuppliedUSD + userSuppliedInterestUSD) * LIQUIDATION_FACTOR / (userBorrowInterestUSD + userBorrowedUSD);
-      const currentLoanToValue = (userBorrowedUSD + userBorrowInterestUSD).toString();
-      const currentLiquidationThreshold = (userSuppliedUSD + userSuppliedInterestUSD) * LIQUIDATION_FACTOR;
-      const loanToValue = currentLoanToValue;
-
-      let earnedAPYNumerator = 0, earnedAPYDenominator = 0;
-      let debtAPYNumerator = 0, debtAPYDenominator = 0;
-      for (const tokenType in userReserves) {
-        const userReserve = userReserves[tokenType];
-        const price = Number(userReserve.reserve.priceInUSD);
-        const supplied = Number(userReserve.underlyingBalance);
-        const borrowed = Number(userReserve.variableBorrows);
-        const supplyAPY = Number(userReserve.reserve.supplyAPY);
-        const borrowAPY = Number(userReserve.reserve.variableBorrowAPY);
-        const suppliedUSD = price * supplied;
-        const borrowedUSD = price * borrowed;
-
-        earnedAPYNumerator += suppliedUSD * supplyAPY;
-        earnedAPYDenominator += suppliedUSD;
-
-        debtAPYNumerator += borrowedUSD * borrowAPY;
-        debtAPYDenominator += borrowedUSD;
-      }
-      const earnedAPY = earnedAPYNumerator / earnedAPYDenominator;
-      const debtAPY = debtAPYNumerator / debtAPYDenominator;
-      const netAPY = (earnedAPYNumerator - debtAPYNumerator) / earnedAPYDenominator;
-
-      const totalCollateralUSD = earnedAPYDenominator;
-      const totalBorrowsUSD = debtAPYDenominator;
-      const totalLiquidityUSD = totalCollateralUSD - totalBorrowsUSD;
-
-        get().setUserAssetsOverview({
-        netAPY,
-        earnedAPY,
-        debtAPY,
-        netWorthUSD,
-        totalLiquidityUSD,
-        totalCollateralUSD,
-        totalBorrowsUSD,
-        claimableRewardsUSD: 0, // We don't have token incentives for now
-        healthFactor: healthFactor.toString(),
-        currentLiquidationThreshold: currentLiquidationThreshold.toString(),
-        loanToValue,
-        currentLoanToValue: currentLoanToValue.toString(),
-      })
-    }
-    const convertRecordToValueArr = <T>(r: Record<string, T>): T[] => {
-      let res: T[] = [];
-      for(const key in r) {
-        res.push(r[key])
-      }
-      return res;
-    }
-    get().setReserves(convertRecordToValueArr(reserves));
-    get().setUserReserves(convertRecordToValueArr(userReserves));
+    get().setReserves(reserves);
+    get().setUserReserves(userReserves);
+    userAssetOverview && get().setUserAssetsOverview(userAssetOverview);
   }
   return { refreshAppData, isRefreshingAppData: false }
 }

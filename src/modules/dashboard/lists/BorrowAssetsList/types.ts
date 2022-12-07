@@ -4,9 +4,9 @@ export type BorrowAssetsItem = {
   name: string;
   iconSymbol: string;
   underlyingAsset: string;
-  variableBorrowRate: number | string;
-  availableBorrows: number | string;
-  availableBorrowsInUSD: number | string;
+  variableBorrowRate: string;
+  availableBorrows: string;
+  availableBorrowsInUSD: string;
   borrowCap: string;
   totalBorrows: string;
   totalLiquidityUSD: string;

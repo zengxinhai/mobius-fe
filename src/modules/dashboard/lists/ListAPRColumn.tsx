@@ -4,7 +4,7 @@ import { IncentivesCard } from 'src/components/incentives/IncentivesCard';
 import { ListColumn } from 'src/components/lists/ListColumn';
 
 interface ListAPRColumnProps {
-  value: number;
+  value: number | string;
   incentives?: ReserveIncentiveResponse[];
   symbol: string;
 }

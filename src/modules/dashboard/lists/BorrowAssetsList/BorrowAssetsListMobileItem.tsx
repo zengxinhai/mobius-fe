@@ -35,8 +35,8 @@ export const BorrowAssetsListMobileItem = ({
     >
       <ListValueRow
         title={<Trans>Available to borrow</Trans>}
-        value={Number(availableBorrows)}
-        subValue={Number(availableBorrowsInUSD)}
+        value={availableBorrows}
+        subValue={availableBorrowsInUSD}
         disabled={Number(availableBorrows) === 0}
         capsComponent={
           <CapsHint

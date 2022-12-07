@@ -16,30 +16,33 @@ function zip(coins: CoinMeta[], balances: number[]) {
 }
 
 export const getAllData = async (address: string) => {
-  const coinBalances = aptox.checkBalances(devCoins.map(coin => coin.type), address)
+  const coinBalancesP = aptox.checkBalances(devCoins.map(coin => coin.type), address)
     .then(balances => zip(devCoins, balances))
   
-  const assetOverview = query.getCurrentAssetsOverview()
+  const assetOverviewP = query.getCurrentAssetsOverview()
     .then(res => res.ok ? convertAssetsOverview(res.data) : undefined);
   
-  const rateList = query.getCurrentRateList()
+  const rateListP = query.getCurrentRateList()
     .then(res => res.ok ? convertRateList(res.data) : undefined);
   
-  const priceList = query.getCurrentToUsdPriceList()
+  const priceListP = query.getCurrentToUsdPriceList()
     .then(res => res.ok ? convertToUSDPriceList(res.data): undefined);
   
-  const userAssets = query.getUserAssets(address)
+  const userAssetsP = query.getUserAssets(address)
     .then(res => res.ok ? convertAssetNftGallery(res.data) : undefined);
   
-  const borrowableAmountsList = query.getCurrentBorrowableAmountsList(address)
+  const borrowableAmountsListP = query.getCurrentBorrowableAmountsList(address)
     .then(res => res.ok ? convertBorrowableAmountsList(res.data) : undefined)
   
-  return Promise.all([
-    coinBalances,
-    assetOverview,
-    rateList,
-    priceList,
-    userAssets,
-    borrowableAmountsList,
+  const [coinBalances, assetsOverview, rateList, priceList, userAssets, borrowableAmounts] = await Promise.all([
+    coinBalancesP,
+    assetOverviewP,
+    rateListP,
+    priceListP,
+    userAssetsP,
+    borrowableAmountsListP,
   ])
+  return { coinBalances, assetsOverview, rateList, priceList, userAssets, borrowableAmounts }
 }
+
+export type AllData = Awaited<ReturnType<typeof getAllData>>

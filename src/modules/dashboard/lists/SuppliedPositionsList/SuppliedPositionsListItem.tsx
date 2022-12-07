@@ -25,13 +25,13 @@ export const SuppliedPositionsListItem = ({
     >
       <ListValueColumn
         symbol={reserve.iconSymbol}
-        value={Number(underlyingBalance)}
-        subValue={Number(underlyingBalanceUSD)}
+        value={underlyingBalance}
+        subValue={underlyingBalanceUSD}
         disabled={Number(underlyingBalance) === 0}
       />
 
       <ListAPRColumn
-        value={Number(reserve.supplyAPY)}
+        value={reserve.supplyAPY}
         incentives={[]}
         symbol={reserve.symbol}
       />

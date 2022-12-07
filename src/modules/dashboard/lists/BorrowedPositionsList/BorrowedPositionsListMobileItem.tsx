@@ -34,14 +34,14 @@ export const BorrowedPositionsListMobileItem = (props: BorrowedPositionsItem) =>
     >
       <ListValueRow
         title={<Trans>Debt</Trans>}
-        value={Number(totalBorrows)}
-        subValue={Number(totalBorrowsUSD)}
+        value={totalBorrows}
+        subValue={totalBorrowsUSD}
         disabled={Number(totalBorrows) === 0}
       />
 
       <Row caption={<Trans>APY</Trans>} align="flex-start" captionVariant="description" mb={2}>
         <IncentivesCard
-          value={Number(variableBorrowAPY)}
+          value={variableBorrowAPY}
           incentives={[]}
           symbol={symbol}
           variant="secondary14"

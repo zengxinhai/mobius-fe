@@ -29,8 +29,8 @@ export const SuppliedPositionsListMobileItem = ({
     >
       <ListValueRow
         title={<Trans>Supply balance</Trans>}
-        value={Number(underlyingBalance)}
-        subValue={Number(underlyingBalanceUSD)}
+        value={underlyingBalance}
+        subValue={underlyingBalanceUSD}
         disabled={Number(underlyingBalance) === 0}
       />
 
@@ -41,7 +41,7 @@ export const SuppliedPositionsListMobileItem = ({
         mb={2}
       >
         <IncentivesCard
-          value={Number(supplyAPY)}
+          value={supplyAPY}
           incentives={[]}
           symbol={symbol}
           variant="secondary14"

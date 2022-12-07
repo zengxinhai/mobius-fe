@@ -34,12 +34,12 @@ export const BorrowedPositionsListItem = ({
     >
       <ListValueColumn
         symbol={symbol}
-        value={Number(variableBorrows)}
-        subValue={Number(variableBorrowsUSD)}
+        value={variableBorrows}
+        subValue={variableBorrowsUSD}
       />
       
       <ListAPRColumn
-        value={Number(variableBorrowAPY)}
+        value={variableBorrowAPY}
         incentives={[]}
         symbol={symbol}
       />

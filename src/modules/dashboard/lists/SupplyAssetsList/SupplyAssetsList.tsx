@@ -35,10 +35,10 @@ export const SupplyAssetsList = () => {
     const tokenAmountUSD = walletBalances[r.underlyingAsset].amountUSD;
     return {
       ...r,
-      walletBalance: tokenAmount.toString(),
-      walletBalanceUSD: tokenAmountUSD.toString(),
-      availableToDeposit: tokenAmount.toString(),
-      availableToDepositUSD: tokenAmountUSD.toString(),
+      walletBalance: tokenAmount,
+      walletBalanceUSD: tokenAmountUSD,
+      availableToDeposit: tokenAmount,
+      availableToDepositUSD: tokenAmountUSD,
     }
   })
 

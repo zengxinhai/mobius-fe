@@ -34,7 +34,7 @@ export const SupplyAssetsListMobileItem = ({
     >
       <ListValueRow
         title={<Trans>Supply balance</Trans>}
-        value={Number(walletBalance)}
+        value={walletBalance}
         subValue={walletBalanceUSD}
         disabled={Number(walletBalance) === 0}
         capsComponent={
@@ -54,7 +54,7 @@ export const SupplyAssetsListMobileItem = ({
         mb={2}
       >
         <IncentivesCard
-          value={Number(supplyAPY)}
+          value={supplyAPY}
           incentives={[]}
           symbol={symbol}
           variant="secondary14"

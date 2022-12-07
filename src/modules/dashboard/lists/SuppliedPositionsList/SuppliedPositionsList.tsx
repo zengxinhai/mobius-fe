@@ -2,8 +2,6 @@ import { Trans } from '@lingui/macro';
 import { Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Fragment } from 'react';
 
-import { CollateralSwitchTooltip } from 'src/components/infoTooltips/CollateralSwitchTooltip';
-import { CollateralTooltip } from 'src/components/infoTooltips/CollateralTooltip';
 import { TotalSupplyAPYTooltip } from 'src/components/infoTooltips/TotalSupplyAPYTooltip';
 import { ListWrapper } from 'src/components/lists/ListWrapper';
 import { useAppDataContext } from 'src/hooks/useAppDataProvider';
@@ -54,11 +52,11 @@ export const SuppliedPositionsList = () => {
             <>
               <ListTopInfoItem
                 title={<Trans>Balance</Trans>}
-                value={user?.totalLiquidityUSD || 0}
+                value={user?.totalLiquidityUSD || '0'}
               />
               <ListTopInfoItem
                 title={<Trans>APY</Trans>}
-                value={user?.earnedAPY || 0}
+                value={user?.earnedAPY || '0'}
                 percent
                 tooltip={<TotalSupplyAPYTooltip />}
               />

@@ -4,7 +4,6 @@ import { Fragment } from 'react';
 
 import { useAppDataContext } from 'src/hooks/useAppDataProvider'
 import { APYTypeTooltip } from 'src/components/infoTooltips/APYTypeTooltip';
-import { BorrowPowerTooltip } from 'src/components/infoTooltips/BorrowPowerTooltip';
 import { TotalBorrowAPYTooltip } from 'src/components/infoTooltips/TotalBorrowAPYTooltip';
 import { ListWrapper } from 'src/components/lists/ListWrapper';
 import { DashboardContentNoData } from '../../DashboardContentNoData';

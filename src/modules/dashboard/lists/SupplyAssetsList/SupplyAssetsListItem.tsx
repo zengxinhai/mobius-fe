@@ -34,7 +34,7 @@ export const SupplyAssetsListItem = ({
     >
       <ListValueColumn
         symbol={symbol}
-        value={Number(walletBalance)}
+        value={walletBalance}
         subValue={walletBalanceUSD}
         withTooltip
         disabled={Number(walletBalance) === 0}

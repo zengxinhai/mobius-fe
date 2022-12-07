@@ -34,8 +34,8 @@ export const BorrowAssetsListItem = ({
     >
       <ListValueColumn
         symbol={symbol}
-        value={Number(availableBorrows)}
-        subValue={Number(availableBorrowsInUSD)}
+        value={availableBorrows}
+        subValue={availableBorrowsInUSD}
         disabled={Number(availableBorrows) === 0}
         withTooltip
         capsComponent={
