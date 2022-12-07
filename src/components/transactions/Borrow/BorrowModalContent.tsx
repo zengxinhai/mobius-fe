@@ -20,6 +20,7 @@ import {
 } from '../FlowCommons/TxModalDetails';
 import { BorrowActions } from './BorrowActions';
 import BigNumber from "bignumber.js";
+import { useMaxborrowableAmount } from "./hooks";
 
 export const BorrowModalContent = ({
   poolReserve,
@@ -34,8 +35,7 @@ export const BorrowModalContent = ({
   const amountRef = useRef<string>();
 
   // amount calculations
-  const maxAmountToBorrow = userReserve.borrowableAmount;
-  const formattedMaxAmountToBorrow = maxAmountToBorrow;
+  const maxAmountToBorrow = useMaxborrowableAmount(poolReserve.priceInUSD, poolReserve.decimals)
 
   const isMaxSelected = _amount === '-1';
   const amount = isMaxSelected ? maxAmountToBorrow : _amount;
@@ -74,7 +74,7 @@ export const BorrowModalContent = ({
         usdValue={usdValue.toString(10)}
         assets={[
           {
-            balance: formattedMaxAmountToBorrow,
+            balance: userReserve.underlyingBalance,
             symbol: symbol,
             iconSymbol: poolReserve.iconSymbol,
           },

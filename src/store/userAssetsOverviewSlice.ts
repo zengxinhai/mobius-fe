@@ -17,6 +17,7 @@ export const createUserAssetsOverviewSlice: StateCreator<
     userAssetsOverview: {
       assetId: '',
       netWorthUSD: '0',
+      borrowPowerUSD: '0',
       netAPY: '0',
       earnedAPY: '0',
       debtAPY: '0',

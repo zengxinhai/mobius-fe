@@ -40,6 +40,7 @@ export type ReserveData = {
 export type UserAssetsOverview = {
   assetId: string
   netWorthUSD: string
+  borrowPowerUSD: string
   netAPY: string
   earnedAPY: string
   debtAPY: string
