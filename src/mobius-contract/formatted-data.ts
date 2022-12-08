@@ -165,7 +165,7 @@ const formatUserAssetOverview = ({ userAssets }: AllData, reserves: Record<strin
     }
   })
   const netWorthUSD = totalCollateralUSD.minus(totalDebtUSD);
-  const borrowPowerUSD = totalCollateralUSD.multipliedBy(LIQUIDATION_FACTOR).minus(totalDebtUSD);
+  const borrowPowerUSD = totalCollateralUSD.minus(totalDebtUSD.div(LIQUIDATION_FACTOR));
   const healthFactor = totalCollateralUSD.multipliedBy(LIQUIDATION_FACTOR).div(totalDebtUSD);
   const currentLiquidationThreshold = totalCollateralUSD.multipliedBy(LIQUIDATION_FACTOR);
   const currentLoanToValue = totalDebtUSD;

@@ -1,10 +1,13 @@
 import {useRootStore} from "../../../store/root";
 import BigNumber from "bignumber.js";
+import {ReserveData} from "../../../mobius-contract/types";
 
-export const useMaxborrowableAmount = (price: string, decimal: number) => {
-  const bigNumber = BigNumber.clone({ DECIMAL_PLACES: decimal, ROUNDING_MODE: BigNumber.ROUND_DOWN })
+export const useMaxborrowableAmount = (reserve: ReserveData) => {
+  const bigNumber = BigNumber.clone({ DECIMAL_PLACES: reserve.decimals, ROUNDING_MODE: BigNumber.ROUND_DOWN })
   const borrowPowerUSD = useRootStore(state => state.userAssetsOverview.borrowPowerUSD);
-  return bigNumber(borrowPowerUSD).isPositive()
-    ? bigNumber(borrowPowerUSD).div(price).div(1.01).toString()
-    : '0'
+  const borrowPower = bigNumber(borrowPowerUSD).isPositive()
+    ? bigNumber(borrowPowerUSD).div(reserve.priceInUSD).div(1.01)
+    : bigNumber(0)
+  
+  return bigNumber.min(borrowPower, reserve.availableBorrows).toString()
 }

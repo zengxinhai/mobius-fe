@@ -3,7 +3,6 @@ import { BoxProps } from '@mui/material';
 import { ReserveData } from 'src/store/types';
 
 import { TxActionsWrapper } from '../TxActionsWrapper';
-import {useWallet} from "@manahippo/aptos-wallet-adapter";
 import {useCallback} from "react";
 import {useModalContext} from "../../../hooks/useModal";
 import {buildWithdrawPayload} from "../../../mobius-contract";

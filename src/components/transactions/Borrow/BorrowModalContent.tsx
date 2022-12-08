@@ -32,7 +32,7 @@ export const BorrowModalContent = ({
   const amountRef = useRef<string>();
 
   // amount calculations
-  const maxAmountToBorrow = useMaxborrowableAmount(poolReserve.priceInUSD, poolReserve.decimals)
+  const maxAmountToBorrow = useMaxborrowableAmount(poolReserve)
 
   const isMaxSelected = _amount === '-1';
   const amount = isMaxSelected ? maxAmountToBorrow : _amount;

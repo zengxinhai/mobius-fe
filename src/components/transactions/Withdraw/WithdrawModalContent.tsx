@@ -17,7 +17,7 @@ import {
 } from '../FlowCommons/TxModalDetails';
 import { WithdrawActions } from './WithdrawActions';
 import {useHealthFactorAfterWithdraw} from "../health-factor";
-import {useMaxborrowableAmount} from "../Borrow/hooks";
+import {useMaxWithdrawAmount} from "./hooks";
 
 export const WithdrawModalContent = ({
   poolReserve,
@@ -34,7 +34,7 @@ export const WithdrawModalContent = ({
 
   // calculations
   const underlyingBalance = BigNumber(userReserve?.underlyingBalance || '0');
-  let maxAmountToWithdraw = useMaxborrowableAmount(poolReserve.priceInUSD, poolReserve.decimals)
+  let maxAmountToWithdraw = useMaxWithdrawAmount(userReserve);
 
   const isMaxSelected = _amount === '-1';
   const amount = isMaxSelected ? maxAmountToWithdraw : _amount;
