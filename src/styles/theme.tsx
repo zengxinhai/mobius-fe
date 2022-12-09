@@ -35,14 +35,14 @@ declare module '@mui/material/styles/createPalette' {
 
   interface Palette {
     gradients: {
-      aaveGradient: string;
+      mobiusGradient: string;
       newGradient: string;
     };
   }
 
   interface PaletteOptions {
     gradients: {
-      aaveGradient: string;
+      mobiusGradient: string;
       newGradient: string;
     };
   }
@@ -174,10 +174,10 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
         muted: getColor('#A5A8B6', '#8E92A3'),
       },
       background: {
-        default: getColor('#F1F1F3', '#1B2030'),
-        paper: getColor('#FFFFFF', '#292E41'),
+        default: getColor('#F1F1F3', '#0D131A'),
+        paper: getColor('#FFFFFF', '#1D2833'),
         surface: getColor('#F7F7F9', '#383D51'),
-        header: getColor('#2B2D3C', '#1B2030'),
+        header: getColor('#2B2D3C', '#0D131A'),
         disabled: getColor('#EAEBEF', '#EBEBEF14'),
       },
       divider: getColor('#EAEBEF', '#EBEBEF14'),
@@ -190,7 +190,7 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
         focus: getColor('#F1F1F3', '#EBEBEF1F'),
       },
       gradients: {
-        aaveGradient: 'linear-gradient(248.86deg, #B6509E 10.51%, #2EBAC6 93.41%)',
+        mobiusGradient: 'linear-gradient(248.86deg, #B6509E 10.51%, #2EBAC6 93.41%)',
         newGradient: 'linear-gradient(79.67deg, #8C3EBC 0%, #007782 95.82%)',
       },
     },
@@ -391,7 +391,7 @@ export function getThemedComponents(theme: Theme) {
         },
         styleOverrides: {
           root: {
-            borderRadius: '4px',
+            borderRadius: '28px',
           },
           sizeLarge: {
             ...theme.typography.buttonL,
@@ -423,10 +423,10 @@ export function getThemedComponents(theme: Theme) {
             props: { variant: 'gradient' },
             style: {
               color: theme.palette.common.white,
-              background: theme.palette.gradients.aaveGradient,
+              background: theme.palette.gradients.mobiusGradient,
               transition: 'all 0.2s ease',
               '&:hover, &.Mui-focusVisible': {
-                background: theme.palette.gradients.aaveGradient,
+                background: theme.palette.gradients.mobiusGradient,
                 opacity: '0.9',
               },
             },
@@ -812,10 +812,10 @@ export function getThemedComponents(theme: Theme) {
       MuiLinearProgress: {
         styleOverrides: {
           bar1Indeterminate: {
-            background: theme.palette.gradients.aaveGradient,
+            background: theme.palette.gradients.mobiusGradient,
           },
           bar2Indeterminate: {
-            background: theme.palette.gradients.aaveGradient,
+            background: theme.palette.gradients.mobiusGradient,
           },
         },
       },
