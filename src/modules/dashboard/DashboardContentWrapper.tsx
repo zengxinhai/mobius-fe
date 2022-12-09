@@ -24,12 +24,12 @@ export const DashboardContentWrapper = ({ isBorrow }: DashboardContentWrapperPro
     >
       <Box sx={{ display: { xs: isBorrow ? 'none' : 'block', lg: 'block' }, width: paperWidth }}>
         <SuppliedPositionsList />
-        <SupplyAssetsList />
+        {/*<SupplyAssetsList />*/}
       </Box>
 
       <Box sx={{ display: { xs: !isBorrow ? 'none' : 'block', lg: 'block' }, width: paperWidth }}>
         <BorrowedPositionsList />
-        <BorrowAssetsList />
+        {/*<BorrowAssetsList />*/}
       </Box>
     </Box>
   );

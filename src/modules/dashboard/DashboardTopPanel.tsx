@@ -1,14 +1,11 @@
 import { Trans } from '@lingui/macro';
-import { Box, Button, useMediaQuery, useTheme } from '@mui/material';
+import {Box, Button, useMediaQuery, useTheme} from '@mui/material';
 import * as React from 'react';
 import { useState, useContext } from 'react';
 import { NetAPYTooltip } from 'src/components/infoTooltips/NetAPYTooltip';
 import { web3Context } from 'src/libs/Web3Provider';
 
 import ClaimGiftIcon from '../../../public/icons/markets/claim-gift-icon.svg';
-import EmptyHeartIcon from '../../../public/icons/markets/empty-heart-icon.svg';
-import NetAPYIcon from '../../../public/icons/markets/net-apy-icon.svg';
-import WalletIcon from '../../../public/icons/markets/wallet-icon.svg';
 
 import { HealthFactorNumber } from '../../components/HealthFactorNumber';
 import { FormattedNumber } from '../../components/primitives/FormattedNumber';
@@ -43,7 +40,7 @@ export const DashboardTopPanel = () => {
       <TopInfoPanel
         pageTitle={<Trans>Dashboard</Trans>}
       >
-        <TopInfoPanelItem icon={<WalletIcon />} title={<Trans>Net worth</Trans>} loading={false}>
+        <TopInfoPanelItem withoutIconWrapper title={<Trans>Net worth</Trans>} loading={false}>
           {currentAccount ? (
             <FormattedNumber
               value={userNetWorthUSD}
@@ -60,7 +57,7 @@ export const DashboardTopPanel = () => {
         </TopInfoPanelItem>
 
         <TopInfoPanelItem
-          icon={<NetAPYIcon />}
+          withoutIconWrapper
           title={
             <div style={{ display: 'flex' }}>
               <Trans>Net APY</Trans>
@@ -85,7 +82,7 @@ export const DashboardTopPanel = () => {
 
         {currentAccount && (
           <TopInfoPanelItem
-            icon={<EmptyHeartIcon />}
+            withoutIconWrapper
             title={
               <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
                 <Trans>Health factor</Trans>

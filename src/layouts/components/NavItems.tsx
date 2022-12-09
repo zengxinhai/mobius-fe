@@ -1,5 +1,6 @@
 import { useLingui } from '@lingui/react';
 import { Button, List, ListItem, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import { Link } from 'src/components/primitives/Link';
@@ -14,6 +15,9 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
 
   const { breakpoints } = useTheme();
   const md = useMediaQuery(breakpoints.down('md'));
+  
+  const router = useRouter();
+  const currentPath = router.pathname;
 
   return (
     <List
@@ -53,25 +57,9 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
                 href={item.link}
                 disabled={item.disabled}
                 sx={(theme) => ({
-                  color: '#F1F1F3',
-                  p: '6px 8px',
-                  position: 'relative',
-                  '.active&:after, &:hover&:after': {
-                    transform: 'scaleX(1)',
-                    transformOrigin: 'bottom left',
-                  },
-                  '&:after': {
-                    content: "''",
-                    position: 'absolute',
-                    width: '100%',
-                    transform: 'scaleX(0)',
-                    height: '2px',
-                    bottom: '-6px',
-                    left: '0',
-                    background: theme.palette.gradients.mobiusGradient,
-                    transformOrigin: 'bottom right',
-                    transition: 'transform 0.25s ease-out',
-                  },
+                  background: item.link === currentPath ? theme.palette.background.grey : undefined,
+                  p: '1px 12px',
+                  fontWeight: theme.typography.fontWeightBold
                 })}
               >
                 {i18n._(item.title)}

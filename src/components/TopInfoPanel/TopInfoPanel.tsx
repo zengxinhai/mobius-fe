@@ -15,12 +15,10 @@ export const TopInfoPanel = ({
 }: TopInfoPanelProps) => {
   return (
     <Box
-      sx={{
-        bgcolor: 'background.header',
-        pt: { xs: 10, md: 12 },
-        pb: { xs: 18, md: 20, lg: '94px', xl: '92px', xxl: '96px' },
-        color: '#F1F1F3',
-      }}
+      sx={(theme) =>({
+        pt: { xs: 6, md: 8 },
+        pb: { xs: 8, md: 10, lg: '74px', xl: '72px', xxl: '76px' },
+      })}
     >
       <Container sx={{ pb: 0 }}>
         <Box sx={{ px: { xs: 4, xsm: 6 } }}>

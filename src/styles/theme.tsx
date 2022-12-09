@@ -23,6 +23,7 @@ declare module '@mui/material/styles/createPalette' {
 
   interface TypeText {
     muted: string;
+    contrastPrimary: string;
   }
 
   interface TypeBackground {
@@ -31,6 +32,7 @@ declare module '@mui/material/styles/createPalette' {
     surface: string;
     header: string;
     disabled: string;
+    grey: string;
   }
 
   interface Palette {
@@ -169,6 +171,7 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
       },
       text: {
         primary: getColor('#303549', '#F1F1F3'),
+        contrastPrimary: getColor('#F1F1F3','#303549'),
         secondary: getColor('#62677B', '#A5A8B6'),
         disabled: getColor('#D2D4DC', '#62677B'),
         muted: getColor('#A5A8B6', '#8E92A3'),
@@ -179,6 +182,7 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
         surface: getColor('#F7F7F9', '#383D51'),
         header: getColor('#2B2D3C', '#0D131A'),
         disabled: getColor('#EAEBEF', '#EBEBEF14'),
+        grey: getColor('#D8DFE5', '#383D51'),
       },
       divider: getColor('#EAEBEF', '#EBEBEF14'),
       action: {
@@ -191,7 +195,7 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
       },
       gradients: {
         mobiusGradient: 'linear-gradient(248.86deg, #B6509E 10.51%, #2EBAC6 93.41%)',
-        newGradient: 'linear-gradient(79.67deg, #8C3EBC 0%, #007782 95.82%)',
+        newGradient: 'linear-gradient(79.67deg, red 0%, yellow 95.82%)',
       },
     },
     spacing: 4,

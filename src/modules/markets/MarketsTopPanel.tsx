@@ -1,8 +1,7 @@
 import { Trans } from '@lingui/macro';
-import { useMediaQuery, SvgIcon, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import * as React from 'react';
 
-import { ChartPieIcon, InboxIcon, FlagIcon } from '@heroicons/react/24/outline'
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { TopInfoPanel } from 'src/components/TopInfoPanel/TopInfoPanel';
 import { TopInfoPanelItem } from 'src/components/TopInfoPanel/TopInfoPanelItem';
@@ -21,7 +20,7 @@ export const MarketsTopPanel = () => {
   return (
     <TopInfoPanel pageTitle={<Trans>Markets</Trans>}>
       <TopInfoPanelItem
-        icon={<SvgIcon><ChartPieIcon /></SvgIcon>}
+        withoutIconWrapper
         title={<Trans>Total market size</Trans>}
         loading={false}
       >
@@ -36,7 +35,7 @@ export const MarketsTopPanel = () => {
         />
       </TopInfoPanelItem>
       <TopInfoPanelItem
-        icon={<SvgIcon><InboxIcon /></SvgIcon>}
+        withoutIconWrapper
         title={<Trans>Total available</Trans>}
         loading={false}
       >
@@ -51,7 +50,7 @@ export const MarketsTopPanel = () => {
         />
       </TopInfoPanelItem>
       <TopInfoPanelItem
-        icon={<SvgIcon><FlagIcon /></SvgIcon>}
+        withoutIconWrapper
         title={<Trans>Total borrows</Trans>}
         loading={false}
       >
