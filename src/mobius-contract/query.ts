@@ -21,7 +21,7 @@ export const getCurrentBorrowableAmountsList = (address: string) => {
     func: 'get_current_borrowable_amounts_list',
     tyArgs: [StandardPositionType],
     args: [EntryFuncArgs.fromHexString(address)],
-  }, 'CurrentBorrowableAmountsListV2')
+  }, 'CurrentBorrowableAmountsList')
 }
 
 export const getCurrentAssetsOverview = () => {
