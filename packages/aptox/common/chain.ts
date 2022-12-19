@@ -7,7 +7,7 @@ const APTOS_FAUCET_URL_DEV = 'https://faucet.devnet.aptoslabs.com';
 
 export type AptosNet = "main" | "dev" | "test";
 
-export const getAptosClients = (aptosNet: AptosNet = "dev") => {
+export const getAptosClients = (aptosNet: AptosNet = "test") => {
   const isMainnet = aptosNet === "main";
   const isTestnet = aptosNet === "test";
   const aptosNodeUrl =  isMainnet

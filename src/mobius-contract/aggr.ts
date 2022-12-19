@@ -1,5 +1,5 @@
 import { aptox } from './aptox';
-import { CoinMeta, devCoins } from './coin-config';
+import { CoinMeta, testCoins } from './coin-config';
 import * as query from './query';
 import {
   convertAssetNftGallery,
@@ -16,8 +16,8 @@ function zip(coins: CoinMeta[], balances: number[]) {
 }
 
 export const getAllData = async (address: string) => {
-  const coinBalancesP = aptox.checkBalances(devCoins.map(coin => coin.type), address)
-    .then(balances => zip(devCoins, balances))
+  const coinBalancesP = aptox.checkBalances(testCoins.map(coin => coin.type), address)
+    .then(balances => zip(testCoins, balances))
   
   const assetOverviewP = query.getCurrentAssetsOverview()
     .then(res => res.ok ? convertAssetsOverview(res.data) : undefined);

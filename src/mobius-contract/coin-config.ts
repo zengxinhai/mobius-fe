@@ -42,9 +42,23 @@ export const testCoins: CoinMeta[] = [
     name: "Aptos Coin",
     symbol: "APT",
     type: "0x1::aptos_coin::AptosCoin",
-    decimal: 9
   },
-];
+  {
+    name: "MBTC",
+    symbol: "BTC",
+    type: `${MOBIUS}::MBTC::MBTC`,
+  },
+  {
+    name: "METH",
+    symbol: "ETH",
+    type: `${MOBIUS}::METH::METH`,
+  },
+  {
+    name: "MUSDT",
+    symbol: "USDT",
+    type: `${MOBIUS}::MUSDT::MUSDT`,
+  },
+].map(item => ({ ...item, decimal: decimals[item.type] }))
 
 export const mainCoins: CoinMeta[] = [
   {
